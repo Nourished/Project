@@ -28,15 +28,435 @@ public class GUIFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        envelopebuttonGroup = new javax.swing.ButtonGroup();
+        ButtonPanel = new javax.swing.JPanel();
+        playButton = new javax.swing.JButton();
+        pauseButton = new javax.swing.JButton();
+        stopButton = new javax.swing.JButton();
+        progressBar = new javax.swing.JProgressBar();
+        grainPanel = new javax.swing.JPanel();
+        durationLabel = new javax.swing.JLabel();
+        durationSetting = new javax.swing.JTextField();
+        locationSlider = new javax.swing.JSlider();
+        pitchSetting = new javax.swing.JTextField();
+        amplitudeSetting = new javax.swing.JTextField();
+        locationLabel = new javax.swing.JLabel();
+        locationSetting = new javax.swing.JTextField();
+        pitchSlider = new javax.swing.JSlider();
+        durationSlider = new javax.swing.JSlider();
+        amplitudeSlider = new javax.swing.JSlider();
+        offsetSlider = new javax.swing.JSlider();
+        grainLabel = new javax.swing.JLabel();
+        pitchLabel = new javax.swing.JLabel();
+        offsetLabel = new javax.swing.JLabel();
+        amplitudeLabel = new javax.swing.JLabel();
+        offsetSetting = new javax.swing.JTextField();
+        jPanel1 = new javax.swing.JPanel();
+        adsrReleaseTextField = new javax.swing.JTextField();
+        bpReleaseTextField = new javax.swing.JTextField();
+        hannButton = new javax.swing.JRadioButton();
+        breakpointButton = new javax.swing.JRadioButton();
+        gaussianButton = new javax.swing.JRadioButton();
+        arAttackTextField = new javax.swing.JTextField();
+        envelopeLabel = new javax.swing.JLabel();
+        sinButton = new javax.swing.JRadioButton();
+        adsrDecayTextField = new javax.swing.JTextField();
+        hammingButton = new javax.swing.JRadioButton();
+        adsrAttackTextField = new javax.swing.JTextField();
+        arButton = new javax.swing.JRadioButton();
+        adsrSustainTextField = new javax.swing.JTextField();
+        bpSustainTextField = new javax.swing.JTextField();
+        bpDecayTextField = new javax.swing.JTextField();
+        bpAttackTextField = new javax.swing.JTextField();
+        adsrButton = new javax.swing.JRadioButton();
+        arReleaseTextField = new javax.swing.JTextField();
         jMenuBar1 = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
+        save = new javax.swing.JMenuItem();
+        saveAs = new javax.swing.JMenuItem();
+        open = new javax.swing.JMenuItem();
+        quit = new javax.swing.JMenuItem();
         optionsMenu = new javax.swing.JMenu();
         helpMenu = new javax.swing.JMenu();
         lMenu = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        playButton.setText("Play");
+
+        pauseButton.setText("Pause");
+
+        stopButton.setText("Stop");
+
+        javax.swing.GroupLayout ButtonPanelLayout = new javax.swing.GroupLayout(ButtonPanel);
+        ButtonPanel.setLayout(ButtonPanelLayout);
+        ButtonPanelLayout.setHorizontalGroup(
+            ButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(ButtonPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(ButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(progressBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, ButtonPanelLayout.createSequentialGroup()
+                        .addComponent(playButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(pauseButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(stopButton)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        ButtonPanelLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {pauseButton, playButton, stopButton});
+
+        ButtonPanelLayout.setVerticalGroup(
+            ButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(ButtonPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(ButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(playButton)
+                    .addComponent(pauseButton)
+                    .addComponent(stopButton))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(progressBar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        ButtonPanelLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {pauseButton, playButton, stopButton});
+
+        durationLabel.setText("Duration");
+
+        durationSetting.setText("50");
+
+        locationSlider.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                locationSliderStateChanged(evt);
+            }
+        });
+
+        pitchSetting.setText("50");
+
+        amplitudeSetting.setText("50");
+
+        locationLabel.setText("Location");
+
+        locationSetting.setText("50");
+
+        pitchSlider.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                pitchSliderStateChanged(evt);
+            }
+        });
+
+        durationSlider.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                durationSliderStateChanged(evt);
+            }
+        });
+
+        amplitudeSlider.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                amplitudeSliderStateChanged(evt);
+            }
+        });
+
+        offsetSlider.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                offsetSliderStateChanged(evt);
+            }
+        });
+
+        grainLabel.setText("Grain Settings");
+
+        pitchLabel.setText("Pitch");
+
+        offsetLabel.setText("Offset");
+
+        amplitudeLabel.setText("Amplitude");
+
+        offsetSetting.setText("50");
+
+        javax.swing.GroupLayout grainPanelLayout = new javax.swing.GroupLayout(grainPanel);
+        grainPanel.setLayout(grainPanelLayout);
+        grainPanelLayout.setHorizontalGroup(
+            grainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(grainPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(grainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(grainPanelLayout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(grainLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(grainPanelLayout.createSequentialGroup()
+                        .addComponent(durationLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(durationSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(durationSetting))
+                    .addGroup(grainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, grainPanelLayout.createSequentialGroup()
+                            .addComponent(locationLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(locationSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(locationSetting))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, grainPanelLayout.createSequentialGroup()
+                            .addComponent(offsetLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(offsetSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(offsetSetting))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, grainPanelLayout.createSequentialGroup()
+                            .addComponent(amplitudeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(amplitudeSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(amplitudeSetting, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, grainPanelLayout.createSequentialGroup()
+                            .addComponent(pitchLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(pitchSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(pitchSetting, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap())
+        );
+        grainPanelLayout.setVerticalGroup(
+            grainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(grainPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(grainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(grainPanelLayout.createSequentialGroup()
+                        .addComponent(grainLabel)
+                        .addGap(18, 18, 18)
+                        .addGroup(grainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(durationSlider, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(durationLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(durationSetting, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(grainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(amplitudeSlider, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 55, Short.MAX_VALUE)
+                    .addComponent(amplitudeLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(grainPanelLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 4, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(amplitudeSetting, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(grainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(pitchSlider, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 55, Short.MAX_VALUE)
+                    .addComponent(pitchLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(grainPanelLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 4, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(pitchSetting, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(grainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(offsetSlider, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 55, Short.MAX_VALUE)
+                    .addComponent(offsetLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(grainPanelLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 4, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(offsetSetting, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(grainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(locationSlider, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 55, Short.MAX_VALUE)
+                    .addComponent(locationLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(grainPanelLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 4, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(locationSetting, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
+        );
+
+        grainPanelLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {durationLabel, durationSlider});
+
+        adsrReleaseTextField.setText("0");
+        adsrReleaseTextField.setEnabled(false);
+
+        bpReleaseTextField.setText("0");
+        bpReleaseTextField.setEnabled(false);
+
+        envelopebuttonGroup.add(hannButton);
+        hannButton.setText("Hann");
+        hannButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                hannButtonActionPerformed(evt);
+            }
+        });
+
+        envelopebuttonGroup.add(breakpointButton);
+        breakpointButton.setText("Breakpoint");
+        breakpointButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                breakpointButtonActionPerformed(evt);
+            }
+        });
+
+        envelopebuttonGroup.add(gaussianButton);
+        gaussianButton.setText("Gaussian");
+        gaussianButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                gaussianButtonActionPerformed(evt);
+            }
+        });
+
+        arAttackTextField.setText("0");
+        arAttackTextField.setEnabled(false);
+
+        envelopeLabel.setText("Envelope Settings");
+
+        envelopebuttonGroup.add(sinButton);
+        sinButton.setText("Sine");
+        sinButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sinButtonActionPerformed(evt);
+            }
+        });
+
+        adsrDecayTextField.setText("0");
+        adsrDecayTextField.setEnabled(false);
+
+        envelopebuttonGroup.add(hammingButton);
+        hammingButton.setText("Hamming");
+        hammingButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                hammingButtonActionPerformed(evt);
+            }
+        });
+
+        adsrAttackTextField.setText("0");
+        adsrAttackTextField.setEnabled(false);
+
+        envelopebuttonGroup.add(arButton);
+        arButton.setText("Attack and Release");
+        arButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                arButtonActionPerformed(evt);
+            }
+        });
+
+        adsrSustainTextField.setText("0");
+        adsrSustainTextField.setEnabled(false);
+
+        bpSustainTextField.setText("0");
+        bpSustainTextField.setEnabled(false);
+
+        bpDecayTextField.setText("0");
+        bpDecayTextField.setEnabled(false);
+
+        bpAttackTextField.setText("0");
+        bpAttackTextField.setEnabled(false);
+
+        envelopebuttonGroup.add(adsrButton);
+        adsrButton.setText("Attack Decay Sustain Release");
+        adsrButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                adsrButtonActionPerformed(evt);
+            }
+        });
+
+        arReleaseTextField.setText("0");
+        arReleaseTextField.setEnabled(false);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(envelopeLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(sinButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(hannButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(hammingButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(gaussianButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(arButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(adsrButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(breakpointButton, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(bpAttackTextField)
+                    .addComponent(arAttackTextField, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(adsrAttackTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(bpDecayTextField)
+                    .addComponent(adsrDecayTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+                    .addComponent(arReleaseTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(bpSustainTextField)
+                    .addComponent(adsrSustainTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 27, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(adsrReleaseTextField)
+                    .addComponent(bpReleaseTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
+
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {adsrAttackTextField, adsrDecayTextField, adsrReleaseTextField, adsrSustainTextField});
+
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(envelopeLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(sinButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(hannButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(hammingButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(gaussianButton)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(arButton)
+                    .addComponent(arAttackTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(arReleaseTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(adsrButton)
+                    .addComponent(adsrAttackTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(adsrDecayTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(adsrSustainTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(adsrReleaseTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(breakpointButton)
+                    .addComponent(bpAttackTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(bpDecayTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(bpSustainTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(bpReleaseTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
+
         fileMenu.setText("File");
+
+        save.setText("Save");
+        save.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveActionPerformed(evt);
+            }
+        });
+        fileMenu.add(save);
+
+        saveAs.setText("Save As");
+        saveAs.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveAsActionPerformed(evt);
+            }
+        });
+        fileMenu.add(saveAs);
+
+        open.setText("Open");
+        open.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                openActionPerformed(evt);
+            }
+        });
+        fileMenu.add(open);
+
+        quit.setText("Quit");
+        quit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                quitActionPerformed(evt);
+            }
+        });
+        fileMenu.add(quit);
+
         jMenuBar1.add(fileMenu);
 
         optionsMenu.setText("Options");
@@ -54,15 +474,208 @@ public class GUIFrame extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 764, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(grainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(ButtonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(205, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 496, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(11, 11, 11)
+                .addComponent(ButtonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(43, 43, 43)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(grainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_saveActionPerformed
+
+    private void saveAsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveAsActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_saveAsActionPerformed
+
+    private void openActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_openActionPerformed
+
+    private void quitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quitActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_quitActionPerformed
+
+    private void durationSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_durationSliderStateChanged
+        // TODO add your handling code here:
+        durationSetting.setText("" + durationSlider.getValue());
+    }//GEN-LAST:event_durationSliderStateChanged
+
+    private void amplitudeSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_amplitudeSliderStateChanged
+        // TODO add your handling code here:
+        amplitudeSetting.setText("" + amplitudeSlider.getValue());
+    }//GEN-LAST:event_amplitudeSliderStateChanged
+
+    private void pitchSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_pitchSliderStateChanged
+        // TODO add your handling code here:
+        pitchSetting.setText("" + pitchSlider.getValue());
+    }//GEN-LAST:event_pitchSliderStateChanged
+
+    private void offsetSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_offsetSliderStateChanged
+        // TODO add your handling code here:
+        offsetSetting.setText("" + offsetSlider.getValue());
+    }//GEN-LAST:event_offsetSliderStateChanged
+
+    private void locationSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_locationSliderStateChanged
+        // TODO add your handling code here:
+        locationSetting.setText("" + locationSlider.getValue());
+    }//GEN-LAST:event_locationSliderStateChanged
+
+    private void arButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_arButtonActionPerformed
+        // TODO add your handling code here:
+        // Enable text
+        arAttackTextField.setEnabled(true);
+        arReleaseTextField.setEnabled(true);
+        // Disable other texts
+        // ADSR
+        adsrAttackTextField.setEnabled(false);
+        adsrDecayTextField.setEnabled(false);
+        adsrSustainTextField.setEnabled(false);
+        adsrReleaseTextField.setEnabled(false);
+        
+        // Breakpoint
+        bpAttackTextField.setEnabled(false);
+        bpDecayTextField.setEnabled(false);
+        bpSustainTextField.setEnabled(false);
+        bpReleaseTextField.setEnabled(false);
+        
+    }//GEN-LAST:event_arButtonActionPerformed
+
+    private void adsrButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adsrButtonActionPerformed
+        // TODO add your handling code here:
+        // Enable text
+        
+        // ADSR
+        adsrAttackTextField.setEnabled(true);
+        adsrDecayTextField.setEnabled(true);
+        adsrSustainTextField.setEnabled(true);
+        adsrReleaseTextField.setEnabled(true);
+        
+        // Disable other texts
+        // Attack Release
+        arAttackTextField.setEnabled(false);
+        arReleaseTextField.setEnabled(false);
+        
+        // Breakpoint
+        bpAttackTextField.setEnabled(false);
+        bpDecayTextField.setEnabled(false);
+        bpSustainTextField.setEnabled(false);
+        bpReleaseTextField.setEnabled(false);
+    }//GEN-LAST:event_adsrButtonActionPerformed
+
+    private void breakpointButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_breakpointButtonActionPerformed
+        // TODO add your handling code here:
+        // Enable text
+        // Breakpoint
+        bpAttackTextField.setEnabled(true);
+        bpDecayTextField.setEnabled(true);
+        bpSustainTextField.setEnabled(true);
+        bpReleaseTextField.setEnabled(true);
+        
+        // Disable other texts
+        // ADSR
+        adsrAttackTextField.setEnabled(false);
+        adsrDecayTextField.setEnabled(false);
+        adsrSustainTextField.setEnabled(false);
+        adsrReleaseTextField.setEnabled(false);
+        // Attack Release
+        arAttackTextField.setEnabled(false);
+        arReleaseTextField.setEnabled(false);
+        
+    }//GEN-LAST:event_breakpointButtonActionPerformed
+
+    private void sinButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sinButtonActionPerformed
+        // TODO add your handling code here:
+        // Disbale text fields for other envelopes        
+        // ADSR
+        adsrAttackTextField.setEnabled(false);
+        adsrDecayTextField.setEnabled(false);
+        adsrSustainTextField.setEnabled(false);
+        adsrReleaseTextField.setEnabled(false);        
+        // Attack Release
+        arAttackTextField.setEnabled(false);
+        arReleaseTextField.setEnabled(false);        
+        // Breakpoint
+        bpAttackTextField.setEnabled(false);
+        bpDecayTextField.setEnabled(false);
+        bpSustainTextField.setEnabled(false);
+        bpReleaseTextField.setEnabled(false);
+    }//GEN-LAST:event_sinButtonActionPerformed
+
+    private void hannButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hannButtonActionPerformed
+        // TODO add your handling code here:
+        // Disbale text fields for other envelopes        
+        // ADSR
+        adsrAttackTextField.setEnabled(false);
+        adsrDecayTextField.setEnabled(false);
+        adsrSustainTextField.setEnabled(false);
+        adsrReleaseTextField.setEnabled(false);        
+        // Attack Release
+        arAttackTextField.setEnabled(false);
+        arReleaseTextField.setEnabled(false);        
+        // Breakpoint
+        bpAttackTextField.setEnabled(false);
+        bpDecayTextField.setEnabled(false);
+        bpSustainTextField.setEnabled(false);
+        bpReleaseTextField.setEnabled(false);
+    }//GEN-LAST:event_hannButtonActionPerformed
+
+    private void hammingButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hammingButtonActionPerformed
+        // TODO add your handling code here:
+        // Disbale text fields for other envelopes        
+        // ADSR
+        adsrAttackTextField.setEnabled(false);
+        adsrDecayTextField.setEnabled(false);
+        adsrSustainTextField.setEnabled(false);
+        adsrReleaseTextField.setEnabled(false);        
+        // Attack Release
+        arAttackTextField.setEnabled(false);
+        arReleaseTextField.setEnabled(false);        
+        // Breakpoint
+        bpAttackTextField.setEnabled(false);
+        bpDecayTextField.setEnabled(false);
+        bpSustainTextField.setEnabled(false);
+        bpReleaseTextField.setEnabled(false);
+    }//GEN-LAST:event_hammingButtonActionPerformed
+
+    private void gaussianButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gaussianButtonActionPerformed
+        // TODO add your handling code here:
+        // Disbale text fields for other envelopes        
+        // ADSR
+        adsrAttackTextField.setEnabled(false);
+        adsrDecayTextField.setEnabled(false);
+        adsrSustainTextField.setEnabled(false);
+        adsrReleaseTextField.setEnabled(false);        
+        // Attack Release
+        arAttackTextField.setEnabled(false);
+        arReleaseTextField.setEnabled(false);        
+        // Breakpoint
+        bpAttackTextField.setEnabled(false);
+        bpDecayTextField.setEnabled(false);
+        bpSustainTextField.setEnabled(false);
+        bpReleaseTextField.setEnabled(false);
+    }//GEN-LAST:event_gaussianButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -100,10 +713,56 @@ public class GUIFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel ButtonPanel;
+    private javax.swing.JTextField adsrAttackTextField;
+    private javax.swing.JRadioButton adsrButton;
+    private javax.swing.JTextField adsrDecayTextField;
+    private javax.swing.JTextField adsrReleaseTextField;
+    private javax.swing.JTextField adsrSustainTextField;
+    private javax.swing.JLabel amplitudeLabel;
+    private javax.swing.JTextField amplitudeSetting;
+    private javax.swing.JSlider amplitudeSlider;
+    private javax.swing.JTextField arAttackTextField;
+    private javax.swing.JRadioButton arButton;
+    private javax.swing.JTextField arReleaseTextField;
+    private javax.swing.JTextField bpAttackTextField;
+    private javax.swing.JTextField bpDecayTextField;
+    private javax.swing.JTextField bpReleaseTextField;
+    private javax.swing.JTextField bpSustainTextField;
+    private javax.swing.JRadioButton breakpointButton;
+    private javax.swing.JLabel durationLabel;
+    private javax.swing.JTextField durationSetting;
+    private javax.swing.JSlider durationSlider;
+    private javax.swing.JLabel envelopeLabel;
+    private javax.swing.ButtonGroup envelopebuttonGroup;
     private javax.swing.JMenu fileMenu;
+    private javax.swing.JRadioButton gaussianButton;
+    private javax.swing.JLabel grainLabel;
+    private javax.swing.JPanel grainPanel;
+    private javax.swing.JRadioButton hammingButton;
+    private javax.swing.JRadioButton hannButton;
     private javax.swing.JMenu helpMenu;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JMenu lMenu;
+    private javax.swing.JLabel locationLabel;
+    private javax.swing.JTextField locationSetting;
+    private javax.swing.JSlider locationSlider;
+    private javax.swing.JLabel offsetLabel;
+    private javax.swing.JTextField offsetSetting;
+    private javax.swing.JSlider offsetSlider;
+    private javax.swing.JMenuItem open;
     private javax.swing.JMenu optionsMenu;
+    private javax.swing.JButton pauseButton;
+    private javax.swing.JLabel pitchLabel;
+    private javax.swing.JTextField pitchSetting;
+    private javax.swing.JSlider pitchSlider;
+    private javax.swing.JButton playButton;
+    private javax.swing.JProgressBar progressBar;
+    private javax.swing.JMenuItem quit;
+    private javax.swing.JMenuItem save;
+    private javax.swing.JMenuItem saveAs;
+    private javax.swing.JRadioButton sinButton;
+    private javax.swing.JButton stopButton;
     // End of variables declaration//GEN-END:variables
 }
