@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package audio.engine;
 
 import java.io.File;
 import java.io.FileReader;
@@ -24,8 +23,7 @@ public class GUIFrame extends javax.swing.JFrame {
      */
     public GUIFrame() {
         initComponents();
-        AS.execute();
-        
+                
     }
 
     /**
@@ -91,6 +89,11 @@ public class GUIFrame extends javax.swing.JFrame {
         lMenu = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         playButton.setText("Play");
         playButton.addActionListener(new java.awt.event.ActionListener() {
@@ -541,9 +544,11 @@ public class GUIFrame extends javax.swing.JFrame {
         try {
           // What to do with the file, e.g. display it in a TextArea
          // textarea.read( new FileReader( file.getAbsolutePath() ), null );
-            System.out.println("LOADED");
+            System.out.println("File: " + file.getAbsolutePath());
+            //AS.execute(file.getAbsolutePath());
+            AS.execute("FancyPants.wav");
         } catch (Exception ex) {
-          System.out.println("problem accessing file"+file.getAbsolutePath());
+          System.out.println("problem accessing file " + file.getAbsolutePath());
         }
     } else {
         System.out.println("File access cancelled by user.");
@@ -552,6 +557,8 @@ public class GUIFrame extends javax.swing.JFrame {
 
     private void quitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quitActionPerformed
         // TODO add your handling code here:
+        AS.killALData();
+        System.exit(0);
     }//GEN-LAST:event_quitActionPerformed
 
     private void durationSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_durationSliderStateChanged
@@ -726,6 +733,11 @@ public class GUIFrame extends javax.swing.JFrame {
     private void stopButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stopButtonActionPerformed
        AS.stop();
     }//GEN-LAST:event_stopButtonActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+        AS.killALData();
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments
