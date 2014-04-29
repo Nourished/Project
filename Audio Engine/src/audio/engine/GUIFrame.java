@@ -3,8 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package audio.engine;
+
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import javax.swing.JFileChooser;
+
 
 /**
  *
@@ -12,11 +17,15 @@ package audio.engine;
  */
 public class GUIFrame extends javax.swing.JFrame {
 
+    AudioStream AS = new AudioStream();
+
     /**
      * Creates new form GUIFrame
      */
     public GUIFrame() {
         initComponents();
+        AS.execute();
+        
     }
 
     /**
@@ -29,6 +38,7 @@ public class GUIFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         envelopebuttonGroup = new javax.swing.ButtonGroup();
+        fileChooser = new javax.swing.JFileChooser();
         ButtonPanel = new javax.swing.JPanel();
         playButton = new javax.swing.JButton();
         pauseButton = new javax.swing.JButton();
@@ -83,10 +93,25 @@ public class GUIFrame extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         playButton.setText("Play");
+        playButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                playButtonActionPerformed(evt);
+            }
+        });
 
         pauseButton.setText("Pause");
+        pauseButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pauseButtonActionPerformed(evt);
+            }
+        });
 
         stopButton.setText("Stop");
+        stopButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                stopButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout ButtonPanelLayout = new javax.swing.GroupLayout(ButtonPanel);
         ButtonPanel.setLayout(ButtonPanelLayout);
@@ -510,7 +535,19 @@ public class GUIFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_saveAsActionPerformed
 
     private void openActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openActionPerformed
-        // TODO add your handling code here:
+       int returnVal = fileChooser.showOpenDialog(this);
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+        File file = fileChooser.getSelectedFile();
+        try {
+          // What to do with the file, e.g. display it in a TextArea
+         // textarea.read( new FileReader( file.getAbsolutePath() ), null );
+            System.out.println("LOADED");
+        } catch (Exception ex) {
+          System.out.println("problem accessing file"+file.getAbsolutePath());
+        }
+    } else {
+        System.out.println("File access cancelled by user.");
+    }
     }//GEN-LAST:event_openActionPerformed
 
     private void quitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quitActionPerformed
@@ -553,30 +590,30 @@ public class GUIFrame extends javax.swing.JFrame {
         adsrDecayTextField.setEnabled(false);
         adsrSustainTextField.setEnabled(false);
         adsrReleaseTextField.setEnabled(false);
-        
+
         // Breakpoint
         bpAttackTextField.setEnabled(false);
         bpDecayTextField.setEnabled(false);
         bpSustainTextField.setEnabled(false);
         bpReleaseTextField.setEnabled(false);
-        
+
     }//GEN-LAST:event_arButtonActionPerformed
 
     private void adsrButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adsrButtonActionPerformed
         // TODO add your handling code here:
         // Enable text
-        
+
         // ADSR
         adsrAttackTextField.setEnabled(true);
         adsrDecayTextField.setEnabled(true);
         adsrSustainTextField.setEnabled(true);
         adsrReleaseTextField.setEnabled(true);
-        
+
         // Disable other texts
         // Attack Release
         arAttackTextField.setEnabled(false);
         arReleaseTextField.setEnabled(false);
-        
+
         // Breakpoint
         bpAttackTextField.setEnabled(false);
         bpDecayTextField.setEnabled(false);
@@ -592,7 +629,7 @@ public class GUIFrame extends javax.swing.JFrame {
         bpDecayTextField.setEnabled(true);
         bpSustainTextField.setEnabled(true);
         bpReleaseTextField.setEnabled(true);
-        
+
         // Disable other texts
         // ADSR
         adsrAttackTextField.setEnabled(false);
@@ -602,7 +639,7 @@ public class GUIFrame extends javax.swing.JFrame {
         // Attack Release
         arAttackTextField.setEnabled(false);
         arReleaseTextField.setEnabled(false);
-        
+
     }//GEN-LAST:event_breakpointButtonActionPerformed
 
     private void sinButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sinButtonActionPerformed
@@ -612,10 +649,10 @@ public class GUIFrame extends javax.swing.JFrame {
         adsrAttackTextField.setEnabled(false);
         adsrDecayTextField.setEnabled(false);
         adsrSustainTextField.setEnabled(false);
-        adsrReleaseTextField.setEnabled(false);        
+        adsrReleaseTextField.setEnabled(false);
         // Attack Release
         arAttackTextField.setEnabled(false);
-        arReleaseTextField.setEnabled(false);        
+        arReleaseTextField.setEnabled(false);
         // Breakpoint
         bpAttackTextField.setEnabled(false);
         bpDecayTextField.setEnabled(false);
@@ -630,10 +667,10 @@ public class GUIFrame extends javax.swing.JFrame {
         adsrAttackTextField.setEnabled(false);
         adsrDecayTextField.setEnabled(false);
         adsrSustainTextField.setEnabled(false);
-        adsrReleaseTextField.setEnabled(false);        
+        adsrReleaseTextField.setEnabled(false);
         // Attack Release
         arAttackTextField.setEnabled(false);
-        arReleaseTextField.setEnabled(false);        
+        arReleaseTextField.setEnabled(false);
         // Breakpoint
         bpAttackTextField.setEnabled(false);
         bpDecayTextField.setEnabled(false);
@@ -648,10 +685,10 @@ public class GUIFrame extends javax.swing.JFrame {
         adsrAttackTextField.setEnabled(false);
         adsrDecayTextField.setEnabled(false);
         adsrSustainTextField.setEnabled(false);
-        adsrReleaseTextField.setEnabled(false);        
+        adsrReleaseTextField.setEnabled(false);
         // Attack Release
         arAttackTextField.setEnabled(false);
-        arReleaseTextField.setEnabled(false);        
+        arReleaseTextField.setEnabled(false);
         // Breakpoint
         bpAttackTextField.setEnabled(false);
         bpDecayTextField.setEnabled(false);
@@ -666,16 +703,29 @@ public class GUIFrame extends javax.swing.JFrame {
         adsrAttackTextField.setEnabled(false);
         adsrDecayTextField.setEnabled(false);
         adsrSustainTextField.setEnabled(false);
-        adsrReleaseTextField.setEnabled(false);        
+        adsrReleaseTextField.setEnabled(false);
         // Attack Release
         arAttackTextField.setEnabled(false);
-        arReleaseTextField.setEnabled(false);        
+        arReleaseTextField.setEnabled(false);
         // Breakpoint
         bpAttackTextField.setEnabled(false);
         bpDecayTextField.setEnabled(false);
         bpSustainTextField.setEnabled(false);
         bpReleaseTextField.setEnabled(false);
     }//GEN-LAST:event_gaussianButtonActionPerformed
+
+    private void playButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playButtonActionPerformed
+        AS.play();
+        
+    }//GEN-LAST:event_playButtonActionPerformed
+
+    private void pauseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pauseButtonActionPerformed
+       AS.pause();
+    }//GEN-LAST:event_pauseButtonActionPerformed
+
+    private void stopButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stopButtonActionPerformed
+       AS.stop();
+    }//GEN-LAST:event_stopButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -706,11 +756,20 @@ public class GUIFrame extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new GUIFrame().setVisible(true);
+
             }
         });
+        
+        
+        
+        
+
     }
+
+   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel ButtonPanel;
@@ -735,6 +794,7 @@ public class GUIFrame extends javax.swing.JFrame {
     private javax.swing.JSlider durationSlider;
     private javax.swing.JLabel envelopeLabel;
     private javax.swing.ButtonGroup envelopebuttonGroup;
+    private javax.swing.JFileChooser fileChooser;
     private javax.swing.JMenu fileMenu;
     private javax.swing.JRadioButton gaussianButton;
     private javax.swing.JLabel grainLabel;

@@ -4,6 +4,8 @@
   <NonVisualComponents>
     <Component class="javax.swing.ButtonGroup" name="envelopebuttonGroup">
     </Component>
+    <Component class="javax.swing.JFileChooser" name="fileChooser">
+    </Component>
     <Menu class="javax.swing.JMenuBar" name="jMenuBar1">
       <SubComponents>
         <Menu class="javax.swing.JMenu" name="fileMenu">
@@ -161,16 +163,25 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Play"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="playButtonActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="pauseButton">
           <Properties>
             <Property name="text" type="java.lang.String" value="Pause"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="pauseButtonActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="stopButton">
           <Properties>
             <Property name="text" type="java.lang.String" value="Stop"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="stopButtonActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JProgressBar" name="progressBar">
         </Component>
