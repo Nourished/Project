@@ -545,14 +545,16 @@ public class GUIFrame extends javax.swing.JFrame {
           // What to do with the file, e.g. display it in a TextArea
          // textarea.read( new FileReader( file.getAbsolutePath() ), null );
             System.out.println("File: " + file.getAbsolutePath());
-            //AS.execute(file.getAbsolutePath());
-            AS.execute("FancyPants.wav");
+            AS.execute(file);
+            //AS.loadALData();
+          //  AS.execute("FancyPants.wav");
         } catch (Exception ex) {
           System.out.println("problem accessing file " + file.getAbsolutePath());
         }
     } else {
         System.out.println("File access cancelled by user.");
     }
+        
     }//GEN-LAST:event_openActionPerformed
 
     private void quitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quitActionPerformed
@@ -771,7 +773,7 @@ public class GUIFrame extends javax.swing.JFrame {
             @Override
             public void run() {
                 new GUIFrame().setVisible(true);
-
+                
             }
         });
         

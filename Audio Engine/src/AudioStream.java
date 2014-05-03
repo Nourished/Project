@@ -4,7 +4,11 @@
  * and open the template in the editor.
  */
 
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 import java.util.Scanner;
@@ -21,6 +25,8 @@ import org.lwjgl.util.WaveData;
  */
 public class AudioStream {
 
+    File song;
+     
     /**
      * Buffers hold sound data.
      */
@@ -64,48 +70,42 @@ public class AudioStream {
      * utility and send the data into OpenAL as a buffer. A source is then also
      * created to play that buffer.
      */
-    int loadALData(String path) {
+    int loadALData() {
         // Load wav data into a buffer.
         AL10.alGenBuffers(buffer);
-        System.out.println("error 24");
+       
         if (AL10.alGetError() != AL10.AL_NO_ERROR) {
             return AL10.AL_FALSE;
         }
 
-        /*
+        
         //Loads the wave file from your file system
         java.io.FileInputStream fin = null;
+        BufferedInputStream bin = null;
         try {
-            fin = new java.io.FileInputStream(path);
+            fin = new FileInputStream(song);
+            bin = new BufferedInputStream(fin);
         } catch (java.io.FileNotFoundException ex) {
             System.out.println("error 1");
             ex.printStackTrace();
             return AL10.AL_FALSE;
         }
-        System.out.println("error 25");
-        WaveData waveFile = WaveData.create(fin);
-        try {
-            fin.close();
-        } catch (java.io.IOException ex) {
-        }
-        */
-        System.out.println("error 26");
-        //Loads the wave file from this class's package in your classpath
-        //WaveData waveFile = WaveData.create("FancyPants.wav");
-        WaveData waveFile = WaveData.create(path);
+       
+        WaveData waveFile = WaveData.create(bin);
+       
         AL10.alBufferData(buffer.get(0), waveFile.format, waveFile.data, waveFile.samplerate);
         waveFile.dispose();
-        System.out.println("error 27");
+       
         // Bind the buffer with the source.
         AL10.alGenSources(source);
 
         if (AL10.alGetError() != AL10.AL_NO_ERROR) {
             return AL10.AL_FALSE;
         }
-        System.out.println("error 28");
+      
         AL10.alSourcei(source.get(0), AL10.AL_BUFFER, buffer.get(0));
         AL10.alSourcef(source.get(0), AL10.AL_PITCH, 1.0f);
-        AL10.alSourcef(source.get(0), AL10.AL_GAIN, 1.0f);
+        AL10.alSourcef(source.get(0), AL10.AL_GAIN, 50.0f);
         AL10.alSource(source.get(0), AL10.AL_POSITION, sourcePos);
         AL10.alSource(source.get(0), AL10.AL_VELOCITY, sourceVel);
 
@@ -113,7 +113,7 @@ public class AudioStream {
         if (AL10.alGetError() == AL10.AL_NO_ERROR) {
             return AL10.AL_TRUE;
         }
-        System.out.println("error 29");
+     
         return AL10.AL_FALSE;
     }
 
@@ -154,8 +154,11 @@ public class AudioStream {
 
     }
 
-    public void execute(String path) {
+    public void execute(File file) {
         // Initialize OpenAL and clear the error bit.
+        
+        song = file;
+        
         try {
             AL.create();
         } catch (LWJGLException le) {
@@ -166,47 +169,13 @@ public class AudioStream {
         AL10.alGetError();
         System.out.println("error 22");
         // Load the wav data.
-        if (loadALData(path) == AL10.AL_FALSE) {
+        if (loadALData() == AL10.AL_FALSE) {
             System.out.println("Error loading data.");
             return;
         }
 
         setListenerValues();
         System.out.println("error 23");
-        /*
-         // Loop.
-         System.out.println("OpenAL Tutorial 1 - Single Static Source");
-         System.out.println("[Menu]");
-         System.out.println("p - Play the sample.");
-         System.out.println("s - Stop the sample.");
-         System.out.println("h - Pause the sample.");
-         System.out.println("q - Quit the program.");
-         char c = ' ';
-         Scanner stdin = new Scanner(System.in);
-    
-    
-         while(c != 'q') {
-         try {
-         System.out.print("Input: ");
-         c = (char)stdin.nextLine().charAt(0);
-         } catch (Exception ex) {
-         c = 'q';
-         }
-
-         switch(c) {
-         // Pressing 'p' will begin playing the sample.
-         case 'p': AL10.alSourcePlay(source.get(0)); break;
-
-         // Pressing 's' will stop the sample from playing.
-         case's': AL10.alSourceStop(source.get(0)); break;
-
-         // Pressing 'h' will pause the sample.
-         case 'h': AL10.alSourcePause(source.get(0)); break;
-         };
-         }
-           
-         killALData();
-         AL.destroy();
-         */
+        
     }
 }
