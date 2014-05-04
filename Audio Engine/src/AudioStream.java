@@ -85,8 +85,7 @@ public class AudioStream {
         try {
             fin = new FileInputStream(song);
             bin = new BufferedInputStream(fin);
-        } catch (java.io.FileNotFoundException ex) {
-            System.out.println("error 1");
+        } catch (java.io.FileNotFoundException ex) {            
             ex.printStackTrace();
             return AL10.AL_FALSE;
         }
@@ -162,20 +161,18 @@ public class AudioStream {
         try {
             AL.create();
         } catch (LWJGLException le) {
-            System.out.println("error 2");
             le.printStackTrace();
             return;
         }
         AL10.alGetError();
-        System.out.println("error 22");
+        
         // Load the wav data.
         if (loadALData() == AL10.AL_FALSE) {
             System.out.println("Error loading data.");
             return;
         }
 
-        setListenerValues();
-        System.out.println("error 23");
+        setListenerValues();        
         
     }
 }

@@ -9,7 +9,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import javax.swing.JFileChooser;
 
-
 /**
  *
  * @author Eric
@@ -17,13 +16,14 @@ import javax.swing.JFileChooser;
 public class GUIFrame extends javax.swing.JFrame {
 
     AudioStream AS = new AudioStream();
+    boolean songLoaded = false;
 
     /**
      * Creates new form GUIFrame
      */
     public GUIFrame() {
         initComponents();
-                
+
     }
 
     /**
@@ -88,6 +88,8 @@ public class GUIFrame extends javax.swing.JFrame {
         helpMenu = new javax.swing.JMenu();
         lMenu = new javax.swing.JMenu();
 
+        fileChooser.setCurrentDirectory(new java.io.File("C:\\Users\\Eric\\Documents\\Word Documents\\COSC\\4P98\\Project\\Audio Engine"));
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -96,6 +98,7 @@ public class GUIFrame extends javax.swing.JFrame {
         });
 
         playButton.setText("Play");
+        playButton.setEnabled(false);
         playButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 playButtonActionPerformed(evt);
@@ -103,6 +106,7 @@ public class GUIFrame extends javax.swing.JFrame {
         });
 
         pauseButton.setText("Pause");
+        pauseButton.setEnabled(false);
         pauseButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 pauseButtonActionPerformed(evt);
@@ -110,6 +114,7 @@ public class GUIFrame extends javax.swing.JFrame {
         });
 
         stopButton.setText("Stop");
+        stopButton.setEnabled(false);
         stopButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 stopButtonActionPerformed(evt);
@@ -538,28 +543,36 @@ public class GUIFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_saveAsActionPerformed
 
     private void openActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openActionPerformed
-       int returnVal = fileChooser.showOpenDialog(this);
+         if(songLoaded)
+            AS.killALData();
+        int returnVal = fileChooser.showOpenDialog(this);
         if (returnVal == JFileChooser.APPROVE_OPTION) {
-        File file = fileChooser.getSelectedFile();
-        try {
+            File file = fileChooser.getSelectedFile();
+            try {
           // What to do with the file, e.g. display it in a TextArea
-         // textarea.read( new FileReader( file.getAbsolutePath() ), null );
-            System.out.println("File: " + file.getAbsolutePath());
-            AS.execute(file);
-            //AS.loadALData();
-          //  AS.execute("FancyPants.wav");
-        } catch (Exception ex) {
-          System.out.println("problem accessing file " + file.getAbsolutePath());
+                // textarea.read( new FileReader( file.getAbsolutePath() ), null );
+                System.out.println("File: " + file.getAbsolutePath());
+                AS.execute(file);
+
+            } catch (Exception ex) {
+                System.out.println("problem accessing file " + file.getAbsolutePath());
+            }
+            
+            songLoaded = true;
+            playButton.setEnabled(true);
+            pauseButton.setEnabled(true);
+            stopButton.setEnabled(true);
+        } else {
+            System.out.println("File access cancelled by user.");
         }
-    } else {
-        System.out.println("File access cancelled by user.");
-    }
-        
+
     }//GEN-LAST:event_openActionPerformed
 
     private void quitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quitActionPerformed
         // TODO add your handling code here:
-        AS.killALData();
+        // Kill the song buffer if something is loaded
+        if(songLoaded)
+            AS.killALData();
         System.exit(0);
     }//GEN-LAST:event_quitActionPerformed
 
@@ -724,21 +737,29 @@ public class GUIFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_gaussianButtonActionPerformed
 
     private void playButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playButtonActionPerformed
-        AS.play();
-        
+        // Play if a song is loaded
+        if(songLoaded)
+            AS.play();
+
     }//GEN-LAST:event_playButtonActionPerformed
 
     private void pauseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pauseButtonActionPerformed
-       AS.pause();
+        // Pause if a song is loaded
+        if(songLoaded)
+            AS.pause();
     }//GEN-LAST:event_pauseButtonActionPerformed
 
     private void stopButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stopButtonActionPerformed
-       AS.stop();
+        // Stop if a song is loaded
+        if(songLoaded)
+            AS.stop();
     }//GEN-LAST:event_stopButtonActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // TODO add your handling code here:
-        AS.killALData();
+        // Close song buffer if a song is loaded
+        if(songLoaded)
+            AS.killALData();
     }//GEN-LAST:event_formWindowClosing
 
     /**
@@ -773,17 +794,12 @@ public class GUIFrame extends javax.swing.JFrame {
             @Override
             public void run() {
                 new GUIFrame().setVisible(true);
-                
+
             }
         });
-        
-        
-        
-        
 
     }
 
-   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel ButtonPanel;
