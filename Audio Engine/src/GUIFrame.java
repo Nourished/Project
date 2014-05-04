@@ -4,9 +4,8 @@
  * and open the template in the editor.
  */
 
+import com.musicg.wave.Wave;
 import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
 import javax.swing.JFileChooser;
 
 /**
@@ -78,6 +77,7 @@ public class GUIFrame extends javax.swing.JFrame {
         bpAttackTextField = new javax.swing.JTextField();
         adsrButton = new javax.swing.JRadioButton();
         arReleaseTextField = new javax.swing.JTextField();
+        testButton = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         save = new javax.swing.JMenuItem();
@@ -88,7 +88,7 @@ public class GUIFrame extends javax.swing.JFrame {
         helpMenu = new javax.swing.JMenu();
         lMenu = new javax.swing.JMenu();
 
-        fileChooser.setCurrentDirectory(new java.io.File("C:\\Users\\Eric\\Documents\\Word Documents\\COSC\\4P98\\Project\\Audio Engine"));
+        fileChooser.setCurrentDirectory(new java.io.File("C:\\Users\\Eric\\Documents\\Word Documents\\COSC\\4P98\\Project\\Audio Engine\\src"));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -456,6 +456,13 @@ public class GUIFrame extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        testButton.setText("TEST SHIT");
+        testButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                testButtonActionPerformed(evt);
+            }
+        });
+
         fileMenu.setText("File");
 
         save.setText("Save");
@@ -510,18 +517,24 @@ public class GUIFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(grainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(grainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(ButtonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(testButton)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(205, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(11, 11, 11)
-                .addComponent(ButtonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(11, 11, 11)
+                        .addComponent(ButtonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(60, 60, 60)
+                        .addComponent(testButton)))
                 .addGap(43, 43, 43)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(grainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -543,13 +556,14 @@ public class GUIFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_saveAsActionPerformed
 
     private void openActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openActionPerformed
-         if(songLoaded)
+        if (songLoaded) {
             AS.killALData();
+        }
         int returnVal = fileChooser.showOpenDialog(this);
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             File file = fileChooser.getSelectedFile();
             try {
-          // What to do with the file, e.g. display it in a TextArea
+                // What to do with the file, e.g. display it in a TextArea
                 // textarea.read( new FileReader( file.getAbsolutePath() ), null );
                 System.out.println("File: " + file.getAbsolutePath());
                 AS.execute(file);
@@ -557,7 +571,7 @@ public class GUIFrame extends javax.swing.JFrame {
             } catch (Exception ex) {
                 System.out.println("problem accessing file " + file.getAbsolutePath());
             }
-            
+
             songLoaded = true;
             playButton.setEnabled(true);
             pauseButton.setEnabled(true);
@@ -571,8 +585,9 @@ public class GUIFrame extends javax.swing.JFrame {
     private void quitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quitActionPerformed
         // TODO add your handling code here:
         // Kill the song buffer if something is loaded
-        if(songLoaded)
+        if (songLoaded) {
             AS.killALData();
+        }
         System.exit(0);
     }//GEN-LAST:event_quitActionPerformed
 
@@ -738,29 +753,59 @@ public class GUIFrame extends javax.swing.JFrame {
 
     private void playButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playButtonActionPerformed
         // Play if a song is loaded
-        if(songLoaded)
+        if (songLoaded) {
             AS.play();
+        }
 
     }//GEN-LAST:event_playButtonActionPerformed
 
     private void pauseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pauseButtonActionPerformed
         // Pause if a song is loaded
-        if(songLoaded)
+        if (songLoaded) {
             AS.pause();
+        }
     }//GEN-LAST:event_pauseButtonActionPerformed
 
     private void stopButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stopButtonActionPerformed
         // Stop if a song is loaded
-        if(songLoaded)
+        if (songLoaded) {
             AS.stop();
+        }
     }//GEN-LAST:event_stopButtonActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // TODO add your handling code here:
         // Close song buffer if a song is loaded
-        if(songLoaded)
+        if (songLoaded) {
             AS.killALData();
+        }
     }//GEN-LAST:event_formWindowClosing
+
+    private void testButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_testButtonActionPerformed
+        // TODO add your handling code here:
+        if (songLoaded) {
+            AS.killALData();
+        }
+
+        File f = new File("C:\\Users\\Eric\\Documents\\Word Documents\\COSC\\4P98\\Project\\Audio Engine\\src\\FancyPants2.wav");
+        AS.execute(f);
+        songLoaded = true;
+        playButton.setEnabled(true);
+        pauseButton.setEnabled(true);
+        stopButton.setEnabled(true);
+
+                
+        //Wave wave = new Wave ("C:\\Users\\Eric\\Documents\\Word Documents\\COSC\\4P98\\Project\\Audio Engine\\src\\Cash4GoldShort.wav");
+        Wave wave = new Wave ("C:\\Users\\Eric\\Documents\\Word Documents\\COSC\\4P98\\Project\\Audio Engine\\src\\FancyPants2.wav");
+        short [] sm = wave.getSampleAmplitudes();
+        for(int i = 0; i < sm.length; i++){
+            System.out.println(sm[i]);
+        }
+        
+        
+        
+        
+    }//GEN-LAST:event_testButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -854,5 +899,6 @@ public class GUIFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem saveAs;
     private javax.swing.JRadioButton sinButton;
     private javax.swing.JButton stopButton;
+    private javax.swing.JButton testButton;
     // End of variables declaration//GEN-END:variables
 }

@@ -7,11 +7,8 @@
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
-import java.util.Scanner;
 
 import org.lwjgl.BufferUtils;
 import org.lwjgl.LWJGLException;
@@ -26,7 +23,7 @@ import org.lwjgl.util.WaveData;
 public class AudioStream {
 
     File song;
-     
+
     /**
      * Buffers hold sound data.
      */
@@ -73,35 +70,34 @@ public class AudioStream {
     int loadALData() {
         // Load wav data into a buffer.
         AL10.alGenBuffers(buffer);
-       
+
         if (AL10.alGetError() != AL10.AL_NO_ERROR) {
             return AL10.AL_FALSE;
         }
 
-        
         //Loads the wave file from your file system
         java.io.FileInputStream fin = null;
         BufferedInputStream bin = null;
         try {
             fin = new FileInputStream(song);
             bin = new BufferedInputStream(fin);
-        } catch (java.io.FileNotFoundException ex) {            
+        } catch (java.io.FileNotFoundException ex) {
             ex.printStackTrace();
             return AL10.AL_FALSE;
         }
-       
+
         WaveData waveFile = WaveData.create(bin);
-       
+
         AL10.alBufferData(buffer.get(0), waveFile.format, waveFile.data, waveFile.samplerate);
         waveFile.dispose();
-       
+
         // Bind the buffer with the source.
         AL10.alGenSources(source);
 
         if (AL10.alGetError() != AL10.AL_NO_ERROR) {
             return AL10.AL_FALSE;
         }
-      
+
         AL10.alSourcei(source.get(0), AL10.AL_BUFFER, buffer.get(0));
         AL10.alSourcef(source.get(0), AL10.AL_PITCH, 1.0f);
         AL10.alSourcef(source.get(0), AL10.AL_GAIN, 50.0f);
@@ -112,7 +108,7 @@ public class AudioStream {
         if (AL10.alGetError() == AL10.AL_NO_ERROR) {
             return AL10.AL_TRUE;
         }
-     
+
         return AL10.AL_FALSE;
     }
 
@@ -146,6 +142,7 @@ public class AudioStream {
 
     void pause() {
         AL10.alSourcePause(source.get(0));
+        
     }
 
     void stop() {
@@ -155,9 +152,9 @@ public class AudioStream {
 
     public void execute(File file) {
         // Initialize OpenAL and clear the error bit.
-        
+
         song = file;
-        
+
         try {
             AL.create();
         } catch (LWJGLException le) {
@@ -165,14 +162,14 @@ public class AudioStream {
             return;
         }
         AL10.alGetError();
-        
+
         // Load the wav data.
         if (loadALData() == AL10.AL_FALSE) {
             System.out.println("Error loading data.");
             return;
         }
 
-        setListenerValues();        
-        
+        setListenerValues();
+
     }
 }
