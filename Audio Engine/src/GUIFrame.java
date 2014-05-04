@@ -4,7 +4,9 @@
  * and open the template in the editor.
  */
 
+// https://sites.google.com/site/musicgapi/home - MUSICG jar
 import com.musicg.wave.Wave;
+import com.musicg.wave.WaveFileManager;
 import java.io.File;
 import javax.swing.JFileChooser;
 
@@ -78,6 +80,7 @@ public class GUIFrame extends javax.swing.JFrame {
         adsrButton = new javax.swing.JRadioButton();
         arReleaseTextField = new javax.swing.JTextField();
         testButton = new javax.swing.JButton();
+        test2Button = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         save = new javax.swing.JMenuItem();
@@ -463,6 +466,13 @@ public class GUIFrame extends javax.swing.JFrame {
             }
         });
 
+        test2Button.setText("Output Wave Test");
+        test2Button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                test2ButtonActionPerformed(evt);
+            }
+        });
+
         fileMenu.setText("File");
 
         save.setText("Save");
@@ -521,7 +531,10 @@ public class GUIFrame extends javax.swing.JFrame {
                     .addComponent(ButtonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(testButton)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(testButton)
+                        .addGap(18, 18, 18)
+                        .addComponent(test2Button))
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(205, Short.MAX_VALUE))
         );
@@ -534,7 +547,9 @@ public class GUIFrame extends javax.swing.JFrame {
                         .addComponent(ButtonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(60, 60, 60)
-                        .addComponent(testButton)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(testButton)
+                            .addComponent(test2Button))))
                 .addGap(43, 43, 43)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(grainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -787,25 +802,38 @@ public class GUIFrame extends javax.swing.JFrame {
             AS.killALData();
         }
 
-        File f = new File("C:\\Users\\Eric\\Documents\\Word Documents\\COSC\\4P98\\Project\\Audio Engine\\src\\FancyPants2.wav");
+        File f = new File("FancyPants.wav");
         AS.execute(f);
         songLoaded = true;
         playButton.setEnabled(true);
         pauseButton.setEnabled(true);
         stopButton.setEnabled(true);
 
-                
         //Wave wave = new Wave ("C:\\Users\\Eric\\Documents\\Word Documents\\COSC\\4P98\\Project\\Audio Engine\\src\\Cash4GoldShort.wav");
-        Wave wave = new Wave ("C:\\Users\\Eric\\Documents\\Word Documents\\COSC\\4P98\\Project\\Audio Engine\\src\\FancyPants2.wav");
-        short [] sm = wave.getSampleAmplitudes();
-        for(int i = 0; i < sm.length; i++){
+        Wave wave = new Wave("FancyPants.wav");
+        short[] sm = wave.getSampleAmplitudes();
+        for (int i = 0; i < sm.length; i++) {
             System.out.println(sm[i]);
         }
-        
-        
-        
-        
+
+
     }//GEN-LAST:event_testButtonActionPerformed
+
+    private void test2ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_test2ButtonActionPerformed
+        // TODO add your handling code here:
+        // Wave output
+        Wave wave = new Wave("FancyPants.wav");
+        
+        // trim the wav
+        wave.leftTrim(1);
+        wave.rightTrim(0.5F);
+
+        
+        // save the trimmed wav
+        WaveFileManager waveFileManager = new WaveFileManager(wave);
+        waveFileManager.saveWaveAsFile("out.wav");
+
+    }//GEN-LAST:event_test2ButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -899,6 +927,7 @@ public class GUIFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem saveAs;
     private javax.swing.JRadioButton sinButton;
     private javax.swing.JButton stopButton;
+    private javax.swing.JButton test2Button;
     private javax.swing.JButton testButton;
     // End of variables declaration//GEN-END:variables
 }
