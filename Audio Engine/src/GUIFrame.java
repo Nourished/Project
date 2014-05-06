@@ -815,7 +815,14 @@ public class GUIFrame extends javax.swing.JFrame {
         for (int i = 0; i < sm.length; i++) {
             System.out.println(sm[i]);
         }
-
+        Process p ;
+        try{
+            p = Runtime.getRuntime().exec("wav2txt " + f.getName() + " > test.txt");
+        p.waitFor();
+        
+        } catch (Exception e) {
+			e.printStackTrace();
+		} 
 
     }//GEN-LAST:event_testButtonActionPerformed
 
