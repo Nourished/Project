@@ -832,53 +832,116 @@ public class GUIFrame extends javax.swing.JFrame {
 
         SoundRecord audio = new SoundRecord();
         String fileName = "austin";
-       
 
         txtToAudio(fileName);
-        
+
         audioToTxt("FancyPants");
 
+        fileName = AS.getSongPath();
+
+        es.readFile(fileName, audio); // read file in
+
+        double[] envelope = new double[2 * audio.sampleRate];
+
+        envelope = es.sinEnvelope(audio, 1);
+        //envelope = hannEnvelope(audio, 2);
+        //envelope = hammEnvelope(audio,2);
+        //envelope = gaussianEnvelope( audio, 2, 0.3 );
+        // envelope =  adsrEnvelope ( audio, 2 , 0.01, 0.1, 0.4, 1.0);
+        int type = 0;
+        if (sinButton.isSelected()) {
+            type = 1;
+        } else if (hannButton.isSelected()) {
+            type = 2;
+        } else if (hammingButton.isSelected()) {
+            type = 3;
+        } else if (gaussianButton.isSelected()) {
+            type = 4;
+        } else if (arButton.isSelected()) {
+            type = 5;
+        } else if (adsrButton.isSelected()) {
+            type = 6;
+        } else if (breakpointButton.isSelected()) {
+            type = 7;
+        }
+
+        switch (type) {
+            case 0:
+                System.out.println("No envelope set");
+            case 1:
+
+                break;
+
+            case 2:
+
+                break;
+            case 3:
+
+                break;
+
+            case 4:
+
+                break;
+            case 5:
+
+                break;
+
+            case 6:
+
+                break;
+            case 7:
+
+                break;
+
+            case 8:
+
+                break;
+
+        }
+
+        for (int i = 0; i < envelope.length; i++) {
+            System.out.println(envelope[i]);
+
+        }
 
 
     }//GEN-LAST:event_applyEnvelopeButtonActionPerformed
 
     void audioToTxt(String fileName) {
 
-       
-
         String base = System.getProperty("user.dir") + "/src/music/";
-         String cmd
+        String cmd
                 = base + "wav2txt " + base + fileName + ".wav > " + base + fileName + ".txt";
         try {
             Runtime.getRuntime().exec(
-                    new String[] {"cmd.exe", "/c",  cmd});
+                    new String[]{"cmd.exe", "/c", cmd});
             System.out
                     .println("Txt file constructed: /src/music/" + fileName + ".txt");
 
         } catch (IOException ex) {
             System.out.println("FAILED: " + ex.getMessage());
-    
+
         }
     }//End of audioToTxt
-    
+
     void txtToAudio(String fileName) {
 
-     String base = System.getProperty("user.dir") + "/src/music/";
+        String base = System.getProperty("user.dir") + "/src/music/";
         String cmd
                 = base + "txt2wav " + base + fileName + ".wav < " + base + fileName + ".txt";
         try {
             Runtime.getRuntime().exec(
-                    new String[] {"cmd.exe", "/c",  cmd});
+                    new String[]{"cmd.exe", "/c", cmd});
             System.out
                     .println("Wav file constructed: /src/music/" + fileName + ".wav");
 
         } catch (IOException ex) {
             System.out.println("FAILED: " + ex.getMessage());
-    
-        }   
+
+        }
     }//End of txtToAudio
-    
-    
+
+
     private void resetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetButtonActionPerformed
         // TODO add your handling code here:
 
@@ -888,7 +951,7 @@ public class GUIFrame extends javax.swing.JFrame {
     private void testLoadButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_testLoadButtonActionPerformed
         // TODO add your handling code here:
         AS.killALData();
-        
+
         File f = new File("src/FancyPants.wav");
         AS.execute(f);
 
@@ -899,7 +962,7 @@ public class GUIFrame extends javax.swing.JFrame {
 
     private void txtWavButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtWavButtonActionPerformed
         // TODO add your handling code here:
-        
+
         es.audioToTxt(AS.getSongFileName(), AS.getSongPath());
     }//GEN-LAST:event_txtWavButtonActionPerformed
 
