@@ -17,26 +17,7 @@ import java.util.Scanner;
 public class Envelope {
 
     public Envelope() {
-        /*
-         SoundRecord audio = new SoundRecord();
-         String fileName = "austin.txt";
-
-         readFile(fileName, audio); // read file in
-
-         double[] envelope = new double[2 * audio.sampleRate];
-         */
-
-        //envelope = sinEnvelope(audio, 1);
-        //envelope = hannEnvelope(audio, 2);
-        //envelope = hammEnvelope(audio,2);
-        //envelope = gaussianEnvelope( audio, 2, 0.3 );
-        // envelope =  adsrEnvelope ( audio, 2 , 0.01, 0.1, 0.4, 1.0);
-        /*
-         for (int i = 0; i < envelope.length; i++) {
-         System.out.println(envelope[i]);
-
-         }
-         */
+        
     }
 
     /* double[] sinEnvelope(SoundRecord audio,int envelopeDuration)
@@ -155,26 +136,21 @@ public class Envelope {
 
     /* txtToAudio(String fileName)
      */
-    void txtToAudio(String fileName, String filePath) {
+    void txtToAudio(String fileName) {
 
-        String newFileName = fileName.substring(0, fileName.length() - 4);
-        String base = System.getProperty("user.dir") + "\\src\\";
-        System.out.println(base);
-        System.out.println(filePath);
-        System.out.println(fileName + " " + newFileName);
-        
+     String base = System.getProperty("user.dir") + "/src/music/";
         String cmd
-                = base + "txt2wav " + base + newFileName + ".wav < " + base + fileName;
+                = base + "txt2wav " + base + fileName + ".wav < " + base + fileName + ".txt";
         try {
             Runtime.getRuntime().exec(
-                    new String[]{"cmd.exe", "\\C:", cmd});
+                    new String[] {"cmd.exe", "/c",  cmd});
             System.out
-                    .println("Wav file constructed: \\src\\" + newFileName + ".wav");
+                    .println("Wav file constructed: /src/music/" + fileName + ".wav");
 
         } catch (IOException ex) {
             System.out.println("FAILED: " + ex.getMessage());
-
-        }
+    
+        }   
     }//End of txtToAudio
 
     /* readFile(String fileName, SoundRecord record)

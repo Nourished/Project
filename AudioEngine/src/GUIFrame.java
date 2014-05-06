@@ -6,6 +6,7 @@
 
 // https://sites.google.com/site/musicgapi/home - MUSICG jar
 import java.io.File;
+import java.io.IOException;
 import javax.swing.JFileChooser;
 
 /**
@@ -830,27 +831,54 @@ public class GUIFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
 
         SoundRecord audio = new SoundRecord();
-        String fileName = "austin.txt";
-        fileName = AS.getSongPath();
+        String fileName = "austin";
+       
 
-        es.readFile(fileName, audio); // read file in
+        txtToAudio(fileName);
+        
+        audioToTxt("FancyPants");
 
-        double[] envelope = new double[2 * audio.sampleRate];
-
-        envelope = es.sinEnvelope(audio, 1);
-        //envelope = hannEnvelope(audio, 2);
-        //envelope = hammEnvelope(audio,2);
-        //envelope = gaussianEnvelope( audio, 2, 0.3 );
-        // envelope =  adsrEnvelope ( audio, 2 , 0.01, 0.1, 0.4, 1.0);
-
-        for (int i = 0; i < envelope.length; i++) {
-            System.out.println(envelope[i]);
-
-        }
 
 
     }//GEN-LAST:event_applyEnvelopeButtonActionPerformed
 
+    void audioToTxt(String fileName) {
+
+       
+
+        String base = System.getProperty("user.dir") + "/src/music/";
+         String cmd
+                = base + "wav2txt " + base + fileName + ".wav > " + base + fileName + ".txt";
+        try {
+            Runtime.getRuntime().exec(
+                    new String[] {"cmd.exe", "/c",  cmd});
+            System.out
+                    .println("Txt file constructed: /src/music/" + fileName + ".txt");
+
+        } catch (IOException ex) {
+            System.out.println("FAILED: " + ex.getMessage());
+    
+        }
+    }//End of audioToTxt
+    
+    void txtToAudio(String fileName) {
+
+     String base = System.getProperty("user.dir") + "/src/music/";
+        String cmd
+                = base + "txt2wav " + base + fileName + ".wav < " + base + fileName + ".txt";
+        try {
+            Runtime.getRuntime().exec(
+                    new String[] {"cmd.exe", "/c",  cmd});
+            System.out
+                    .println("Wav file constructed: /src/music/" + fileName + ".wav");
+
+        } catch (IOException ex) {
+            System.out.println("FAILED: " + ex.getMessage());
+    
+        }   
+    }//End of txtToAudio
+    
+    
     private void resetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetButtonActionPerformed
         // TODO add your handling code here:
 
