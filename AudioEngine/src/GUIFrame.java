@@ -17,6 +17,7 @@ public class GUIFrame extends javax.swing.JFrame {
 
     AudioStream AS = new AudioStream();
     Envelope es = new Envelope();
+    File songFile, txtFile;
 
     /**
      * Creates new form GUIFrame
@@ -614,6 +615,7 @@ public class GUIFrame extends javax.swing.JFrame {
                 // What to do with the file, e.g. display it in a TextArea
                 // textarea.read( new FileReader( file.getAbsolutePath() ), null );
                 System.out.println("File: " + file.getAbsolutePath());
+                songFile=file;
                 AS.execute(file);
 
             } catch (Exception ex) {
@@ -626,6 +628,8 @@ public class GUIFrame extends javax.swing.JFrame {
         } else {
             System.out.println("File access cancelled by user.");
         }
+        
+        
 
     }//GEN-LAST:event_openActionPerformed
 
@@ -831,24 +835,37 @@ public class GUIFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
 
         SoundRecord audio = new SoundRecord();
+        
+        String base = System.getProperty("user.dir") + "/src/music/";
+        
         String fileName = "austin";
        
-
         txtToAudio(fileName);
         
         audioToTxt("FancyPants");
+        
+        double[] envelope = null;
+        
+        //es.readFile(base+"austin.txt", audio); //requires base to find file
+        
+        System.out.println( songFile.getName() );
+        
+        //for(int i = 0 ; i < audio.samples ; i++ ){
+         //   System.out.println(audio.channelOne[i]);
+       // }
 
 
 
     }//GEN-LAST:event_applyEnvelopeButtonActionPerformed
 
-    void audioToTxt(String fileName) {
-
-       
-
+    /* void audioToTxt(String fileName)
+    ------SONG MUST BE LOADED FIRST!
+    */
+    void audioToTxt(String fileName) {       
+        
         String base = System.getProperty("user.dir") + "/src/music/";
          String cmd
-                = base + "wav2txt " + base + fileName + ".wav > " + base + fileName + ".txt";
+                = base + "wav2txt " + songFile.getAbsolutePath() + " > " + base + fileName + ".txt";
         try {
             Runtime.getRuntime().exec(
                     new String[] {"cmd.exe", "/c",  cmd});
@@ -861,7 +878,10 @@ public class GUIFrame extends javax.swing.JFrame {
         }
     }//End of audioToTxt
     
-    void txtToAudio(String fileName) {
+    /* void txtToAudio(String fileName)
+    
+    */
+    void txtToAudio(String fileName) {       
 
      String base = System.getProperty("user.dir") + "/src/music/";
         String cmd
@@ -900,7 +920,7 @@ public class GUIFrame extends javax.swing.JFrame {
     private void txtWavButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtWavButtonActionPerformed
         // TODO add your handling code here:
         
-        es.audioToTxt(AS.getSongFileName(), AS.getSongPath());
+       //es.audioToTxt(AS.getSongFileName(), AS.getSongPath());
     }//GEN-LAST:event_txtWavButtonActionPerformed
 
     /**

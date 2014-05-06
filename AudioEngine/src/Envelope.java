@@ -106,52 +106,7 @@ public class Envelope {
 
     }//End of adsrEnvelope
 
-    /* audioToText(string fileName)    
-        Pass in a string which is the path of the 
-     */
-    void audioToTxt(String fileName, String filePath) {
-
-        String newFileName = fileName.substring(0, fileName.length() - 4);
-
-        String base = System.getProperty("user.dir") + "\\src\\";
-        //System.out.println(base);
-        
-        filePath = filePath.substring(0, filePath.length()- fileName.length());
-        System.out.println(filePath);
-        System.out.println(fileName + " " + newFileName);
-        
-        String cmd
-                = "wav2txt " + fileName + " > " + newFileName + ".txt";
-        try {
-            Runtime.getRuntime().exec(
-                    new String[]{"cmd.exe", "cd " + filePath, cmd});
-            System.out
-                    .println("Txt file constructed: \\src\\" + newFileName + ".txt");
-
-        } catch (IOException ex) {
-            System.out.println("FAILED: " + ex.getMessage());
-
-        }
-    }//End of audioToTxt
-
-    /* txtToAudio(String fileName)
-     */
-    void txtToAudio(String fileName) {
-
-     String base = System.getProperty("user.dir") + "/src/music/";
-        String cmd
-                = base + "txt2wav " + base + fileName + ".wav < " + base + fileName + ".txt";
-        try {
-            Runtime.getRuntime().exec(
-                    new String[] {"cmd.exe", "/c",  cmd});
-            System.out
-                    .println("Wav file constructed: /src/music/" + fileName + ".wav");
-
-        } catch (IOException ex) {
-            System.out.println("FAILED: " + ex.getMessage());
-    
-        }   
-    }//End of txtToAudio
+   
 
     /* readFile(String fileName, SoundRecord record)
      */
