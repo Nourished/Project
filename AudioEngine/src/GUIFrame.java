@@ -839,12 +839,8 @@ public class GUIFrame extends javax.swing.JFrame {
         String base = System.getProperty("user.dir") + "/src/music/";
         
         String fileName = "austin";
-<<<<<<< HEAD
-       
-=======
 
->>>>>>> 19c77b55413f182df6216be5796316580fee8419
-        txtToAudio(fileName);
+        //txtToAudio(fileName);
 
         audioToTxt("FancyPants");
         
@@ -862,7 +858,7 @@ public class GUIFrame extends javax.swing.JFrame {
 
         es.readFile(fileName, audio); // read file in
 
-        double[] envelope = new double[2 * audio.sampleRate];
+      //  double[] envelope = new double[2 * audio.sampleRate];
 
         envelope = es.sinEnvelope(audio, 1);
         //envelope = hannEnvelope(audio, 2);
@@ -928,22 +924,17 @@ public class GUIFrame extends javax.swing.JFrame {
 
     }//GEN-LAST:event_applyEnvelopeButtonActionPerformed
 
-<<<<<<< HEAD
+
     /* void audioToTxt(String fileName)
     ------SONG MUST BE LOADED FIRST!
     */
-    void audioToTxt(String fileName) {       
-        
-        String base = System.getProperty("user.dir") + "/src/music/";
-         String cmd
-                = base + "wav2txt " + songFile.getAbsolutePath() + " > " + base + fileName + ".txt";
-=======
+  
     void audioToTxt(String fileName) {
 
         String base = System.getProperty("user.dir") + "/src/music/";
         String cmd
                 = base + "wav2txt " + base + fileName + ".wav > " + base + fileName + ".txt";
->>>>>>> 19c77b55413f182df6216be5796316580fee8419
+
         try {
             Runtime.getRuntime().exec(
                     new String[]{"cmd.exe", "/c", cmd});
@@ -954,18 +945,13 @@ public class GUIFrame extends javax.swing.JFrame {
             System.out.println("FAILED: " + ex.getMessage());
 
         }
-    }//End of audioToTxt
-<<<<<<< HEAD
-    
+
+    }
     /* void txtToAudio(String fileName)
     
-    */
-    void txtToAudio(String fileName) {       
-=======
-
-    void txtToAudio(String fileName) {
->>>>>>> 19c77b55413f182df6216be5796316580fee8419
-
+*/
+     void txtToAudio(String fileName) {        
+    
         String base = System.getProperty("user.dir") + "/src/music/";
         String cmd
                 = base + "txt2wav " + base + fileName + ".wav < " + base + fileName + ".txt";
@@ -1002,13 +988,13 @@ public class GUIFrame extends javax.swing.JFrame {
 
     private void txtWavButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtWavButtonActionPerformed
         // TODO add your handling code here:
-<<<<<<< HEAD
+
         
        //es.audioToTxt(AS.getSongFileName(), AS.getSongPath());
-=======
 
-        es.audioToTxt(AS.getSongFileName(), AS.getSongPath());
->>>>>>> 19c77b55413f182df6216be5796316580fee8419
+
+        //es.audioToTxt(AS.getSongFileName(), AS.getSongPath());
+
     }//GEN-LAST:event_txtWavButtonActionPerformed
 
     /**
