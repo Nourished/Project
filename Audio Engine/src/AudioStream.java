@@ -23,7 +23,7 @@ import org.lwjgl.util.WaveData;
 public class AudioStream {
 
     File song;
-
+    boolean songLoaded = false;
     /**
      * Buffers hold sound data.
      */
@@ -67,7 +67,7 @@ public class AudioStream {
      * utility and send the data into OpenAL as a buffer. A source is then also
      * created to play that buffer.
      */
-    int loadALData() {
+    public int loadALData() {
         // Load wav data into a buffer.
         AL10.alGenBuffers(buffer);
 
@@ -118,7 +118,7 @@ public class AudioStream {
      * We already defined certain values for the Listener, but we need to tell
      * OpenAL to use that data. This function does just that.
      */
-    void setListenerValues() {
+    public void setListenerValues() {
         AL10.alListener(AL10.AL_POSITION, listenerPos);
         AL10.alListener(AL10.AL_VELOCITY, listenerVel);
         AL10.alListener(AL10.AL_ORIENTATION, listenerOri);
@@ -130,24 +130,48 @@ public class AudioStream {
      * We have allocated memory for our buffers and sources which needs to be
      * returned to the system. This function frees that memory.
      */
-    void killALData() {
-        AL10.alDeleteSources(source);
-        AL10.alDeleteBuffers(buffer);
-        AL.destroy();
+    public void killALData() {
+        if(songLoaded){
+            songLoaded = false;
+            AL10.alDeleteSources(source);
+            AL10.alDeleteBuffers(buffer);
+            AL.destroy();
+        }
     }
 
-    void play() {
+    public void play() {
         AL10.alSourcePlay(source.get(0));
     }
 
-    void pause() {
+    public void pause() {
         AL10.alSourcePause(source.get(0));
         
     }
 
-    void stop() {
+    public void stop() {
         AL10.alSourceStop(source.get(0));
 
+    }
+    
+    public File getSongFile(){
+        if(songLoaded)
+            return song;
+        else
+            return null;
+    }
+    
+    public String getSongFileName(){
+        if(songLoaded)
+            return song.getName();
+        else
+            return "";
+    }
+    
+    public String getSongPath(){
+        if(songLoaded)
+            return song.getAbsolutePath();
+        else
+            return "";
     }
 
     public void execute(File file) {
@@ -166,10 +190,21 @@ public class AudioStream {
         // Load the wav data.
         if (loadALData() == AL10.AL_FALSE) {
             System.out.println("Error loading data.");
+            songLoaded = false;
+            song = null;
             return;
         }
 
         setListenerValues();
+        songLoaded = true;
 
+    }
+    
+    public void updateStatus(boolean b){
+        songLoaded = b;
+    }
+    
+    public boolean status(){
+        return songLoaded;
     }
 }

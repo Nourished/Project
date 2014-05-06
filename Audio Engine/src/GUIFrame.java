@@ -5,8 +5,6 @@
  */
 
 // https://sites.google.com/site/musicgapi/home - MUSICG jar
-import com.musicg.wave.Wave;
-import com.musicg.wave.WaveFileManager;
 import java.io.File;
 import javax.swing.JFileChooser;
 
@@ -17,7 +15,7 @@ import javax.swing.JFileChooser;
 public class GUIFrame extends javax.swing.JFrame {
 
     AudioStream AS = new AudioStream();
-    boolean songLoaded = false;
+    Envelope es = new Envelope();
 
     /**
      * Creates new form GUIFrame
@@ -79,8 +77,10 @@ public class GUIFrame extends javax.swing.JFrame {
         bpAttackTextField = new javax.swing.JTextField();
         adsrButton = new javax.swing.JRadioButton();
         arReleaseTextField = new javax.swing.JTextField();
-        testButton = new javax.swing.JButton();
-        test2Button = new javax.swing.JButton();
+        applyEnvelopeButton = new javax.swing.JButton();
+        resetButton = new javax.swing.JButton();
+        testLoadButton = new javax.swing.JButton();
+        txtWavButton = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         save = new javax.swing.JMenuItem();
@@ -386,6 +386,13 @@ public class GUIFrame extends javax.swing.JFrame {
         arReleaseTextField.setText("0");
         arReleaseTextField.setEnabled(false);
 
+        applyEnvelopeButton.setText("Apply Envelope");
+        applyEnvelopeButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                applyEnvelopeButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -402,23 +409,26 @@ public class GUIFrame extends javax.swing.JFrame {
                     .addComponent(adsrButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(breakpointButton, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(bpAttackTextField)
-                    .addComponent(arAttackTextField, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(adsrAttackTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(bpDecayTextField)
-                    .addComponent(adsrDecayTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
-                    .addComponent(arReleaseTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(bpSustainTextField)
-                    .addComponent(adsrSustainTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 27, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(adsrReleaseTextField)
-                    .addComponent(bpReleaseTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(bpAttackTextField)
+                            .addComponent(arAttackTextField, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(adsrAttackTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(bpDecayTextField)
+                            .addComponent(adsrDecayTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+                            .addComponent(arReleaseTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(bpSustainTextField)
+                            .addComponent(adsrSustainTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 27, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(adsrReleaseTextField)
+                            .addComponent(bpReleaseTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(applyEnvelopeButton))
                 .addContainerGap())
         );
 
@@ -429,10 +439,15 @@ public class GUIFrame extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(envelopeLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(sinButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(hannButton)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(sinButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(hannButton))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(17, 17, 17)
+                        .addComponent(applyEnvelopeButton)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(hammingButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -459,17 +474,24 @@ public class GUIFrame extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        testButton.setText("TEST SHIT");
-        testButton.addActionListener(new java.awt.event.ActionListener() {
+        resetButton.setText("Reset to loaded Song");
+        resetButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                testButtonActionPerformed(evt);
+                resetButtonActionPerformed(evt);
             }
         });
 
-        test2Button.setText("Output Wave Test");
-        test2Button.addActionListener(new java.awt.event.ActionListener() {
+        testLoadButton.setText("Load Song");
+        testLoadButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                test2ButtonActionPerformed(evt);
+                testLoadButtonActionPerformed(evt);
+            }
+        });
+
+        txtWavButton.setText("Test txt2wav");
+        txtWavButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtWavButtonActionPerformed(evt);
             }
         });
 
@@ -527,16 +549,23 @@ public class GUIFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(grainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(ButtonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(testButton)
-                        .addGap(18, 18, 18)
-                        .addComponent(test2Button))
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(205, Short.MAX_VALUE))
+                        .addComponent(grainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(205, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(ButtonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(resetButton)
+                                .addGap(107, 107, 107)
+                                .addComponent(testLoadButton))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(txtWavButton)
+                                .addGap(119, 119, 119))))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -546,10 +575,13 @@ public class GUIFrame extends javax.swing.JFrame {
                         .addGap(11, 11, 11)
                         .addComponent(ButtonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(60, 60, 60)
+                        .addGap(22, 22, 22)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(testButton)
-                            .addComponent(test2Button))))
+                            .addComponent(resetButton)
+                            .addComponent(testLoadButton)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(txtWavButton)))
                 .addGap(43, 43, 43)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(grainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -571,7 +603,7 @@ public class GUIFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_saveAsActionPerformed
 
     private void openActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openActionPerformed
-        if (songLoaded) {
+        if (AS.status()) {
             AS.killALData();
         }
         int returnVal = fileChooser.showOpenDialog(this);
@@ -587,7 +619,6 @@ public class GUIFrame extends javax.swing.JFrame {
                 System.out.println("problem accessing file " + file.getAbsolutePath());
             }
 
-            songLoaded = true;
             playButton.setEnabled(true);
             pauseButton.setEnabled(true);
             stopButton.setEnabled(true);
@@ -599,10 +630,9 @@ public class GUIFrame extends javax.swing.JFrame {
 
     private void quitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quitActionPerformed
         // TODO add your handling code here:
-        // Kill the song buffer if something is loaded
-        if (songLoaded) {
-            AS.killALData();
-        }
+        // Kill the song buffer if something is loaded        
+        AS.killALData();
+
         System.exit(0);
     }//GEN-LAST:event_quitActionPerformed
 
@@ -768,7 +798,7 @@ public class GUIFrame extends javax.swing.JFrame {
 
     private void playButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playButtonActionPerformed
         // Play if a song is loaded
-        if (songLoaded) {
+        if (AS.status()) {
             AS.play();
         }
 
@@ -776,14 +806,14 @@ public class GUIFrame extends javax.swing.JFrame {
 
     private void pauseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pauseButtonActionPerformed
         // Pause if a song is loaded
-        if (songLoaded) {
+        if (AS.status()) {
             AS.pause();
         }
     }//GEN-LAST:event_pauseButtonActionPerformed
 
     private void stopButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stopButtonActionPerformed
         // Stop if a song is loaded
-        if (songLoaded) {
+        if (AS.status()) {
             AS.stop();
         }
     }//GEN-LAST:event_stopButtonActionPerformed
@@ -791,56 +821,59 @@ public class GUIFrame extends javax.swing.JFrame {
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // TODO add your handling code here:
         // Close song buffer if a song is loaded
-        if (songLoaded) {
+        if (AS.status()) {
             AS.killALData();
         }
     }//GEN-LAST:event_formWindowClosing
 
-    private void testButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_testButtonActionPerformed
+    private void applyEnvelopeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_applyEnvelopeButtonActionPerformed
         // TODO add your handling code here:
-        if (songLoaded) {
-            AS.killALData();
+
+        SoundRecord audio = new SoundRecord();
+        String fileName = "austin.txt";
+        fileName = AS.getSongPath();
+
+        es.readFile(fileName, audio); // read file in
+
+        double[] envelope = new double[2 * audio.sampleRate];
+
+        envelope = es.sinEnvelope(audio, 1);
+        //envelope = hannEnvelope(audio, 2);
+        //envelope = hammEnvelope(audio,2);
+        //envelope = gaussianEnvelope( audio, 2, 0.3 );
+        // envelope =  adsrEnvelope ( audio, 2 , 0.01, 0.1, 0.4, 1.0);
+
+        for (int i = 0; i < envelope.length; i++) {
+            System.out.println(envelope[i]);
+
         }
 
-        File f = new File("FancyPants.wav");
+
+    }//GEN-LAST:event_applyEnvelopeButtonActionPerformed
+
+    private void resetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetButtonActionPerformed
+        // TODO add your handling code here:
+
+
+    }//GEN-LAST:event_resetButtonActionPerformed
+
+    private void testLoadButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_testLoadButtonActionPerformed
+        // TODO add your handling code here:
+        AS.killALData();
+        
+        File f = new File("src/FancyPants.wav");
         AS.execute(f);
-        songLoaded = true;
+
         playButton.setEnabled(true);
         pauseButton.setEnabled(true);
         stopButton.setEnabled(true);
+    }//GEN-LAST:event_testLoadButtonActionPerformed
 
-        //Wave wave = new Wave ("C:\\Users\\Eric\\Documents\\Word Documents\\COSC\\4P98\\Project\\Audio Engine\\src\\Cash4GoldShort.wav");
-        Wave wave = new Wave("FancyPants.wav");
-        short[] sm = wave.getSampleAmplitudes();
-        for (int i = 0; i < sm.length; i++) {
-            System.out.println(sm[i]);
-        }
-        Process p ;
-        try{
-            p = Runtime.getRuntime().exec("wav2txt " + f.getName() + " > test.txt");
-        p.waitFor();
-        
-        } catch (Exception e) {
-			e.printStackTrace();
-		} 
-
-    }//GEN-LAST:event_testButtonActionPerformed
-
-    private void test2ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_test2ButtonActionPerformed
+    private void txtWavButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtWavButtonActionPerformed
         // TODO add your handling code here:
-        // Wave output
-        Wave wave = new Wave("FancyPants.wav");
         
-        // trim the wav
-        wave.leftTrim(1);
-        wave.rightTrim(0.5F);
-
-        
-        // save the trimmed wav
-        WaveFileManager waveFileManager = new WaveFileManager(wave);
-        waveFileManager.saveWaveAsFile("out.wav");
-
-    }//GEN-LAST:event_test2ButtonActionPerformed
+        es.audioToTxt(AS.getSongFileName(), AS.getSongPath());
+    }//GEN-LAST:event_txtWavButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -891,6 +924,7 @@ public class GUIFrame extends javax.swing.JFrame {
     private javax.swing.JLabel amplitudeLabel;
     private javax.swing.JTextField amplitudeSetting;
     private javax.swing.JSlider amplitudeSlider;
+    private javax.swing.JButton applyEnvelopeButton;
     private javax.swing.JTextField arAttackTextField;
     private javax.swing.JRadioButton arButton;
     private javax.swing.JTextField arReleaseTextField;
@@ -930,11 +964,12 @@ public class GUIFrame extends javax.swing.JFrame {
     private javax.swing.JButton playButton;
     private javax.swing.JProgressBar progressBar;
     private javax.swing.JMenuItem quit;
+    private javax.swing.JButton resetButton;
     private javax.swing.JMenuItem save;
     private javax.swing.JMenuItem saveAs;
     private javax.swing.JRadioButton sinButton;
     private javax.swing.JButton stopButton;
-    private javax.swing.JButton test2Button;
-    private javax.swing.JButton testButton;
+    private javax.swing.JButton testLoadButton;
+    private javax.swing.JButton txtWavButton;
     // End of variables declaration//GEN-END:variables
 }
