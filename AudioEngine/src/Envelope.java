@@ -110,9 +110,13 @@ public class Envelope {
 
     /* readFile(String fileName, SoundRecord record)
      */
-    void readFile(String fileName, SoundRecord record) {
+    void readFile(File txtFile, SoundRecord record) {
+        
+         String base = System.getProperty("user.dir") + "/src/music/";
 
-        File file = new File(fileName);
+        File file = new File( base + txtFile.getName() );
+        
+        System.out.println(file.getAbsoluteFile() );
 
         try {
             Scanner lineReader = new Scanner(file);
@@ -149,8 +153,9 @@ public class Envelope {
             lineReader.close();
 
         } catch (Exception e) {
-            System.out.println("Error reading file " + fileName);
+            System.out.println("Error reading file " + file.getName() );
         }
+        
 
     }//End of readFile
 

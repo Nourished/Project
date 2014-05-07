@@ -27,8 +27,19 @@ public class SoundRecord {
      this.channels = 0;
      this.sampleRate = 0;
      normalized = false;
-     short[] channelOne = null;
-     short[] channelTwo = null;
+    // short[] channelOne = null;
+    // short[] channelTwo = null;
 }
+       
+    public void populate(int length){
+        this.channelOne = new short[length];        
+    }
+    
+    public void copy( short[] dataFrom){
+        for(int i = 0 ; i < dataFrom.length ; i++){
+            this.channelOne[i] = dataFrom[i];
+        }
+        
+    }
     
 }

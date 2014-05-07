@@ -7,7 +7,9 @@
 // https://sites.google.com/site/musicgapi/home - MUSICG jar
 import java.io.File;
 import java.io.IOException;
+import java.util.Scanner;
 import javax.swing.JFileChooser;
+
 
 /**
  *
@@ -17,7 +19,9 @@ public class GUIFrame extends javax.swing.JFrame {
 
     AudioStream AS = new AudioStream();
     Envelope es = new Envelope();
-    File songFile, txtFile;
+    File tempSongFile, tempTxtFile;
+    double[] envelope = null;
+    SoundRecord audioData = new SoundRecord();
 
     /**
      * Creates new form GUIFrame
@@ -614,22 +618,26 @@ public class GUIFrame extends javax.swing.JFrame {
             try {
                 // What to do with the file, e.g. display it in a TextArea
                 // textarea.read( new FileReader( file.getAbsolutePath() ), null );
-                System.out.println("File: " + file.getAbsolutePath());
-                songFile=file;
-                AS.execute(file);
+            //    System.out.println("File: " + file.getAbsolutePath());
+                tempSongFile=file;
+                AS.execute(tempSongFile);
 
             } catch (Exception ex) {
                 System.out.println("problem accessing file " + file.getAbsolutePath());
             }
+            
+            tempTxtFile = audioToTxt(tempSongFile);
+            readFile(tempTxtFile, audioData);   
 
             playButton.setEnabled(true);
             pauseButton.setEnabled(true);
             stopButton.setEnabled(true);
+            
+            
         } else {
             System.out.println("File access cancelled by user.");
         }
-        
-        
+           
 
     }//GEN-LAST:event_openActionPerformed
 
@@ -806,7 +814,6 @@ public class GUIFrame extends javax.swing.JFrame {
         if (AS.status()) {
             AS.play();
         }
-
     }//GEN-LAST:event_playButtonActionPerformed
 
     private void pauseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pauseButtonActionPerformed
@@ -842,13 +849,13 @@ public class GUIFrame extends javax.swing.JFrame {
 
         //txtToAudio(fileName);
 
-        audioToTxt("FancyPants");
+       // audioToTxt("FancyPants");
         
         double[] envelope = null;
         
         //es.readFile(base+"austin.txt", audio); //requires base to find file
         
-        System.out.println( songFile.getName() );
+        System.out.println( tempSongFile.getName() );
         
         //for(int i = 0 ; i < audio.samples ; i++ ){
          //   System.out.println(audio.channelOne[i]);
@@ -856,7 +863,7 @@ public class GUIFrame extends javax.swing.JFrame {
 
         fileName = AS.getSongPath();
 
-        es.readFile(fileName, audio); // read file in
+      //  es.readFile(fileName, audio); // read file in
 
       //  double[] envelope = new double[2 * audio.sampleRate];
 
@@ -927,29 +934,39 @@ public class GUIFrame extends javax.swing.JFrame {
 
     /* void audioToTxt(String fileName)
     ------SONG MUST BE LOADED FIRST!
-    */
-  
-    void audioToTxt(String fileName) {
-
+    */  
+    File  audioToTxt(File file) {
+        
+        //File txtFile;
+        String fileName = file.getName();
+        System.out.println(fileName);
+        fileName = fileName.substring(0, fileName.lastIndexOf("."));
+        System.out.println(fileName);
+        
+        
         String base = System.getProperty("user.dir") + "/src/music/";
         String cmd
-                = base + "wav2txt " + base + fileName + ".wav > " + base + fileName + ".txt";
+                = base + "wav2txt " + file.getAbsolutePath() + " > " + base + fileName + ".txt";
 
         try {
-            Runtime.getRuntime().exec(
+         Process p =   Runtime.getRuntime().exec(
                     new String[]{"cmd.exe", "/c", cmd});
             System.out
                     .println("Txt file constructed: /src/music/" + fileName + ".txt");
-
-        } catch (IOException ex) {
+            p.waitFor();
+        } catch (Exception ex) {
             System.out.println("FAILED: " + ex.getMessage());
 
         }
-
-    }
-    /* void txtToAudio(String fileName)
+        
+        File txtFile = new File(base + fileName+".txt");
+        //txtFile = fileName+".txt";
+        return txtFile;
+        
+    }//End of audioToTxt
     
-*/
+    /* void txtToAudio(String fileName)    
+    */
      void txtToAudio(String fileName) {        
     
         String base = System.getProperty("user.dir") + "/src/music/";
@@ -966,12 +983,53 @@ public class GUIFrame extends javax.swing.JFrame {
 
         }
     }//End of txtToAudio
+     
+     
+ 
+     /* readFile(String fileName, SoundRecord record)
+     */
+    void readFile(File txtFile, SoundRecord record) {        
+        
+         
+        try {
+         Scanner scanner = new Scanner(new File(txtFile.getAbsolutePath() ));
+         int count = 0;
+         scanner.next();
+         record.samples = scanner.nextInt();
+         short[]  data = new short[record.samples];
+         record.channelOne = new short[record.samples];
+          scanner.next();
+            record.bitsPreSample = scanner.nextInt();
+            scanner.next();
+            record.channels = scanner.nextInt();
+            scanner.next();
+            record.sampleRate = scanner.nextInt();
+            scanner.next();
+            record.normalized = false;         
+            scanner.next();
+            
+                 
+         while (scanner.hasNextShort()) {            
+             
+            short line = scanner.nextShort();
+           //  data[count] = line;
+            record.channelOne[count] = line;
+             //System.out.printf("%3d: %s %n", count, line );
+             System.out.printf("%s %n", record.channelOne[count] );
+             //System.out.printf("%s %n", data[count]);
+            count++;
+         }
+         
+         scanner.close();
+      
+        } catch (Exception e) {System.out.println("ERROR");}
+      
+       
+    }//End of readFile
 
 
     private void resetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetButtonActionPerformed
         // TODO add your handling code here:
-
-
     }//GEN-LAST:event_resetButtonActionPerformed
 
     private void testLoadButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_testLoadButtonActionPerformed
