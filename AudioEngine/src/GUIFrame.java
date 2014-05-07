@@ -5,7 +5,9 @@
  */
 
 // https://sites.google.com/site/musicgapi/home - MUSICG jar
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 import javax.swing.JFileChooser;
@@ -627,15 +629,28 @@ public class GUIFrame extends javax.swing.JFrame {
             }
 
             tempTxtFile = audioToTxt(tempSongFile);
+
+            readFile(tempTxtFile, audioData); 
+            
+            
+            
+          //  outputTxtFile("new.txt",audioData);
+
             readFile(tempTxtFile, audioData);
+
 
             playButton.setEnabled(true);
             pauseButton.setEnabled(true);
             stopButton.setEnabled(true);
 
+            
+          //  txtToAudio(tempTxtFile);
+            
+
         } else {
             System.out.println("File access cancelled by user.");
         }
+
 
 
     }//GEN-LAST:event_openActionPerformed
@@ -1033,7 +1048,48 @@ public class GUIFrame extends javax.swing.JFrame {
 
     }//End of readFile
 
+     /* outputFile(String fileName, SoundRecord record)     
+     */
+    void outputTxtFile(String fileName, SoundRecord record) {
+        
+        String base = System.getProperty("user.dir") + "/src/music/";
 
+        try {
+            BufferedWriter out = new BufferedWriter(new FileWriter(base+fileName));
+            out.write("SAMPLES: \t" + record.channelOne.length);
+            out.newLine();
+            out.write("BITSPERSAMPLE: \t" + record.bitsPreSample);
+            out.newLine();
+            out.write("CHANNELS: \t" + record.channels);
+            out.newLine();
+            out.write("SAMPLERATE: \t" + record.sampleRate);
+            out.newLine();
+            out.write("NORMALIZED: \t" + "FALSE");
+            out.newLine();
+
+            if (record.channels == 1) {
+                for (int i = 0; i < record.channelOne.length; i++) {
+                    out.write(record.channelOne[i] + "\n");
+                    out.newLine();
+                }
+            } else {
+                for (int i = 0; i < record.channelOne.length; i++) {
+                    
+                    int line1 = record.channelOne[i];
+                    int line2 =  record.channelTwo[i];
+                    System.out.print(line1 + " ");
+                    System.out.println(line2 + "\n");
+                    //out.newLine();
+                }
+            }
+
+            out.close();
+        } catch (Exception e) {
+            System.out.println("Error outputing the file " + fileName);
+        }
+
+    } //End of outPutFile
+    
     private void resetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetButtonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_resetButtonActionPerformed
