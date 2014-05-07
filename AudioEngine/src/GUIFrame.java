@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.util.Scanner;
 import javax.swing.JFileChooser;
 
-
 /**
  *
  * @author Eric
@@ -601,8 +600,8 @@ public class GUIFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveActionPerformed
-        JFileChooser fileChooser =  new JFileChooser();
-        if(fileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION  ){
+        JFileChooser fileChooser = new JFileChooser();
+        if (fileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
             File file = fileChooser.getSelectedFile();
         }
     }//GEN-LAST:event_saveActionPerformed
@@ -619,26 +618,25 @@ public class GUIFrame extends javax.swing.JFrame {
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             File file = fileChooser.getSelectedFile();
             try {
-                
-                tempSongFile=file;
+
+                tempSongFile = file;
                 AS.execute(tempSongFile);
 
             } catch (Exception ex) {
                 System.out.println("Problem accessing file " + file.getAbsolutePath());
             }
-            
+
             tempTxtFile = audioToTxt(tempSongFile);
-            readFile(tempTxtFile, audioData);   
+            readFile(tempTxtFile, audioData);
 
             playButton.setEnabled(true);
             pauseButton.setEnabled(true);
             stopButton.setEnabled(true);
-            
-            
+
         } else {
             System.out.println("File access cancelled by user.");
         }
-           
+
 
     }//GEN-LAST:event_openActionPerformed
 
@@ -843,36 +841,20 @@ public class GUIFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
 
         SoundRecord audio = new SoundRecord();
-        
-        String base = System.getProperty("user.dir") + "/src/music/";
-        
-        String fileName = "austin";
 
-        //txtToAudio(fileName);
-
-       // audioToTxt("FancyPants");
-        
         double[] envelope = null;
-        
-        //es.readFile(base+"austin.txt", audio); //requires base to find file
-        
-        System.out.println( tempSongFile.getName() );
-        
-        //for(int i = 0 ; i < audio.samples ; i++ ){
-         //   System.out.println(audio.channelOne[i]);
-       // }
 
-        fileName = AS.getSongPath();
+        System.out.println(tempSongFile.getName());
+        String fileName = AS.getSongFileName();
+        //for(int i = 0 ; i < audio.samples ; i++ ){
+        //   System.out.println(audio.channelOne[i]);
+        // }
+        
 
       //  es.readFile(fileName, audio); // read file in
-
       //  double[] envelope = new double[2 * audio.sampleRate];
-
-        envelope = es.sinEnvelope(audio, 1);
-        //envelope = hannEnvelope(audio, 2);
-        //envelope = hammEnvelope(audio,2);
-        //envelope = gaussianEnvelope( audio, 2, 0.3 );
-        // envelope =  adsrEnvelope ( audio, 2 , 0.01, 0.1, 0.4, 1.0);
+        //
+        //
         int type = 0;
         if (sinButton.isSelected()) {
             type = 1;
@@ -891,30 +873,31 @@ public class GUIFrame extends javax.swing.JFrame {
         }
 
         switch (type) {
-            case 0:
+            case 0: // none
                 System.out.println("No envelope set");
-            case 1:
+            case 1: // Sin
+                envelope = es.sinEnvelope(audio, 1);
+                break;
+
+            case 2: // Hann
+                envelope = es.hannEnvelope(audio, 2);
+                break;
+            case 3: // Hamming
+                envelope = es.hammEnvelope(audio, 2);
+                break;
+
+            case 4: // Gaussian
+                envelope = es.gaussianEnvelope(audio, 2, 0.3);
+                
+                break;
+            case 5: // AR
 
                 break;
 
-            case 2:
-
+            case 6: // ADSR
+                envelope = es.adsrEnvelope(audio, 2, 0.01, 0.1, 0.4, 1.0);
                 break;
-            case 3:
-
-                break;
-
-            case 4:
-
-                break;
-            case 5:
-
-                break;
-
-            case 6:
-
-                break;
-            case 7:
+            case 7: // Breakpoint
 
                 break;
 
@@ -923,6 +906,8 @@ public class GUIFrame extends javax.swing.JFrame {
                 break;
 
         }
+        
+        // Apply the envelope values to a text file and then create the wav file
 
         for (int i = 0; i < envelope.length; i++) {
             System.out.println(envelope[i]);
@@ -934,23 +919,28 @@ public class GUIFrame extends javax.swing.JFrame {
 
 
     /* void audioToTxt(String fileName)
-    ------SONG MUST BE LOADED FIRST!
-    */  
-    File  audioToTxt(File file) {
-        
+     ------SONG MUST BE LOADED FIRST!
+     */
+    File audioToTxt(File file) {
+
         //File txtFile;
         String fileName = file.getName();
-      
+
         fileName = fileName.substring(0, fileName.lastIndexOf("."));
-    
-        
-        
-        String base = System.getProperty("user.dir") + "/src/music/";
-        String cmd
-                = base + "wav2txt " + file.getAbsolutePath() + " > " + base + fileName + ".txt";
+
+        String base = System.getProperty("user.dir") + "\\src\\music\\";
+        /* No quotations for spaces
+         String cmd  = base + "wav2txt " + file.getAbsolutePath() + " > "
+         + base + fileName + ".txt";
+         */
+
+        String cmd = "\"\"" + base + "wav2txt\" " + "\""
+                + file.getAbsolutePath() + "\"" + " > " + "\""
+                + base + fileName + ".txt" + "\"\"";
+        System.out.println(cmd);
 
         try {
-         Process p =   Runtime.getRuntime().exec(
+            Process p = Runtime.getRuntime().exec(
                     new String[]{"cmd.exe", "/c", cmd});
             System.out
                     .println("Txt file constructed: /src/music/" + fileName + ".txt");
@@ -959,87 +949,88 @@ public class GUIFrame extends javax.swing.JFrame {
             System.out.println("FAILED: " + ex.getMessage());
 
         }
-        
-        File txtFile = new File(base + fileName+".txt");
-      
+
+        File txtFile = new File(base + fileName + ".txt");
+
         return txtFile;
-        
+
     }//End of audioToTxt
-    
+
     /* void txtToAudio(String fileName)    
-    */
-     void txtToAudio(String fileName) {        
-    
-        String base = System.getProperty("user.dir") + "/src/music/";
-        String cmd
-                = base + "txt2wav " + base + fileName + ".wav < " + base + fileName + ".txt";
+     */
+    void txtToAudio(String fileName) {
+
+        fileName = fileName.substring(0, fileName.lastIndexOf("."));
+        String base = System.getProperty("user.dir") + "\\src\\music\\";
+
+        String cmd = "\"\"" + base + "txt2wav\" " + "\"" + base + fileName
+                + ".wav\" < " + "\"" + base + fileName + ".txt\"\"";
+
+        System.out.println(cmd);
         try {
             Process p = Runtime.getRuntime().exec(
                     new String[]{"cmd.exe", "/c", cmd});
-            System.out
-                    .println("Wav file constructed: /src/music/" + fileName + ".wav");
+            System.out.println("Wav file constructed: \\src\\music\\" + fileName + ".wav");
             p.waitFor();
         } catch (Exception ex) {
             System.out.println("FAILED: " + ex.getMessage());
 
         }
     }//End of txtToAudio
-     
-     
- 
-     /* readFile(String fileName, SoundRecord record)
+
+    /* readFile(String fileName, SoundRecord record)
      */
-    void readFile(File txtFile, SoundRecord record) {        
-        
-         
+    void readFile(File txtFile, SoundRecord record) {
+
         try {
-         Scanner scanner = new Scanner(new File(txtFile.getAbsolutePath() ));
-         int count = 0;
-         scanner.next();
-         record.samples = scanner.nextInt();        
-          scanner.next();
+            Scanner scanner = new Scanner(new File(txtFile.getAbsolutePath()));
+            int count = 0;
+            scanner.next();
+            record.samples = scanner.nextInt();
+            scanner.next();
             record.bitsPreSample = scanner.nextInt();
             scanner.next();
             record.channels = scanner.nextInt();
             scanner.next();
             record.sampleRate = scanner.nextInt();
             scanner.next();
-            record.normalized = false;         
+            record.normalized = false;
             scanner.next();
-            
-            if(record.channels == 1){
-            record.channelOne = new int[record.samples];
-            }else{
-            record.channelOne = new int[record.samples];
-            record.channelTwo = new int[record.samples];
-            }
-                      
-         while (scanner.hasNextShort()) {            
-           //  data[count] = line;
-            if(record.channels == 1) {
-                short line = scanner.nextShort();
-                record.channelOne[count] = line;
-             //System.out.printf("%3d: %s %n", count, line );
-             System.out.printf("%s %n", record.channelOne[count] );
-             //System.out.printf("%s %n", data[count]);
-            count++;
+
+            if (record.channels == 1) {
+                record.channelOne = new int[record.samples];
             } else {
-                
-               int line1 = scanner.nextShort();
-               record.channelOne[count] = line1;              
-               int line2 = scanner.nextShort();
-               record.channelTwo[count] = line2;
-               System.out.printf("%s \t %s %n", record.channelOne[count],record.channelTwo[count]);
-                
+                record.channelOne = new int[record.samples];
+                record.channelTwo = new int[record.samples];
             }
-            
-         }
-         
-         scanner.close();
-      
-        } catch (Exception e) {System.out.println("ERROR");}
-      
-       
+
+            while (scanner.hasNextShort()) {
+                //  data[count] = line;
+                if (record.channels == 1) {
+                    short line = scanner.nextShort();
+                    record.channelOne[count] = line;
+                    //System.out.printf("%3d: %s %n", count, line );
+                    System.out.printf("%s %n", record.channelOne[count]);
+                    //System.out.printf("%s %n", data[count]);
+                    count++;
+                } else {
+
+                    int line1 = scanner.nextShort();
+                    record.channelOne[count] = line1;
+                    int line2 = scanner.nextShort();
+                    record.channelTwo[count] = line2;
+                    System.out.printf("%s \t %s %n", record.channelOne[count], record.channelTwo[count]);
+
+                }
+
+            }
+
+            scanner.close();
+
+        } catch (Exception e) {
+            System.out.println("ERROR");
+        }
+
     }//End of readFile
 
 
@@ -1062,11 +1053,9 @@ public class GUIFrame extends javax.swing.JFrame {
     private void txtWavButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtWavButtonActionPerformed
         // TODO add your handling code here:
 
-        
-       //es.audioToTxt(AS.getSongFileName(), AS.getSongPath());
+        String fileName = "austin.txt";
+        txtToAudio(fileName);
 
-
-        //es.audioToTxt(AS.getSongFileName(), AS.getSongPath());
 
     }//GEN-LAST:event_txtWavButtonActionPerformed
 
