@@ -601,7 +601,10 @@ public class GUIFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveActionPerformed
-        // TODO add your handling code here:
+        JFileChooser fileChooser =  new JFileChooser();
+        if(fileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION  ){
+            File file = fileChooser.getSelectedFile();
+        }
     }//GEN-LAST:event_saveActionPerformed
 
     private void saveAsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveAsActionPerformed
