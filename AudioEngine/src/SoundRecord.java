@@ -18,8 +18,8 @@ public class SoundRecord {
     int channels;
     int sampleRate;
     boolean normalized;
-    short[] channelOne;
-    short[] channelTwo;
+    int[] channelOne;
+    int[] channelTwo;
     
     public SoundRecord() {
      this.samples = 0;
@@ -32,7 +32,7 @@ public class SoundRecord {
 }
        
     public void populate(int length){
-        this.channelOne = new short[length];        
+        this.channelOne = new int[length];        
     }
     
     public void copy( short[] dataFrom){

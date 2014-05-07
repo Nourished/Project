@@ -616,14 +616,12 @@ public class GUIFrame extends javax.swing.JFrame {
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             File file = fileChooser.getSelectedFile();
             try {
-                // What to do with the file, e.g. display it in a TextArea
-                // textarea.read( new FileReader( file.getAbsolutePath() ), null );
-            //    System.out.println("File: " + file.getAbsolutePath());
+                
                 tempSongFile=file;
                 AS.execute(tempSongFile);
 
             } catch (Exception ex) {
-                System.out.println("problem accessing file " + file.getAbsolutePath());
+                System.out.println("Problem accessing file " + file.getAbsolutePath());
             }
             
             tempTxtFile = audioToTxt(tempSongFile);
@@ -939,9 +937,9 @@ public class GUIFrame extends javax.swing.JFrame {
         
         //File txtFile;
         String fileName = file.getName();
-        System.out.println(fileName);
+      
         fileName = fileName.substring(0, fileName.lastIndexOf("."));
-        System.out.println(fileName);
+    
         
         
         String base = System.getProperty("user.dir") + "/src/music/";
@@ -960,7 +958,7 @@ public class GUIFrame extends javax.swing.JFrame {
         }
         
         File txtFile = new File(base + fileName+".txt");
-        //txtFile = fileName+".txt";
+      
         return txtFile;
         
     }//End of audioToTxt
@@ -973,12 +971,12 @@ public class GUIFrame extends javax.swing.JFrame {
         String cmd
                 = base + "txt2wav " + base + fileName + ".wav < " + base + fileName + ".txt";
         try {
-            Runtime.getRuntime().exec(
+            Process p = Runtime.getRuntime().exec(
                     new String[]{"cmd.exe", "/c", cmd});
             System.out
                     .println("Wav file constructed: /src/music/" + fileName + ".wav");
-
-        } catch (IOException ex) {
+            p.waitFor();
+        } catch (Exception ex) {
             System.out.println("FAILED: " + ex.getMessage());
 
         }
@@ -995,9 +993,7 @@ public class GUIFrame extends javax.swing.JFrame {
          Scanner scanner = new Scanner(new File(txtFile.getAbsolutePath() ));
          int count = 0;
          scanner.next();
-         record.samples = scanner.nextInt();
-         short[]  data = new short[record.samples];
-         record.channelOne = new short[record.samples];
+         record.samples = scanner.nextInt();        
           scanner.next();
             record.bitsPreSample = scanner.nextInt();
             scanner.next();
@@ -1008,16 +1004,32 @@ public class GUIFrame extends javax.swing.JFrame {
             record.normalized = false;         
             scanner.next();
             
-                 
+            if(record.channels == 1){
+            record.channelOne = new int[record.samples];
+            }else{
+            record.channelOne = new int[record.samples];
+            record.channelTwo = new int[record.samples];
+            }
+                      
          while (scanner.hasNextShort()) {            
-             
-            short line = scanner.nextShort();
            //  data[count] = line;
-            record.channelOne[count] = line;
+            if(record.channels == 1) {
+                short line = scanner.nextShort();
+                record.channelOne[count] = line;
              //System.out.printf("%3d: %s %n", count, line );
              System.out.printf("%s %n", record.channelOne[count] );
              //System.out.printf("%s %n", data[count]);
             count++;
+            } else {
+                
+               int line1 = scanner.nextShort();
+               record.channelOne[count] = line1;              
+               int line2 = scanner.nextShort();
+               record.channelTwo[count] = line2;
+               System.out.printf("%s \t %s %n", record.channelOne[count],record.channelTwo[count]);
+                
+            }
+            
          }
          
          scanner.close();

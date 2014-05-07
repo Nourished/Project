@@ -108,56 +108,7 @@ public class Envelope {
 
    
 
-    /* readFile(String fileName, SoundRecord record)
-     */
-    void readFile(File txtFile, SoundRecord record) {
-        
-         String base = System.getProperty("user.dir") + "/src/music/";
-
-        File file = new File( base + txtFile.getName() );
-        
-        System.out.println(file.getAbsoluteFile() );
-
-        try {
-            Scanner lineReader = new Scanner(file);
-            lineReader.next();
-            record.samples = lineReader.nextInt();
-            lineReader.next();
-            record.bitsPreSample = lineReader.nextInt();
-            lineReader.next();
-            record.channels = lineReader.nextInt();
-            lineReader.next();
-            record.sampleRate = lineReader.nextInt();
-            lineReader.next();
-            record.normalized = false;
-            lineReader.next();
-
-            if (record.channels == 1) {
-                record.channelOne = new short[record.samples];
-            } else {
-                record.channelOne = new short[record.samples];
-                record.channelTwo = new short[record.samples];
-            }
-
-            if (record.channels == 1) {
-                for (int i = 0; i < record.channelOne.length; i++) {
-                    record.channelOne[i] = lineReader.nextShort();
-                }
-            } else {
-                for (int i = 0; i < record.channelOne.length; i++) {
-                    record.channelOne[i] = lineReader.nextShort();
-                    record.channelTwo[i] = lineReader.nextShort();
-                }
-            }
-
-            lineReader.close();
-
-        } catch (Exception e) {
-            System.out.println("Error reading file " + file.getName() );
-        }
-        
-
-    }//End of readFile
+  
 
     /* outputFile(String fileName, SoundRecord record)     
      */
