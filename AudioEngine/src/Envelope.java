@@ -106,45 +106,6 @@ public class Envelope {
 
     }//End of adsrEnvelope
 
-   
-
-  
-
-    /* outputFile(String fileName, SoundRecord record)     
-     */
-    void outputFile(String fileName, SoundRecord record) {
-
-        try {
-            BufferedWriter out = new BufferedWriter(new FileWriter(fileName));
-            out.write("SAMPLES: \t" + record.channelOne.length);
-            out.newLine();
-            out.write("BITSPERSAMPLE: \t" + record.bitsPreSample);
-            out.newLine();
-            out.write("CHANNELS: \t" + record.channels);
-            out.newLine();
-            out.write("SAMPLERATE: \t" + record.sampleRate);
-            out.newLine();
-            out.write("NORMALIZED: \t" + "FALSE");
-            out.newLine();
-
-            if (record.channels == 1) {
-                for (int i = 0; i < record.channelOne.length; i++) {
-                    out.write(record.channelOne[i] + "\n");
-                    out.newLine();
-                }
-            } else {
-                for (int i = 0; i < record.channelOne.length; i++) {
-                    out.write(record.channelOne[i] + "\t");
-                    out.write(record.channelTwo[i] + "\n");
-                    out.newLine();
-                }
-            }
-
-            out.close();
-        } catch (IOException e) {
-            System.out.println("Error outputing the file " + fileName);
-        }
-
-    } //End of outPutFile
+      
 
 }

@@ -11,6 +11,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -20,7 +21,7 @@ public class GUIFrame extends javax.swing.JFrame {
 
     AudioStream AS = new AudioStream();
     Envelope es = new Envelope();
-    File tempSongFile, tempTxtFile;
+    File tempSongFile, tempTxtFile, originalSong;
     double[] envelope = null;
     SoundRecord audioData = new SoundRecord();
 
@@ -66,28 +67,29 @@ public class GUIFrame extends javax.swing.JFrame {
         amplitudeLabel = new javax.swing.JLabel();
         offsetSetting = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
-        adsrReleaseTextField = new javax.swing.JTextField();
-        bpReleaseTextField = new javax.swing.JTextField();
         hannButton = new javax.swing.JRadioButton();
         breakpointButton = new javax.swing.JRadioButton();
         gaussianButton = new javax.swing.JRadioButton();
-        arAttackTextField = new javax.swing.JTextField();
         envelopeLabel = new javax.swing.JLabel();
         sinButton = new javax.swing.JRadioButton();
-        adsrDecayTextField = new javax.swing.JTextField();
         hammingButton = new javax.swing.JRadioButton();
-        adsrAttackTextField = new javax.swing.JTextField();
         arButton = new javax.swing.JRadioButton();
-        adsrSustainTextField = new javax.swing.JTextField();
-        bpSustainTextField = new javax.swing.JTextField();
-        bpDecayTextField = new javax.swing.JTextField();
-        bpAttackTextField = new javax.swing.JTextField();
         adsrButton = new javax.swing.JRadioButton();
-        arReleaseTextField = new javax.swing.JTextField();
         applyEnvelopeButton = new javax.swing.JButton();
+        arTF = new javax.swing.JFormattedTextField();
+        arTF1 = new javax.swing.JFormattedTextField();
+        adsrTF = new javax.swing.JFormattedTextField();
+        adsrTF1 = new javax.swing.JFormattedTextField();
+        adsrTF2 = new javax.swing.JFormattedTextField();
+        adsrTF3 = new javax.swing.JFormattedTextField();
+        bpTF = new javax.swing.JFormattedTextField();
+        bpTF1 = new javax.swing.JFormattedTextField();
+        bpTF2 = new javax.swing.JFormattedTextField();
+        bpTF3 = new javax.swing.JFormattedTextField();
         resetButton = new javax.swing.JButton();
         testLoadButton = new javax.swing.JButton();
         txtWavButton = new javax.swing.JButton();
+        outputButton = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         save = new javax.swing.JMenuItem();
@@ -305,12 +307,6 @@ public class GUIFrame extends javax.swing.JFrame {
 
         grainPanelLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {durationLabel, durationSlider});
 
-        adsrReleaseTextField.setText("0");
-        adsrReleaseTextField.setEnabled(false);
-
-        bpReleaseTextField.setText("0");
-        bpReleaseTextField.setEnabled(false);
-
         envelopebuttonGroup.add(hannButton);
         hannButton.setText("Hann");
         hannButton.addActionListener(new java.awt.event.ActionListener() {
@@ -335,9 +331,6 @@ public class GUIFrame extends javax.swing.JFrame {
             }
         });
 
-        arAttackTextField.setText("0");
-        arAttackTextField.setEnabled(false);
-
         envelopeLabel.setText("Envelope Settings");
 
         envelopebuttonGroup.add(sinButton);
@@ -348,9 +341,6 @@ public class GUIFrame extends javax.swing.JFrame {
             }
         });
 
-        adsrDecayTextField.setText("0");
-        adsrDecayTextField.setEnabled(false);
-
         envelopebuttonGroup.add(hammingButton);
         hammingButton.setText("Hamming");
         hammingButton.addActionListener(new java.awt.event.ActionListener() {
@@ -358,9 +348,6 @@ public class GUIFrame extends javax.swing.JFrame {
                 hammingButtonActionPerformed(evt);
             }
         });
-
-        adsrAttackTextField.setText("0");
-        adsrAttackTextField.setEnabled(false);
 
         envelopebuttonGroup.add(arButton);
         arButton.setText("Attack and Release");
@@ -370,18 +357,6 @@ public class GUIFrame extends javax.swing.JFrame {
             }
         });
 
-        adsrSustainTextField.setText("0");
-        adsrSustainTextField.setEnabled(false);
-
-        bpSustainTextField.setText("0");
-        bpSustainTextField.setEnabled(false);
-
-        bpDecayTextField.setText("0");
-        bpDecayTextField.setEnabled(false);
-
-        bpAttackTextField.setText("0");
-        bpAttackTextField.setEnabled(false);
-
         envelopebuttonGroup.add(adsrButton);
         adsrButton.setText("Attack Decay Sustain Release");
         adsrButton.addActionListener(new java.awt.event.ActionListener() {
@@ -390,15 +365,42 @@ public class GUIFrame extends javax.swing.JFrame {
             }
         });
 
-        arReleaseTextField.setText("0");
-        arReleaseTextField.setEnabled(false);
-
         applyEnvelopeButton.setText("Apply Envelope");
         applyEnvelopeButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 applyEnvelopeButtonActionPerformed(evt);
             }
         });
+
+        arTF.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,##0.00"))));
+        arTF.setEnabled(false);
+
+        arTF1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,##0.00"))));
+        arTF1.setEnabled(false);
+
+        adsrTF.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,##0.00"))));
+        adsrTF.setEnabled(false);
+
+        adsrTF1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,##0.00"))));
+        adsrTF1.setEnabled(false);
+
+        adsrTF2.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,##0.00"))));
+        adsrTF2.setEnabled(false);
+
+        adsrTF3.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,##0.00"))));
+        adsrTF3.setEnabled(false);
+
+        bpTF.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,##0.00"))));
+        bpTF.setEnabled(false);
+
+        bpTF1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,##0.00"))));
+        bpTF1.setEnabled(false);
+
+        bpTF2.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,##0.00"))));
+        bpTF2.setEnabled(false);
+
+        bpTF3.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,##0.00"))));
+        bpTF3.setEnabled(false);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -417,30 +419,29 @@ public class GUIFrame extends javax.swing.JFrame {
                     .addComponent(breakpointButton, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(applyEnvelopeButton)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(bpAttackTextField)
-                            .addComponent(arAttackTextField, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(adsrAttackTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(bpDecayTextField)
-                            .addComponent(adsrDecayTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
-                            .addComponent(arReleaseTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(bpSustainTextField)
-                            .addComponent(adsrSustainTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 27, Short.MAX_VALUE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(adsrReleaseTextField)
-                            .addComponent(bpReleaseTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(applyEnvelopeButton))
-                .addContainerGap())
+                        .addComponent(arTF, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(arTF1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(adsrTF, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(adsrTF1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(adsrTF2, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(adsrTF3, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(bpTF, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(bpTF1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(bpTF2, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(bpTF3, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(28, 28, 28))
         );
-
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {adsrAttackTextField, adsrDecayTextField, adsrReleaseTextField, adsrSustainTextField});
-
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -462,22 +463,22 @@ public class GUIFrame extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(arButton)
-                    .addComponent(arAttackTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(arReleaseTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(arTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(arTF1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(adsrButton)
-                    .addComponent(adsrAttackTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(adsrDecayTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(adsrSustainTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(adsrReleaseTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(adsrTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(adsrTF1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(adsrTF2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(adsrTF3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(breakpointButton)
-                    .addComponent(bpAttackTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(bpDecayTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(bpSustainTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(bpReleaseTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(bpTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(bpTF1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(bpTF2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(bpTF3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -499,6 +500,13 @@ public class GUIFrame extends javax.swing.JFrame {
         txtWavButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtWavButtonActionPerformed(evt);
+            }
+        });
+
+        outputButton.setText("Output to text file");
+        outputButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                outputButtonActionPerformed(evt);
             }
         });
 
@@ -559,20 +567,18 @@ public class GUIFrame extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(grainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(205, Short.MAX_VALUE))
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(ButtonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(46, 46, 46)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(resetButton)
-                                .addGap(107, 107, 107)
-                                .addComponent(testLoadButton))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(txtWavButton)
-                                .addGap(119, 119, 119))))))
+                            .addComponent(resetButton)
+                            .addComponent(outputButton))
+                        .addGap(68, 68, 68)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(testLoadButton)
+                            .addComponent(txtWavButton))))
+                .addContainerGap(214, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -585,10 +591,11 @@ public class GUIFrame extends javax.swing.JFrame {
                         .addGap(22, 22, 22)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(resetButton)
-                            .addComponent(testLoadButton)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(txtWavButton)))
+                            .addComponent(testLoadButton))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtWavButton)
+                            .addComponent(outputButton))))
                 .addGap(43, 43, 43)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(grainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -603,8 +610,24 @@ public class GUIFrame extends javax.swing.JFrame {
 
     private void saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveActionPerformed
         JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setAcceptAllFileFilterUsed(false);
+        FileNameExtensionFilter filter = new FileNameExtensionFilter(".wav", "wav");
+        fileChooser.addChoosableFileFilter(filter);
         if (fileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
-            File file = fileChooser.getSelectedFile();
+            try {
+                FileWriter fw = new FileWriter(fileChooser.getSelectedFile());
+                String newPath = fileChooser.getSelectedFile().getAbsolutePath();
+                System.out.println("File path = " + newPath);
+                File tempAudio = new File(tempSongFile.getAbsolutePath());
+                System.out.println("File path of tempAudio = " + tempAudio.getAbsolutePath());
+
+                if (tempAudio.renameTo(new File(newPath))) {
+                    System.out.println("File saved successful!");
+                } else {
+                    System.out.println("File failed to save!");
+                }
+            } catch (Exception ex) {
+            }
         }
     }//GEN-LAST:event_saveActionPerformed
 
@@ -613,44 +636,40 @@ public class GUIFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_saveAsActionPerformed
 
     private void openActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openActionPerformed
-        if (AS.status()) {
-            AS.killALData();
-        }
+
+        AS.killALData();
+        fileChooser.setAcceptAllFileFilterUsed(false);
+        FileNameExtensionFilter filter = new FileNameExtensionFilter(".wav", "wav");
+        fileChooser.addChoosableFileFilter(filter);
         int returnVal = fileChooser.showOpenDialog(this);
         if (returnVal == JFileChooser.APPROVE_OPTION) {
-            File file = fileChooser.getSelectedFile();
+            originalSong = fileChooser.getSelectedFile();
             try {
 
-                tempSongFile = file;
+                tempSongFile = originalSong;
                 AS.execute(tempSongFile);
 
             } catch (Exception ex) {
-                System.out.println("Problem accessing file " + file.getAbsolutePath());
+                System.out.println("Problem accessing file " + tempSongFile.getAbsolutePath());
             }
 
+            // Convert the .wav file to a text file
             tempTxtFile = audioToTxt(tempSongFile);
 
-            readFile(tempTxtFile, audioData); 
-            
-            
-            
-          //  outputTxtFile("new.txt",audioData);
-
+            // read the text file into the sound file
             readFile(tempTxtFile, audioData);
 
 
             playButton.setEnabled(true);
             pauseButton.setEnabled(true);
             stopButton.setEnabled(true);
+            // Update duration slider to song duration
+            durationSlider.setMaximum((int) (audioData.samples / audioData.sampleRate));
 
-            
-          //  txtToAudio(tempTxtFile);
-            
-
+            //  txtToAudio(tempTxtFile);
         } else {
             System.out.println("File access cancelled by user.");
         }
-
 
 
     }//GEN-LAST:event_openActionPerformed
@@ -688,141 +707,6 @@ public class GUIFrame extends javax.swing.JFrame {
         locationSetting.setText("" + locationSlider.getValue());
     }//GEN-LAST:event_locationSliderStateChanged
 
-    private void arButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_arButtonActionPerformed
-        // TODO add your handling code here:
-        // Enable text
-        arAttackTextField.setEnabled(true);
-        arReleaseTextField.setEnabled(true);
-        // Disable other texts
-        // ADSR
-        adsrAttackTextField.setEnabled(false);
-        adsrDecayTextField.setEnabled(false);
-        adsrSustainTextField.setEnabled(false);
-        adsrReleaseTextField.setEnabled(false);
-
-        // Breakpoint
-        bpAttackTextField.setEnabled(false);
-        bpDecayTextField.setEnabled(false);
-        bpSustainTextField.setEnabled(false);
-        bpReleaseTextField.setEnabled(false);
-
-    }//GEN-LAST:event_arButtonActionPerformed
-
-    private void adsrButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adsrButtonActionPerformed
-        // TODO add your handling code here:
-        // Enable text
-
-        // ADSR
-        adsrAttackTextField.setEnabled(true);
-        adsrDecayTextField.setEnabled(true);
-        adsrSustainTextField.setEnabled(true);
-        adsrReleaseTextField.setEnabled(true);
-
-        // Disable other texts
-        // Attack Release
-        arAttackTextField.setEnabled(false);
-        arReleaseTextField.setEnabled(false);
-
-        // Breakpoint
-        bpAttackTextField.setEnabled(false);
-        bpDecayTextField.setEnabled(false);
-        bpSustainTextField.setEnabled(false);
-        bpReleaseTextField.setEnabled(false);
-    }//GEN-LAST:event_adsrButtonActionPerformed
-
-    private void breakpointButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_breakpointButtonActionPerformed
-        // TODO add your handling code here:
-        // Enable text
-        // Breakpoint
-        bpAttackTextField.setEnabled(true);
-        bpDecayTextField.setEnabled(true);
-        bpSustainTextField.setEnabled(true);
-        bpReleaseTextField.setEnabled(true);
-
-        // Disable other texts
-        // ADSR
-        adsrAttackTextField.setEnabled(false);
-        adsrDecayTextField.setEnabled(false);
-        adsrSustainTextField.setEnabled(false);
-        adsrReleaseTextField.setEnabled(false);
-        // Attack Release
-        arAttackTextField.setEnabled(false);
-        arReleaseTextField.setEnabled(false);
-
-    }//GEN-LAST:event_breakpointButtonActionPerformed
-
-    private void sinButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sinButtonActionPerformed
-        // TODO add your handling code here:
-        // Disbale text fields for other envelopes        
-        // ADSR
-        adsrAttackTextField.setEnabled(false);
-        adsrDecayTextField.setEnabled(false);
-        adsrSustainTextField.setEnabled(false);
-        adsrReleaseTextField.setEnabled(false);
-        // Attack Release
-        arAttackTextField.setEnabled(false);
-        arReleaseTextField.setEnabled(false);
-        // Breakpoint
-        bpAttackTextField.setEnabled(false);
-        bpDecayTextField.setEnabled(false);
-        bpSustainTextField.setEnabled(false);
-        bpReleaseTextField.setEnabled(false);
-    }//GEN-LAST:event_sinButtonActionPerformed
-
-    private void hannButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hannButtonActionPerformed
-        // TODO add your handling code here:
-        // Disbale text fields for other envelopes        
-        // ADSR
-        adsrAttackTextField.setEnabled(false);
-        adsrDecayTextField.setEnabled(false);
-        adsrSustainTextField.setEnabled(false);
-        adsrReleaseTextField.setEnabled(false);
-        // Attack Release
-        arAttackTextField.setEnabled(false);
-        arReleaseTextField.setEnabled(false);
-        // Breakpoint
-        bpAttackTextField.setEnabled(false);
-        bpDecayTextField.setEnabled(false);
-        bpSustainTextField.setEnabled(false);
-        bpReleaseTextField.setEnabled(false);
-    }//GEN-LAST:event_hannButtonActionPerformed
-
-    private void hammingButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hammingButtonActionPerformed
-        // TODO add your handling code here:
-        // Disbale text fields for other envelopes        
-        // ADSR
-        adsrAttackTextField.setEnabled(false);
-        adsrDecayTextField.setEnabled(false);
-        adsrSustainTextField.setEnabled(false);
-        adsrReleaseTextField.setEnabled(false);
-        // Attack Release
-        arAttackTextField.setEnabled(false);
-        arReleaseTextField.setEnabled(false);
-        // Breakpoint
-        bpAttackTextField.setEnabled(false);
-        bpDecayTextField.setEnabled(false);
-        bpSustainTextField.setEnabled(false);
-        bpReleaseTextField.setEnabled(false);
-    }//GEN-LAST:event_hammingButtonActionPerformed
-
-    private void gaussianButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gaussianButtonActionPerformed
-        // TODO add your handling code here:
-        // Disbale text fields for other envelopes        
-        // ADSR
-        adsrAttackTextField.setEnabled(false);
-        adsrDecayTextField.setEnabled(false);
-        adsrSustainTextField.setEnabled(false);
-        adsrReleaseTextField.setEnabled(false);
-        // Attack Release
-        arAttackTextField.setEnabled(false);
-        arReleaseTextField.setEnabled(false);
-        // Breakpoint
-        bpAttackTextField.setEnabled(false);
-        bpDecayTextField.setEnabled(false);
-        bpSustainTextField.setEnabled(false);
-        bpReleaseTextField.setEnabled(false);
-    }//GEN-LAST:event_gaussianButtonActionPerformed
-
     private void playButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playButtonActionPerformed
         // Play if a song is loaded
         if (AS.status()) {
@@ -846,91 +730,10 @@ public class GUIFrame extends javax.swing.JFrame {
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // TODO add your handling code here:
-        // Close song buffer if a song is loaded
-        if (AS.status()) {
-            AS.killALData();
-        }
+        // Close song buffer if a song is loaded        
+        AS.killALData();
+
     }//GEN-LAST:event_formWindowClosing
-
-    private void applyEnvelopeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_applyEnvelopeButtonActionPerformed
-        // TODO add your handling code here:
-
-        SoundRecord audio = new SoundRecord();
-
-        double[] envelope = null;
-
-        System.out.println(tempSongFile.getName());
-        String fileName = AS.getSongFileName();
-        //for(int i = 0 ; i < audio.samples ; i++ ){
-        //   System.out.println(audio.channelOne[i]);
-        // }
-        
-
-      //  es.readFile(fileName, audio); // read file in
-      //  double[] envelope = new double[2 * audio.sampleRate];
-        //
-        //
-        int type = 0;
-        if (sinButton.isSelected()) {
-            type = 1;
-        } else if (hannButton.isSelected()) {
-            type = 2;
-        } else if (hammingButton.isSelected()) {
-            type = 3;
-        } else if (gaussianButton.isSelected()) {
-            type = 4;
-        } else if (arButton.isSelected()) {
-            type = 5;
-        } else if (adsrButton.isSelected()) {
-            type = 6;
-        } else if (breakpointButton.isSelected()) {
-            type = 7;
-        }
-
-        switch (type) {
-            case 0: // none
-                System.out.println("No envelope set");
-            case 1: // Sin
-                envelope = es.sinEnvelope(audio, 1);
-                break;
-
-            case 2: // Hann
-                envelope = es.hannEnvelope(audio, 2);
-                break;
-            case 3: // Hamming
-                envelope = es.hammEnvelope(audio, 2);
-                break;
-
-            case 4: // Gaussian
-                envelope = es.gaussianEnvelope(audio, 2, 0.3);
-                
-                break;
-            case 5: // AR
-
-                break;
-
-            case 6: // ADSR
-                envelope = es.adsrEnvelope(audio, 2, 0.01, 0.1, 0.4, 1.0);
-                break;
-            case 7: // Breakpoint
-
-                break;
-
-            case 8:
-
-                break;
-
-        }
-        
-        // Apply the envelope values to a text file and then create the wav file
-
-        for (int i = 0; i < envelope.length; i++) {
-            System.out.println(envelope[i]);
-
-        }
-
-
-    }//GEN-LAST:event_applyEnvelopeButtonActionPerformed
 
 
     /* void audioToTxt(String fileName)
@@ -938,21 +741,15 @@ public class GUIFrame extends javax.swing.JFrame {
      */
     File audioToTxt(File file) {
 
-        //File txtFile;
         String fileName = file.getName();
 
         fileName = fileName.substring(0, fileName.lastIndexOf("."));
 
         String base = System.getProperty("user.dir") + "\\src\\music\\";
-        /* No quotations for spaces
-         String cmd  = base + "wav2txt " + file.getAbsolutePath() + " > "
-         + base + fileName + ".txt";
-         */
 
         String cmd = "\"\"" + base + "wav2txt\" " + "\""
                 + file.getAbsolutePath() + "\"" + " > " + "\""
                 + base + fileName + ".txt" + "\"\"";
-        System.out.println(cmd);
 
         try {
             Process p = Runtime.getRuntime().exec(
@@ -981,7 +778,6 @@ public class GUIFrame extends javax.swing.JFrame {
         String cmd = "\"\"" + base + "txt2wav\" " + "\"" + base + fileName
                 + ".wav\" < " + "\"" + base + fileName + ".txt\"\"";
 
-        System.out.println(cmd);
         try {
             Process p = Runtime.getRuntime().exec(
                     new String[]{"cmd.exe", "/c", cmd});
@@ -1003,7 +799,7 @@ public class GUIFrame extends javax.swing.JFrame {
             scanner.next();
             record.samples = scanner.nextInt();
             scanner.next();
-            record.bitsPreSample = scanner.nextInt();
+            record.bitsPerSample = scanner.nextInt();
             scanner.next();
             record.channels = scanner.nextInt();
             scanner.next();
@@ -1019,27 +815,24 @@ public class GUIFrame extends javax.swing.JFrame {
                 record.channelTwo = new int[record.samples];
             }
 
-            while (scanner.hasNextShort()) {
+            while (scanner.hasNextInt()) {
                 //  data[count] = line;
                 if (record.channels == 1) {
-                    short line = scanner.nextShort();
+                    int line = scanner.nextInt();
                     record.channelOne[count] = line;
-                    //System.out.printf("%3d: %s %n", count, line );
-                    System.out.printf("%s %n", record.channelOne[count]);
-                    //System.out.printf("%s %n", data[count]);
+                    //System.out.printf("%s %n", record.channelOne[count]);
                     count++;
                 } else {
 
-                    int line1 = scanner.nextShort();
+                    int line1 = scanner.nextInt();
                     record.channelOne[count] = line1;
-                    int line2 = scanner.nextShort();
+                    int line2 = scanner.nextInt();
                     record.channelTwo[count] = line2;
-                    System.out.printf("%s \t %s %n", record.channelOne[count], record.channelTwo[count]);
-
+                    //System.out.printf("--- %s \t %s %n",
+                    //        record.channelOne[count], record.channelTwo[count]);
+                    count++;
                 }
-
             }
-
             scanner.close();
 
         } catch (Exception e) {
@@ -1048,17 +841,17 @@ public class GUIFrame extends javax.swing.JFrame {
 
     }//End of readFile
 
-     /* outputFile(String fileName, SoundRecord record)     
+    /* outputFile(String fileName, SoundRecord record)     
      */
     void outputTxtFile(String fileName, SoundRecord record) {
-        
-        String base = System.getProperty("user.dir") + "/src/music/";
+
+        String base = System.getProperty("user.dir") + "\\src\\music\\";
 
         try {
-            BufferedWriter out = new BufferedWriter(new FileWriter(base+fileName));
+            BufferedWriter out = new BufferedWriter(new FileWriter(base + fileName));
             out.write("SAMPLES: \t" + record.channelOne.length);
             out.newLine();
-            out.write("BITSPERSAMPLE: \t" + record.bitsPreSample);
+            out.write("BITSPERSAMPLE: \t" + record.bitsPerSample);
             out.newLine();
             out.write("CHANNELS: \t" + record.channels);
             out.newLine();
@@ -1066,40 +859,58 @@ public class GUIFrame extends javax.swing.JFrame {
             out.newLine();
             out.write("NORMALIZED: \t" + "FALSE");
             out.newLine();
-
+            int line1 = 0, line2 = 0;
             if (record.channels == 1) {
                 for (int i = 0; i < record.channelOne.length; i++) {
                     out.write(record.channelOne[i] + "\n");
-                    out.newLine();
                 }
             } else {
                 for (int i = 0; i < record.channelOne.length; i++) {
-                    
-                    int line1 = record.channelOne[i];
-                    int line2 =  record.channelTwo[i];
-                    System.out.print(line1 + " ");
-                    System.out.println(line2 + "\n");
-                    //out.newLine();
+                    line1 = record.channelOne[i];
+                    line2 = record.channelTwo[i];
+                    out.write(line1 + "\t");
+                    out.write(line2 + "\n");
                 }
             }
 
             out.close();
+            System.out.println("Successfully created " + fileName);
         } catch (Exception e) {
             System.out.println("Error outputing the file " + fileName);
         }
 
     } //End of outPutFile
-    
+
     private void resetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetButtonActionPerformed
         // TODO add your handling code here:
+        AS.killALData();
+        
+        try {
+            AS.execute(originalSong);
+
+        } catch (Exception ex) {
+            System.out.println("Problem accessing file " + originalSong.getAbsolutePath());
+        }
+
+        // Convert the .wav file to a text file
+        tempTxtFile = audioToTxt(originalSong);
+
+        // read the text file into the sound file
+        readFile(tempTxtFile, audioData);
+        
+        durationSlider.setMaximum((int) (audioData.samples / audioData.sampleRate));
     }//GEN-LAST:event_resetButtonActionPerformed
 
     private void testLoadButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_testLoadButtonActionPerformed
         // TODO add your handling code here:
         AS.killALData();
 
-        File f = new File("src/FancyPants.wav");
-        AS.execute(f);
+        tempSongFile = new File("src\\FancyPants.wav");
+        AS.execute(tempSongFile);
+
+        tempTxtFile = audioToTxt(tempSongFile);
+
+        readFile(tempTxtFile, audioData);
 
         playButton.setEnabled(true);
         pauseButton.setEnabled(true);
@@ -1114,6 +925,261 @@ public class GUIFrame extends javax.swing.JFrame {
 
 
     }//GEN-LAST:event_txtWavButtonActionPerformed
+
+    private void outputButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_outputButtonActionPerformed
+        // TODO add your handling code here:
+        outputTxtFile("new.txt", audioData);
+    }//GEN-LAST:event_outputButtonActionPerformed
+
+    private void applyEnvelopeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_applyEnvelopeButtonActionPerformed
+        // TODO add your handling code here:
+
+        // Nothing loaded
+        if(!AS.status())
+            return;
+                    
+        int type = 0;
+        if (sinButton.isSelected()) {
+            type = 1;
+        } else if (hannButton.isSelected()) {
+            type = 2;
+        } else if (hammingButton.isSelected()) {
+            type = 3;
+        } else if (gaussianButton.isSelected()) {
+            type = 4;
+        } else if (arButton.isSelected()) {
+            type = 5;
+        } else if (adsrButton.isSelected()) {
+            type = 6;
+        } else if (breakpointButton.isSelected()) {
+            type = 7;
+        }
+        
+        if (type == 0){ // none
+            System.out.println("No envelope set");
+            return;
+        }
+        SoundRecord audio = new SoundRecord();
+        audio.bitsPerSample = audioData.bitsPerSample;
+        audio.channels = audioData.channels;
+        audio.normalized = audioData.normalized;
+        audio.samples = audioData.samples;
+        audio.sampleRate = audioData.sampleRate;
+        double[] envelope = null;
+
+        System.out.println(tempSongFile.getName());
+        String fileName = AS.getSongFileName();
+        //for(int i = 0 ; i < audio.samples ; i++ ){
+        //   System.out.println(audio.channelOne[i]);
+        // }
+
+        //  es.readFile(fileName, audio); // read file in
+        //  double[] envelope = new double[2 * audio.sampleRate];
+        //
+        //
+        
+        int eDur = durationSlider.getValue(), eAmp = amplitudeSlider.getValue(),
+                ePitch = pitchSlider.getValue(), eOffset = offsetSlider.getValue(),
+                eLocation = locationSlider.getValue();
+
+        double[] values = new double [4];
+        switch (type) {
+            
+            case 1: // Sin
+                envelope = es.sinEnvelope(audio, eDur);
+                break;
+
+            case 2: // Hann
+                envelope = es.hannEnvelope(audio, eDur);
+                break;
+            case 3: // Hamming
+                envelope = es.hammEnvelope(audio, eDur);
+                break;
+
+            case 4: // Gaussian
+                envelope = es.gaussianEnvelope(audio, 2, 0.3);
+
+                break;
+            case 5: // AR
+                values[0] = Double.parseDouble(arTF.getText());
+                values[1] = Double.parseDouble(arTF1.getText());
+
+                break;
+
+            case 6: // ADSR
+                values[0] = Double.parseDouble(adsrTF.getText());
+                values[1] = Double.parseDouble(adsrTF1.getText());
+                values[2] = Double.parseDouble(adsrTF2.getText());
+                values[3] = Double.parseDouble(adsrTF3.getText());
+                System.out.println(values[0]);
+                envelope = es.adsrEnvelope(audio, 2, values[0], values[1], 
+                                                    values[2], values[3]);
+                break;
+            case 7: // Breakpoint
+                values[0] = Double.parseDouble(bpTF.getText());
+                values[1] = Double.parseDouble(bpTF1.getText());
+                values[2] = Double.parseDouble(bpTF2.getText());
+                values[3] = Double.parseDouble(bpTF3.getText());
+                break;
+
+            case 8:
+
+                break;
+
+        }
+        
+        audio.channelOne = new int[audio.samples];
+        audio.channelTwo = new int[audio.samples];
+        // Apply the envelope values to a text file and then create the wav file
+        for (int i = 0; i < envelope.length; i++) {
+            //System.out.println(envelope[i]);
+            audio.channelOne[i] = (int) (audioData.channelOne[i] * envelope[i]);
+            if (audio.channels == 2) {
+                audio.channelTwo[i] = (int) (audioData.channelTwo[i] * envelope[i]);
+            }
+        }
+        
+        outputTxtFile("tempEnvelope.txt", audio);
+        txtToAudio("tempEnvelope.txt");
+        
+        //Load it
+        AS.killALData();
+        AS.execute(new File("src\\Music\\tempEnvelope.wav"));
+
+    }//GEN-LAST:event_applyEnvelopeButtonActionPerformed
+
+    private void adsrButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adsrButtonActionPerformed
+        // TODO add your handling code here:
+        // Enable text
+
+        // ADSR
+        adsrTF.setEnabled(true);
+        adsrTF1.setEnabled(true);
+        adsrTF2.setEnabled(true);
+        adsrTF3.setEnabled(true);
+
+        // Disable other texts
+        // Attack Release
+        arTF.setEnabled(false);
+        arTF1.setEnabled(false);
+
+        // Breakpoint
+        bpTF.setEnabled(false);
+        bpTF1.setEnabled(false);
+        bpTF2.setEnabled(false);
+        bpTF3.setEnabled(false);
+    }//GEN-LAST:event_adsrButtonActionPerformed
+
+    private void arButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_arButtonActionPerformed
+        // TODO add your handling code here:
+        // Enable text
+        arTF.setEnabled(true);
+        arTF1.setEnabled(true);;
+        // Disable other texts
+        // ADSR
+        adsrTF.setEnabled(false);
+        adsrTF1.setEnabled(false);
+        adsrTF2.setEnabled(false);
+        adsrTF3.setEnabled(false);
+
+        // Breakpoint
+        bpTF.setEnabled(false);
+        bpTF1.setEnabled(false);
+        bpTF2.setEnabled(false);
+        bpTF3.setEnabled(false);
+    }//GEN-LAST:event_arButtonActionPerformed
+
+    private void hammingButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hammingButtonActionPerformed
+        // TODO add your handling code here:
+        // Disbale text fields for other envelopes
+        // ADSR
+        adsrTF.setEnabled(false);
+        adsrTF1.setEnabled(false);
+        adsrTF2.setEnabled(false);
+        adsrTF3.setEnabled(false);
+        // Attack Release
+        arTF.setEnabled(false);
+        arTF1.setEnabled(false);
+        // Breakpoint
+        bpTF.setEnabled(false);
+        bpTF1.setEnabled(false);
+        bpTF2.setEnabled(false);
+        bpTF3.setEnabled(false);
+    }//GEN-LAST:event_hammingButtonActionPerformed
+
+    private void sinButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sinButtonActionPerformed
+        // TODO add your handling code here:
+        // Disbale text fields for other envelopes
+        // ADSR
+        adsrTF.setEnabled(false);
+        adsrTF1.setEnabled(false);
+        adsrTF2.setEnabled(false);
+        adsrTF3.setEnabled(false);
+        // Attack Release
+        arTF.setEnabled(false);
+        arTF1.setEnabled(false);
+        // Breakpoint
+        bpTF.setEnabled(false);
+        bpTF1.setEnabled(false);
+        bpTF2.setEnabled(false);
+        bpTF3.setEnabled(false);
+    }//GEN-LAST:event_sinButtonActionPerformed
+
+    private void gaussianButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gaussianButtonActionPerformed
+        // TODO add your handling code here:
+        // Disbale text fields for other envelopes
+        // ADSR
+        adsrTF.setEnabled(false);
+        adsrTF1.setEnabled(false);
+        adsrTF2.setEnabled(false);
+        adsrTF3.setEnabled(false);
+        // Attack Release
+        arTF.setEnabled(false);
+        arTF1.setEnabled(false);
+        // Breakpoint
+        bpTF.setEnabled(false);
+        bpTF1.setEnabled(false);
+        bpTF2.setEnabled(false);
+        bpTF3.setEnabled(false);
+    }//GEN-LAST:event_gaussianButtonActionPerformed
+
+    private void breakpointButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_breakpointButtonActionPerformed
+        // TODO add your handling code here:
+        // Enable text
+        // Breakpoint
+        bpTF.setEnabled(true);
+        bpTF1.setEnabled(true);
+        bpTF2.setEnabled(true);
+        bpTF3.setEnabled(true);
+
+        // Disable other texts
+        // ADSR
+        adsrTF.setEnabled(false);
+        adsrTF1.setEnabled(false);
+        adsrTF2.setEnabled(false);
+        adsrTF3.setEnabled(false);
+        // Attack Release
+        arTF.setEnabled(false);
+        arTF1.setEnabled(false);
+    }//GEN-LAST:event_breakpointButtonActionPerformed
+
+    private void hannButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hannButtonActionPerformed
+        // TODO add your handling code here:
+        // Disbale text fields for other envelopes
+        // ADSR
+        adsrTF.setEnabled(false);
+        adsrTF1.setEnabled(false);
+        adsrTF2.setEnabled(false);
+        adsrTF3.setEnabled(false);
+        // Attack Release
+        arTF.setEnabled(false);
+        arTF1.setEnabled(false);
+        // Breakpoint
+        bpTF.setEnabled(false);
+        bpTF1.setEnabled(false);
+        bpTF2.setEnabled(false);
+        bpTF3.setEnabled(false);
+    }//GEN-LAST:event_hannButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1156,22 +1222,22 @@ public class GUIFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel ButtonPanel;
-    private javax.swing.JTextField adsrAttackTextField;
     private javax.swing.JRadioButton adsrButton;
-    private javax.swing.JTextField adsrDecayTextField;
-    private javax.swing.JTextField adsrReleaseTextField;
-    private javax.swing.JTextField adsrSustainTextField;
+    private javax.swing.JFormattedTextField adsrTF;
+    private javax.swing.JFormattedTextField adsrTF1;
+    private javax.swing.JFormattedTextField adsrTF2;
+    private javax.swing.JFormattedTextField adsrTF3;
     private javax.swing.JLabel amplitudeLabel;
     private javax.swing.JTextField amplitudeSetting;
     private javax.swing.JSlider amplitudeSlider;
     private javax.swing.JButton applyEnvelopeButton;
-    private javax.swing.JTextField arAttackTextField;
     private javax.swing.JRadioButton arButton;
-    private javax.swing.JTextField arReleaseTextField;
-    private javax.swing.JTextField bpAttackTextField;
-    private javax.swing.JTextField bpDecayTextField;
-    private javax.swing.JTextField bpReleaseTextField;
-    private javax.swing.JTextField bpSustainTextField;
+    private javax.swing.JFormattedTextField arTF;
+    private javax.swing.JFormattedTextField arTF1;
+    private javax.swing.JFormattedTextField bpTF;
+    private javax.swing.JFormattedTextField bpTF1;
+    private javax.swing.JFormattedTextField bpTF2;
+    private javax.swing.JFormattedTextField bpTF3;
     private javax.swing.JRadioButton breakpointButton;
     private javax.swing.JLabel durationLabel;
     private javax.swing.JTextField durationSetting;
@@ -1197,6 +1263,7 @@ public class GUIFrame extends javax.swing.JFrame {
     private javax.swing.JSlider offsetSlider;
     private javax.swing.JMenuItem open;
     private javax.swing.JMenu optionsMenu;
+    private javax.swing.JButton outputButton;
     private javax.swing.JButton pauseButton;
     private javax.swing.JLabel pitchLabel;
     private javax.swing.JTextField pitchSetting;
