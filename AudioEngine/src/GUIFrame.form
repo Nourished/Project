@@ -109,7 +109,7 @@
                   <Component id="jPanel1" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Component id="grainPanel" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="18" max="32767" attributes="0"/>
+              <EmptySpace pref="14" max="32767" attributes="0"/>
               <Component id="jScrollPane1" min="-2" pref="218" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -429,20 +429,20 @@
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="applyEnvelopeButton" min="-2" max="-2" attributes="0"/>
-                              <Component id="gaussianField" min="-2" pref="33" max="-2" attributes="0"/>
+                              <Component id="gaussianField" linkSize="13" min="-2" pref="33" max="-2" attributes="0"/>
+                              <Component id="applyEnvelopeButton" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="adsrButton" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="adsrTF" min="-2" pref="33" max="-2" attributes="0"/>
+                          <Component id="adsrTF" linkSize="13" min="-2" pref="33" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="adsrTF1" min="-2" pref="33" max="-2" attributes="0"/>
+                          <Component id="adsrTF1" linkSize="13" min="-2" pref="33" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="adsrTF2" min="-2" pref="33" max="-2" attributes="0"/>
+                          <Component id="adsrTF2" linkSize="13" min="-2" pref="33" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="adsrTF3" min="-2" pref="33" max="-2" attributes="0"/>
+                          <Component id="adsrTF3" linkSize="13" min="-2" pref="33" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
@@ -454,18 +454,13 @@
               <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="envelopeLabel" min="-2" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="sinButton" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="hannButton" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
-                          <Component id="applyEnvelopeButton" min="-2" max="-2" attributes="0"/>
-                      </Group>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="sinButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="applyEnvelopeButton" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Component id="hannButton" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="hammingButton" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
@@ -651,7 +646,7 @@
       <SubComponents>
         <Component class="javax.swing.JButton" name="resetButton">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Reset to loaded Song"/>
+            <Property name="text" type="java.lang.String" value="Reset Song"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="resetButtonActionPerformed"/>

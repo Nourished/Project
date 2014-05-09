@@ -16,12 +16,6 @@
  * @std#: 4585469
  */
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.Scanner;
-
 public class Envelope {
 
     public Envelope() {        
@@ -68,7 +62,6 @@ public class Envelope {
 
         for (int i = 0; i < envelope.length; i++) {
             envelope[i] = 0.54 - 0.46 * Math.cos(2 * Math.PI * (double) i / (audio.sampleRate * envelopeDuration));
-            System.out.println(envelope[i]);
         }
 
         return envelope;

@@ -31,7 +31,7 @@ public class GUIFrame extends javax.swing.JFrame {
      */
     public GUIFrame() {
         initComponents();
-        
+
         // Setup sliders
         durationSetting.setText(String.valueOf(durationSlider.getValue()));
         cloudDurationSetting.setText(String.valueOf(cloudDurationSlider.getValue()));
@@ -410,8 +410,8 @@ public class GUIFrame extends javax.swing.JFrame {
                             .addComponent(gaussianButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(applyEnvelopeButton)
-                            .addComponent(gaussianField, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(gaussianField, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(applyEnvelopeButton)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(adsrButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -424,20 +424,20 @@ public class GUIFrame extends javax.swing.JFrame {
                         .addComponent(adsrTF3, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(30, 30, 30))
         );
+
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {adsrTF, adsrTF1, adsrTF2, adsrTF3, gaussianField});
+
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(envelopeLabel)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(sinButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(hannButton))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(17, 17, 17)
-                        .addComponent(applyEnvelopeButton)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(sinButton)
+                    .addComponent(applyEnvelopeButton))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(hannButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(hammingButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -460,7 +460,7 @@ public class GUIFrame extends javax.swing.JFrame {
 
         buttonPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 255, 0)));
 
-        resetButton.setText("Reset to loaded Song");
+        resetButton.setText("Reset Song");
         resetButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 resetButtonActionPerformed(evt);
@@ -561,7 +561,7 @@ public class GUIFrame extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(grainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -840,7 +840,6 @@ public class GUIFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
 
         AS.killALData();
-        
 
         try {
             AS.execute(originalSong);
@@ -880,6 +879,38 @@ public class GUIFrame extends javax.swing.JFrame {
         locationSlider.setMaximum(audioData.samples);
     }//GEN-LAST:event_testLoadButtonActionPerformed
 
+    private void cloudDurationSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_cloudDurationSliderStateChanged
+        // TODO add your handling code here:
+        cloudDurationSetting.setText("" + cloudDurationSlider.getValue());
+    }//GEN-LAST:event_cloudDurationSliderStateChanged
+
+    private void saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveActionPerformed
+        statusTF.append("Status: Attempting to save the temporary file...");
+        fileChooser.setAcceptAllFileFilterUsed(false);
+        FileNameExtensionFilter filter = new FileNameExtensionFilter(".wav", "wav");
+        fileChooser.addChoosableFileFilter(filter);
+        if (fileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
+            try {
+                FileWriter fw = new FileWriter(fileChooser.getSelectedFile());
+                String newPath = fileChooser.getSelectedFile().getAbsolutePath();
+                System.out.println("File path = " + newPath);
+                File tempAudio = new File(tempSongFile.getAbsolutePath());
+                System.out.println("File path of tempAudio = " + tempAudio.getAbsolutePath());
+
+                if (tempAudio.renameTo(new File(newPath))) {
+                    System.out.println("File saved successful!");
+                    statusTF.append("Successfully saved as " + tempAudio.getName() + "\n");
+                } else {
+                    System.out.println("File failed to save!");
+                    statusTF.append("Failed to save.\n");
+                }
+            } catch (IOException ex) {
+                System.out.println("File failed to save!" + ex.getMessage());
+                statusTF.append("Failed to save.\n");
+            }
+        }
+    }//GEN-LAST:event_saveActionPerformed
+
     private void applyEnvelopeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_applyEnvelopeButtonActionPerformed
         // TODO add your handling code here:
 
@@ -913,7 +944,7 @@ public class GUIFrame extends javax.swing.JFrame {
                 eLocation = locationSlider.getValue(),
                 cloudDur = cloudDurationSlider.getValue();
 
-        double eAmp = (amplitudeSlider.getValue() / 100) + 0.4;
+        double eAmp = (amplitudeSlider.getValue() / 10) + 0.4;
         SoundRecord audio = new SoundRecord();
         audio.bitsPerSample = audioData.bitsPerSample;
         audio.channels = audioData.channels;
@@ -941,7 +972,7 @@ public class GUIFrame extends javax.swing.JFrame {
                 break;
 
             case 4: // Gaussian
-                
+
                 try {
                     values[0] = Double.parseDouble(gaussianField.getText());
                     statusTF.append("Status: Applying gaussian...");
@@ -953,13 +984,12 @@ public class GUIFrame extends javax.swing.JFrame {
                 break;
 
             case 5: // ADSR
-                try {                    
+                try {
                     values[0] = Double.parseDouble(adsrTF.getText());
                     values[1] = Double.parseDouble(adsrTF1.getText());
                     values[2] = Double.parseDouble(adsrTF2.getText());
                     values[3] = Double.parseDouble(adsrTF3.getText());
                     statusTF.append("Status: Applying ADSR envelope...");
-                    System.out.println(values[0]);
                     envelope = es.adsrEnvelope(audio, 2, values[0], values[1],
                             values[2], values[3]);
                 } catch (NumberFormatException ex) {
@@ -979,10 +1009,10 @@ public class GUIFrame extends javax.swing.JFrame {
             }
         }
 
-        // Apply the envelope values to a text file and then create the wav file   
+        // Apply the envelope values to a text file and then create the wav file
         // phaseShift = eLocation;
         int counter;
-
+        int maxFreq = 0;
         for (int x = eLocation; x < cloudDur + eLocation; x += eOffset) {
             counter = x;
             for (int i = 0; i < envelope.length; i++) {
@@ -992,18 +1022,28 @@ public class GUIFrame extends javax.swing.JFrame {
                 }
                 audio.channelOne[counter] = (int) (audioData.channelOne[counter] * envelope[i]);
                 audio.channelOne[counter] = (int) (audio.channelOne[counter] * eAmp);
+                if (audio.channelOne[counter] > maxFreq) {
+                    maxFreq = audio.channelOne[counter];
+                }
                 if (audio.channels == 2) {
                     audio.channelTwo[counter] = (int) (audioData.channelTwo[counter] * envelope[i]);
                     audio.channelTwo[counter] = (int) (audio.channelTwo[counter] * eAmp);
+                    if (audio.channelTwo[counter] > maxFreq) {
+                        maxFreq = audio.channelTwo[counter];
+                    }
                 }
                 counter++;
             }
         }
 
+        if (maxFreq * 2 > audio.sampleRate) {
+            audio.sampleRate = maxFreq * 2;
+        }
+
         statusTF.append("Envelope Applied!\n");
 
         String tempText = AS.getSongFileName();
-        if(tempText.substring(0,8).equals("Altered.")){
+        if (tempText.substring(0, 8).equals("Altered.")) {
             tempText = tempText.substring(8);
         }
         tempText = "Altered." + tempText;
@@ -1017,7 +1057,6 @@ public class GUIFrame extends javax.swing.JFrame {
         tempSongFile = new File("src\\Music\\" + tempText + ".wav");
         AS.execute(tempSongFile);
         statusTF.append("Status: " + AS.getSongFileName() + " loaded into the audio stream.");
-
     }//GEN-LAST:event_applyEnvelopeButtonActionPerformed
 
     private void adsrButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adsrButtonActionPerformed
@@ -1031,29 +1070,27 @@ public class GUIFrame extends javax.swing.JFrame {
         adsrTF3.setEnabled(true);
 
         // Disable other texts
-        // Gaussian        
+        // Gaussian
         gaussianField.setEnabled(false);
-
     }//GEN-LAST:event_adsrButtonActionPerformed
 
     private void hammingButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hammingButtonActionPerformed
         // TODO add your handling code here:
         // Disbale text fields for other envelopes
 
-        // Gaussian        
+        // Gaussian
         gaussianField.setEnabled(false);
         // ADSR
         adsrTF.setEnabled(false);
         adsrTF1.setEnabled(false);
         adsrTF2.setEnabled(false);
         adsrTF3.setEnabled(false);
-
     }//GEN-LAST:event_hammingButtonActionPerformed
 
     private void sinButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sinButtonActionPerformed
         // TODO add your handling code here:
         // Disbale text fields for other envelopes
-        // Gaussian        
+        // Gaussian
         gaussianField.setEnabled(false);
 
         // ADSR
@@ -1061,12 +1098,11 @@ public class GUIFrame extends javax.swing.JFrame {
         adsrTF1.setEnabled(false);
         adsrTF2.setEnabled(false);
         adsrTF3.setEnabled(false);
-
     }//GEN-LAST:event_sinButtonActionPerformed
 
     private void gaussianButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gaussianButtonActionPerformed
         // TODO add your handling code here:
-        // Gaussian        
+        // Gaussian
         gaussianField.setEnabled(true);
 
         // Disbale text fields for other envelopes
@@ -1075,53 +1111,19 @@ public class GUIFrame extends javax.swing.JFrame {
         adsrTF1.setEnabled(false);
         adsrTF2.setEnabled(false);
         adsrTF3.setEnabled(false);
-
     }//GEN-LAST:event_gaussianButtonActionPerformed
 
     private void hannButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hannButtonActionPerformed
         // TODO add your handling code here:
         // Disbale text fields for other envelopes
-        // Gaussian        
+        // Gaussian
         gaussianField.setEnabled(false);
         // ADSR
         adsrTF.setEnabled(false);
         adsrTF1.setEnabled(false);
         adsrTF2.setEnabled(false);
         adsrTF3.setEnabled(false);
-
     }//GEN-LAST:event_hannButtonActionPerformed
-
-    private void cloudDurationSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_cloudDurationSliderStateChanged
-        // TODO add your handling code here:
-        cloudDurationSetting.setText("" + cloudDurationSlider.getValue());
-    }//GEN-LAST:event_cloudDurationSliderStateChanged
-
-    private void saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveActionPerformed
-        statusTF.append("Status: Attempting to save the temporary file...");
-        fileChooser.setAcceptAllFileFilterUsed(false);
-        FileNameExtensionFilter filter = new FileNameExtensionFilter(".wav", "wav");
-        fileChooser.addChoosableFileFilter(filter);
-        if (fileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
-            try {
-                FileWriter fw = new FileWriter(fileChooser.getSelectedFile());
-                String newPath = fileChooser.getSelectedFile().getAbsolutePath();
-                System.out.println("File path = " + newPath);
-                File tempAudio = new File(tempSongFile.getAbsolutePath());
-                System.out.println("File path of tempAudio = " + tempAudio.getAbsolutePath());
-
-                if (tempAudio.renameTo(new File(newPath))) {
-                    System.out.println("File saved successful!");
-                    statusTF.append("Successfully saved as " + tempAudio.getName() + "\n");
-                } else {
-                    System.out.println("File failed to save!");
-                    statusTF.append("Failed to save.\n");
-                }
-            } catch (IOException ex) {
-                System.out.println("File failed to save!" + ex.getMessage());
-                statusTF.append("Failed to save.\n");
-            }
-        }
-    }//GEN-LAST:event_saveActionPerformed
 
     /**
      * @param args the command line arguments
