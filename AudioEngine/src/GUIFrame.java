@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 
-// https://sites.google.com/site/musicgapi/home - MUSICG jar
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
@@ -18,14 +17,18 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
- * @author Eric
+ * @author Eric Gummerson & Phil Fraczkowski
+ * GUIFrame is the main class for the UI and execution of code
  */
 public class GUIFrame extends javax.swing.JFrame {
 
+    // AudioStream controls the playback of the wav file
     AudioStream AS = new AudioStream();
+    // Envelope class that applies envelopes to the files
     Envelope es = new Envelope();
+    // Files used to load/store songs loaded and created
     File tempSongFile, tempTxtFile, originalSong;
-    double[] envelope = null;
+    // SoundRecord of the wav file
     SoundRecord audioData = new SoundRecord();
 
     /**
@@ -36,7 +39,8 @@ public class GUIFrame extends javax.swing.JFrame {
 
         // Setup sliders
         durationSetting.setText(String.valueOf(durationSlider.getValue()));
-        cloudDurationSetting.setText(String.valueOf(cloudDurationSlider.getValue()));
+        cloudDurationSetting.setText(String.valueOf
+                                            (cloudDurationSlider.getValue()));
         pitchSetting.setText(String.valueOf(pitchSlider.getValue()));
         amplitudeSetting.setText(String.valueOf(amplitudeSlider.getValue()));
         offsetSetting.setText(String.valueOf(offsetSlider.getValue()));
@@ -567,29 +571,36 @@ public class GUIFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    // Open will allow the user to select .wav files only
+    // It will be opened and attempt to load it into the audio stream
     private void openActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openActionPerformed
 
         statusTF.append("Status: Attempting to Open a .wav file.\n");
 
+        // Only .wav files
         fileChooser.setAcceptAllFileFilterUsed(false);
-        FileNameExtensionFilter filter = new FileNameExtensionFilter(".wav", "wav");
+        FileNameExtensionFilter filter = new    
+                                    FileNameExtensionFilter(".wav", "wav");
         fileChooser.addChoosableFileFilter(filter);
         int returnVal = fileChooser.showOpenDialog(this);
         if (returnVal == JFileChooser.APPROVE_OPTION) {
 
             originalSong = fileChooser.getSelectedFile();
+            // Attempt to load the file into the audio stream
             try {
-
                 if (AS.status()) {
                     AS.killALData();
-                    statusTF.append("Status: " + AS.getSongFileName() + " removed from the audio stream.\n");
+                    statusTF.append("Status: " + AS.getSongFileName() 
+                                + " removed from the audio stream.\n");
                 }
                 tempSongFile = originalSong;
                 AS.execute(tempSongFile);
 
             } catch (Exception ex) {
-                System.out.println("Problem accessing file " + tempSongFile.getAbsolutePath());
-                statusTF.append("Status: Problem accessing file " + tempSongFile.getAbsolutePath() + "\n");
+                System.out.println("Problem accessing file " 
+                                + tempSongFile.getAbsolutePath());
+                statusTF.append("Status: Problem accessing file " 
+                                + tempSongFile.getAbsolutePath() + "\n");
             }
 
             // Convert the .wav file to a text file
@@ -598,20 +609,21 @@ public class GUIFrame extends javax.swing.JFrame {
             // read the text file into the sound file
             readFile(tempTxtFile, audioData);
 
+            // Enable the buttons since a file is loaded
             playButton.setEnabled(true);
             pauseButton.setEnabled(true);
             stopButton.setEnabled(true);
             // Update duration slider to song duration
-            durationSlider.setMaximum((int) (audioData.samples / audioData.sampleRate));
+            durationSlider.setMaximum((int)
+                                    (audioData.samples / audioData.sampleRate));
             locationSlider.setMaximum(audioData.samples);
         } else {
             statusTF.append("Status: Open cancelled by user.\n");
             System.out.println("File access cancelled by user.");
         }
-
-
     }//GEN-LAST:event_openActionPerformed
 
+    // Quit will unload the audio from the stream and exit
     private void quitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quitActionPerformed
         // TODO add your handling code here:
         // Kill the song buffer if something is loaded        
@@ -642,17 +654,18 @@ public class GUIFrame extends javax.swing.JFrame {
 
     private void locationSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_locationSliderStateChanged
         // TODO add your handling code here:
-
         locationSetting.setText("" + locationSlider.getValue());
     }//GEN-LAST:event_locationSliderStateChanged
 
+    // Play the song if loaded
     private void playButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playButtonActionPerformed
         // Play if a song is loaded
         if (AS.status()) {
             AS.play();
         }
     }//GEN-LAST:event_playButtonActionPerformed
-
+    
+    // Pause if a song is loaded
     private void pauseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pauseButtonActionPerformed
         // Pause if a song is loaded
         if (AS.status()) {
@@ -660,6 +673,7 @@ public class GUIFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_pauseButtonActionPerformed
 
+    // Stop if a song is loaded
     private void stopButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stopButtonActionPerformed
         // Stop if a song is loaded
         if (AS.status()) {
@@ -667,6 +681,7 @@ public class GUIFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_stopButtonActionPerformed
 
+    // 'x' button hit, unload audio stream and close
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // TODO add your handling code here:
         // Close song buffer if a song is loaded        
@@ -678,48 +693,54 @@ public class GUIFrame extends javax.swing.JFrame {
 
     /* void audioToTxt(String fileName)
      ------SONG MUST BE LOADED FIRST!
+        Takes a file parameter, which is used to convert the wav file to a txt
+        file
      */
     File audioToTxt(File file) {
 
-        statusTF.append("Status: Attempting to convert " + file.getName() + "... ");
-
+        statusTF.append("Status: Attempting to convert " + 
+                                    file.getName() + "... ");
         String fileName = file.getName();
-
+        // Remove the extentsion from the filename
         fileName = fileName.substring(0, fileName.lastIndexOf("."));
-
+        // Make the directory where the txt2wav and wav2txt tools are located
         String base = System.getProperty("user.dir") + "\\src\\music\\";
-
+        // Command to be executed
         String cmd = "\"\"" + base + "wav2txt\" " + "\""
                 + file.getAbsolutePath() + "\"" + " > " + "\""
                 + base + fileName + ".txt" + "\"\"";
 
+        // Run a cmd.exe window to convert files
         try {
             Process p = Runtime.getRuntime().exec(
                     new String[]{"cmd.exe", "/c", cmd});
             p.waitFor();
-            System.out.println("Txt file constructed: \\src\\music\\" + fileName + ".txt");
-            statusTF.append("Successfuly constructed \\src\\music\\" + fileName + ".txt\n");
-        } catch (IOException ex) {
-            System.out.println("FAILED: " + ex.getMessage());
-            statusTF.append("Failed to convert.\n");
-        } catch (InterruptedException ex) {
+            System.out.println("Txt file constructed: \\src\\music\\"
+                                            + fileName + ".txt");
+            statusTF.append("Successfuly constructed \\src\\music\\" 
+                                            + fileName + ".txt\n");
+        } catch (IOException | InterruptedException ex) {
             System.out.println("FAILED: " + ex.getMessage());
             statusTF.append("Failed to convert.\n");
         }
-
+        
+        // Return the new text file
         File txtFile = new File(base + fileName + ".txt");
         return txtFile;
 
     }//End of audioToTxt
 
     /* void txtToAudio(String fileName)    
+        Takes a string filename which is used to convert a text file to a wav
+        file.
      */
     void txtToAudio(String fileName) {
 
         statusTF.append("Status: Attempting to convert " + fileName + "... ");
+        // Removes the extension from the file name        
         fileName = fileName.substring(0, fileName.lastIndexOf("."));
         String base = System.getProperty("user.dir") + "\\src\\music\\";
-
+        // Command to be executed
         String cmd = "\"\"" + base + "txt2wav\" " + "\"" + base + fileName
                 + ".wav\" < " + "\"" + base + fileName + ".txt\"\"";
 
@@ -727,18 +748,18 @@ public class GUIFrame extends javax.swing.JFrame {
             Process p = Runtime.getRuntime().exec(
                     new String[]{"cmd.exe", "/c", cmd});
             p.waitFor();
-            System.out.println("Wav file constructed: \\src\\music\\" + fileName + ".wav");
-            statusTF.append("Successfuly constructed \\src\\music\\" + fileName + ".wav\n");
-        } catch (IOException ex) {
-            System.out.println("FAILED: " + ex.getMessage());
-            statusTF.append("Failed to convert.\n");
-        } catch (InterruptedException ex) {
+            System.out.println("Wav file constructed: \\src\\music\\"   
+                                            + fileName + ".wav");
+            statusTF.append("Successfuly constructed \\src\\music\\"
+                                            + fileName + ".wav\n");
+        } catch (IOException | InterruptedException ex) {
             System.out.println("FAILED: " + ex.getMessage());
             statusTF.append("Failed to convert.\n");
         }
     }//End of txtToAudio
 
     /* readFile(String fileName, SoundRecord record)
+        reads the text file into the sound record object
      */
     void readFile(File txtFile, SoundRecord record) {
 
@@ -769,16 +790,12 @@ public class GUIFrame extends javax.swing.JFrame {
                 if (record.channels == 1) {
                     int line = scanner.nextInt();
                     record.channelOne[count] = line;
-                    //System.out.printf("%s %n", record.channelOne[count]);
                     count++;
                 } else {
-
                     int line1 = scanner.nextInt();
                     record.channelOne[count] = line1;
                     int line2 = scanner.nextInt();
                     record.channelTwo[count] = line2;
-                    //System.out.printf("--- %s \t %s %n",
-                    //        record.channelOne[count], record.channelTwo[count]);
                     count++;
                 }
             }
@@ -786,19 +803,21 @@ public class GUIFrame extends javax.swing.JFrame {
 
         } catch (FileNotFoundException e) {
             statusTF.append("Status: Error reading " + txtFile.getName() + ".\n");
-            System.out.println("ERROR");
+            System.out.println("ERROR " + e.getMessage());
         }
 
     }//End of readFile
 
-    /* outputFile(String fileName, SoundRecord record)     
+    /* outputFile(String fileName, SoundRecord record)
+        Outputs the the sound record data to a text file
      */
     void outputTxtFile(String fileName, SoundRecord record) {
 
         String base = System.getProperty("user.dir") + "\\src\\music\\";
 
         try {
-            BufferedWriter out = new BufferedWriter(new FileWriter(base + fileName));
+            BufferedWriter out = new BufferedWriter(
+                                            new FileWriter(base + fileName));
             out.write("SAMPLES: \t" + record.channelOne.length);
             out.newLine();
             out.write("BITSPERSAMPLE: \t" + record.bitsPerSample);
@@ -822,30 +841,35 @@ public class GUIFrame extends javax.swing.JFrame {
                     out.write(line2 + "\n");
                 }
             }
-
             out.close();
             statusTF.append("Status: Successfully created " + fileName + "\n");
             System.out.println("Successfully created " + fileName);
         } catch (IOException e) {
             statusTF.append("Status: Error outputing the file " + fileName
                     + ". \n");
-            System.out.println("Error outputing the file " + fileName);
+            System.out.println("Error outputing the file " + fileName 
+                                + e.getMessage());
         }
 
     } //End of outPutFile
 
+    // Reloads the song that was last loaded from open
     private void resetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetButtonActionPerformed
         // TODO add your handling code here:
 
         AS.killALData();
 
         try {
+            // Attempt to reload the original song
             AS.execute(originalSong);
-            statusTF.setText("Status: Attempting to remove song from audio stream. ");
+            statusTF.setText("Status: Attempting to remove "
+                                + "song from audio stream. ");
             statusTF.append("Loaded " + originalSong.getName() + "\n");
         } catch (Exception ex) {
-            System.out.println("Problem accessing file " + originalSong.getAbsolutePath());
-            statusTF.setText("Status: Attempting to remove song from audio stream. ");
+            System.out.println("Problem accessing file " 
+                                        + originalSong.getAbsolutePath());
+            statusTF.setText("Status: Attempting to "
+                                    + "remove song from audio stream. ");
             statusTF.append("Failed to load " + originalSong.getName() + "\n");
             return;
         }
@@ -854,26 +878,29 @@ public class GUIFrame extends javax.swing.JFrame {
         tempTxtFile = audioToTxt(originalSong);
         // read the text file into the sound file
         readFile(tempTxtFile, audioData);
-        durationSlider.setMaximum((int) (audioData.samples / audioData.sampleRate));
+        // Set the sliders as they depend on the sound data
+        durationSlider.setMaximum((int) 
+                            (audioData.samples / audioData.sampleRate));
         locationSlider.setMaximum(audioData.samples);
     }//GEN-LAST:event_resetButtonActionPerformed
 
+    // Quick button to load a test file FancyPants.wav
     private void testLoadButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_testLoadButtonActionPerformed
         // TODO add your handling code here:
 
         AS.killALData();
-
         tempSongFile = originalSong = new File("src\\FancyPants.wav");
         AS.execute(tempSongFile);
-
+        // Loaded file, now convert it to a txt file
         tempTxtFile = audioToTxt(tempSongFile);
-
+        // read the txt file into the audio data
         readFile(tempTxtFile, audioData);
 
         playButton.setEnabled(true);
         pauseButton.setEnabled(true);
         stopButton.setEnabled(true);
-        durationSlider.setMaximum((int) (audioData.samples / audioData.sampleRate));
+        durationSlider.setMaximum((int) (audioData.samples 
+                                            / audioData.sampleRate));
         locationSlider.setMaximum(audioData.samples);
     }//GEN-LAST:event_testLoadButtonActionPerformed
 
@@ -882,21 +909,27 @@ public class GUIFrame extends javax.swing.JFrame {
         cloudDurationSetting.setText("" + cloudDurationSlider.getValue());
     }//GEN-LAST:event_cloudDurationSliderStateChanged
 
+    // Save file will save a the current wav file to the
+    // directory of your choice
     private void saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveActionPerformed
         statusTF.append("Status: Attempting to save the temporary file...");
         fileChooser.setAcceptAllFileFilterUsed(false);
-        FileNameExtensionFilter filter = new FileNameExtensionFilter(".wav", "wav");
+        FileNameExtensionFilter filter = 
+                            new FileNameExtensionFilter(".wav", "wav");
         fileChooser.addChoosableFileFilter(filter);
         if (fileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
             try {
                 FileWriter fw = new FileWriter(fileChooser.getSelectedFile());
-                String newPath = fileChooser.getSelectedFile().getAbsolutePath();
+                String newPath = 
+                            fileChooser.getSelectedFile().getAbsolutePath();
                 try{
+                    // Create a new dst file
                     File srcFile = new File(tempSongFile.getAbsolutePath());
                     File dstFile = new File(newPath);
                     FileInputStream in = new FileInputStream(srcFile);
                     FileOutputStream out = new FileOutputStream(dstFile);
 
+                    // Write it out as it is a wav file
                     byte[] buf = new byte[1024];
                     int len;
                     while ((len = in.read(buf)) > 0) {
@@ -907,7 +940,8 @@ public class GUIFrame extends javax.swing.JFrame {
                     out.close();
                     
                     System.out.println("File saved successful!");
-                    statusTF.append("Successfully saved as " + dstFile.getAbsolutePath() + "\n");
+                    statusTF.append("Successfully saved as " 
+                                    + dstFile.getAbsolutePath() + "\n");
                     
                 }catch(IOException e){                    
                     System.out.println("File failed to save!");
@@ -915,11 +949,6 @@ public class GUIFrame extends javax.swing.JFrame {
                     
                 }
 
-//                if (tempAudio.renameTo(new File(newPath))) {
-//                    
-//                } else {
-//                    
-//                }
             } catch (IOException ex) {
                 System.out.println("File failed to save!" + ex.getMessage());
                 statusTF.append("Failed to save.\n");
@@ -927,6 +956,8 @@ public class GUIFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_saveActionPerformed
 
+    // Apply an envelope to the song loaded
+    // Wont execute if there is no file loaded or no envelope selected
     private void applyEnvelopeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_applyEnvelopeButtonActionPerformed
         // TODO add your handling code here:
 
@@ -955,21 +986,23 @@ public class GUIFrame extends javax.swing.JFrame {
             return;
         }
 
+        // Slider values
         int eDur = durationSlider.getValue(), ePitch = pitchSlider.getValue(),
                 eOffset = offsetSlider.getValue(),
                 eLocation = locationSlider.getValue(),
                 cloudDur = cloudDurationSlider.getValue();
 
+        
         double eAmp = (amplitudeSlider.getValue() / 10) + 0.4;
         SoundRecord audio = new SoundRecord();
         audio.bitsPerSample = audioData.bitsPerSample;
         audio.channels = audioData.channels;
         audio.normalized = audioData.normalized;
         audio.samples = audioData.samples;
-        //audio.sampleRate = audioData.sampleRate;
+        // Frequency between 100 and 44000
         audio.sampleRate = ePitch * 100;
         double[] envelope = null;
-
+        // Text fields for the envelopes
         double[] values = new double[4];
         switch (type) {
 
@@ -1052,12 +1085,13 @@ public class GUIFrame extends javax.swing.JFrame {
             }
         }
 
+        // Nyquist rate
         if (maxFreq * 2 > audio.sampleRate) {
             audio.sampleRate = maxFreq * 2;
         }
 
         statusTF.append("Envelope Applied!\n");
-
+        // create a new altered file of the song loaded
         String tempText = AS.getSongFileName();
         if (tempText.substring(0, 8).equals("Altered.")) {
             tempText = tempText.substring(8);
@@ -1068,11 +1102,12 @@ public class GUIFrame extends javax.swing.JFrame {
         outputTxtFile(tempText + ".txt", audio);
         txtToAudio(tempText + ".txt");
 
-        //Load it
+        //Load the new altered file into the audio stream
         AS.killALData();
         tempSongFile = new File("src\\Music\\" + tempText + ".wav");
         AS.execute(tempSongFile);
-        statusTF.append("Status: " + AS.getSongFileName() + " loaded into the audio stream.\n");
+        statusTF.append("Status: " + AS.getSongFileName() + 
+                                    " loaded into the audio stream.\n");
     }//GEN-LAST:event_applyEnvelopeButtonActionPerformed
 
     private void adsrButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adsrButtonActionPerformed
