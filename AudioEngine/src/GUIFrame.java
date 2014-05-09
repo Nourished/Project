@@ -7,7 +7,9 @@
 // https://sites.google.com/site/musicgapi/home - MUSICG jar
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
@@ -502,7 +504,8 @@ public class GUIFrame extends javax.swing.JFrame {
 
         fileMenu.setText("File");
 
-        save.setText("Save - NW");
+        save.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
+        save.setText("Save");
         save.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 saveActionPerformed(evt);
@@ -510,6 +513,7 @@ public class GUIFrame extends javax.swing.JFrame {
         });
         fileMenu.add(save);
 
+        open.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
         open.setText("Open");
         open.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -518,6 +522,7 @@ public class GUIFrame extends javax.swing.JFrame {
         });
         fileMenu.add(open);
 
+        quit.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Q, java.awt.event.InputEvent.CTRL_MASK));
         quit.setText("Quit");
         quit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -893,17 +898,35 @@ public class GUIFrame extends javax.swing.JFrame {
             try {
                 FileWriter fw = new FileWriter(fileChooser.getSelectedFile());
                 String newPath = fileChooser.getSelectedFile().getAbsolutePath();
-                System.out.println("File path = " + newPath);
-                File tempAudio = new File(tempSongFile.getAbsolutePath());
-                System.out.println("File path of tempAudio = " + tempAudio.getAbsolutePath());
+                try{
+                    File srcFile = new File(tempSongFile.getAbsolutePath());
+                    File dstFile = new File(newPath);
+                    FileInputStream in = new FileInputStream(srcFile);
+                    FileOutputStream out = new FileOutputStream(dstFile);
 
-                if (tempAudio.renameTo(new File(newPath))) {
+                    byte[] buf = new byte[1024];
+                    int len;
+                    while ((len = in.read(buf)) > 0) {
+                        out.write(buf, 0, len);
+                    }
+
+                    in.close();
+                    out.close();
+                    
                     System.out.println("File saved successful!");
-                    statusTF.append("Successfully saved as " + tempAudio.getName() + "\n");
-                } else {
+                    statusTF.append("Successfully saved as " + dstFile.getAbsolutePath() + "\n");
+                    
+                }catch(IOException e){                    
                     System.out.println("File failed to save!");
                     statusTF.append("Failed to save.\n");
+                    
                 }
+
+//                if (tempAudio.renameTo(new File(newPath))) {
+//                    
+//                } else {
+//                    
+//                }
             } catch (IOException ex) {
                 System.out.println("File failed to save!" + ex.getMessage());
                 statusTF.append("Failed to save.\n");
@@ -1056,7 +1079,7 @@ public class GUIFrame extends javax.swing.JFrame {
         AS.killALData();
         tempSongFile = new File("src\\Music\\" + tempText + ".wav");
         AS.execute(tempSongFile);
-        statusTF.append("Status: " + AS.getSongFileName() + " loaded into the audio stream.");
+        statusTF.append("Status: " + AS.getSongFileName() + " loaded into the audio stream.\n");
     }//GEN-LAST:event_applyEnvelopeButtonActionPerformed
 
     private void adsrButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adsrButtonActionPerformed
