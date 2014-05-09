@@ -1,4 +1,3 @@
-
 /**
  * class SoundRecord
  *
@@ -9,37 +8,29 @@
  *
  * @author PHILIP FRACZKOWSKI
  * @std#: 4597290
+ * 
+ * @autho ERIC GUMMERSON
+ * @std#: 4585469
  */
 public class SoundRecord {
 
-    int samples;
-    int bitsPerSample;
-    int channels;
-    int sampleRate;
-    boolean normalized;
-    int[] channelOne;
-    int[] channelTwo;
+    int samples;        //Number of samples in audio file
+    int bitsPerSample;  //Number of bits per sample
+    int channels;       //Number of channels in audio file
+    int sampleRate;     //Sampling rate of audio file
+    boolean normalized; //Audio file normalization status
+    int[] channelOne;   //channel one integer array for sample values
+    int[] channelTwo;   //channel two integer array for sample values
 
     public SoundRecord() {
-        this.samples = 0;
+        this.samples = 0;           
         this.bitsPerSample = 0;
         this.channels = 0;
         this.sampleRate = 0;
         this.normalized = false;
         int[] channelOne = null;
         int[] channelTwo = null;
-    }
-
-    public void populate(int length) {
-        this.channelOne = new int[length];
-    }
-
-    public void copy(short[] dataFrom) {
-        for (int i = 0; i < dataFrom.length; i++) {
-            this.channelOne[i] = dataFrom[i];
-        }
-
-    }
+    }  
 
     public void printOut() {
         System.out.println("-------------------------------------");

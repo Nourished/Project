@@ -1,7 +1,17 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * class AudioStream
+ *
+ * the AudioStream class is responsible for handling all live audio playback. 
+ * Through the use of a third party library called Light Weight Java Gaming
+ * Library ( LWJGL ). http://lwjgl.org/. Made use of and modified Single
+ * Static Source example - 
+ * http://lwjgl.org/wiki/index.php?title=OpenAL_Tutorial_1_-_Single_Static_Source
+ *
+ * @author PHILIP FRACZKOWSKI
+ * @std#: 4597290
+ * 
+ * @autho ERIC GUMMERSON
+ * @std#: 4585469
  */
 
 import java.io.BufferedInputStream;
@@ -139,20 +149,40 @@ public class AudioStream {
         }
     }
 
+    
+    /* play()
+    *  
+    *  this method used to play the audio file. Works in correlation with the 
+    *  play button in the GUI.  
+    */
     public void play() {
         AL10.alSourcePlay(source.get(0));
     }
 
+    /* pause()
+    *  
+    *  this method used to play the audio file. Works in correlation with the 
+    *  pause button in the GUI.  
+    */
     public void pause() {
         AL10.alSourcePause(source.get(0));
         
     }
 
+    /* stop()
+    *  
+    *  this method used to play the audio file. Works in correlation with the 
+    *  stop button in the GUI.  
+    */
     public void stop() {
         AL10.alSourceStop(source.get(0));
 
     }
     
+    /* getSongFile()
+    *  
+    *  this method used to returns the file of the song loaded in  
+    */
     public File getSongFile(){
         if(songLoaded)
             return song;
@@ -160,6 +190,10 @@ public class AudioStream {
             return null;
     }
     
+    /* getSongFileName()
+    *  
+    *  this method used to returns the song file name of the song loaded in  
+    */
     public String getSongFileName(){
         if(songLoaded)
             return song.getName();
@@ -167,6 +201,10 @@ public class AudioStream {
             return "";
     }
     
+    /* getSongPath()
+    *  
+    *  this method used to returns the file path of the song loaded in  
+    */
     public String getSongPath(){
         if(songLoaded)
             return song.getAbsolutePath();
@@ -174,6 +212,10 @@ public class AudioStream {
             return "";
     }
 
+    /* execute()
+    *  
+    *  this method used load in the audio File passed in.
+    */
     public void execute(File file) {
         // Initialize OpenAL and clear the error bit.
 
@@ -200,10 +242,18 @@ public class AudioStream {
 
     }
     
+    /* updateStatus()
+    *  
+    *  this updates the status of the loaded song 
+    */
     public void updateStatus(boolean b){
         songLoaded = b;
     }
     
+    /* status()
+    *  
+    *  this method used to returns the status of the song loaded  
+    */
     public boolean status(){
         return songLoaded;
     }
