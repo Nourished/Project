@@ -7,6 +7,7 @@
 // https://sites.google.com/site/musicgapi/home - MUSICG jar
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
@@ -82,19 +83,16 @@ public class GUIFrame extends javax.swing.JFrame {
         adsrTF2 = new javax.swing.JFormattedTextField();
         adsrTF3 = new javax.swing.JFormattedTextField();
         gaussianField = new javax.swing.JFormattedTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        statusTF = new javax.swing.JTextArea();
+        buttonPanel = new javax.swing.JPanel();
         resetButton = new javax.swing.JButton();
         testLoadButton = new javax.swing.JButton();
-        txtWavButton = new javax.swing.JButton();
-        outputButton = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         save = new javax.swing.JMenuItem();
-        saveAs = new javax.swing.JMenuItem();
         open = new javax.swing.JMenuItem();
         quit = new javax.swing.JMenuItem();
-        optionsMenu = new javax.swing.JMenu();
-        helpMenu = new javax.swing.JMenu();
-        lMenu = new javax.swing.JMenu();
 
         fileChooser.setCurrentDirectory(new java.io.File("C:\\Users\\Eric\\Documents\\Word Documents\\COSC\\4P98\\Project\\Audio Engine\\src"));
 
@@ -104,6 +102,8 @@ public class GUIFrame extends javax.swing.JFrame {
                 formWindowClosing(evt);
             }
         });
+
+        ButtonPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 51, 0)));
 
         playButton.setText("Play");
         playButton.setEnabled(false);
@@ -163,9 +163,9 @@ public class GUIFrame extends javax.swing.JFrame {
 
         ButtonPanelLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {pauseButton, playButton, stopButton});
 
-        durationLabel.setText("Duration");
+        grainPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 204, 204)));
 
-        durationSetting.setText("50");
+        durationLabel.setText("Duration");
 
         locationSlider.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
@@ -173,19 +173,10 @@ public class GUIFrame extends javax.swing.JFrame {
             }
         });
 
-        pitchSetting.setText("50");
-
-        amplitudeSetting.setText("50");
-        amplitudeSetting.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                amplitudeSettingActionPerformed(evt);
-            }
-        });
-
         locationLabel.setText("Location");
 
-        locationSetting.setText("0");
-
+        pitchSlider.setMajorTickSpacing(1);
+        pitchSlider.setMaximum(10);
         pitchSlider.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 pitchSliderStateChanged(evt);
@@ -198,6 +189,8 @@ public class GUIFrame extends javax.swing.JFrame {
             }
         });
 
+        amplitudeSlider.setMajorTickSpacing(1);
+        amplitudeSlider.setMaximum(440);
         amplitudeSlider.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 amplitudeSliderStateChanged(evt);
@@ -210,6 +203,7 @@ public class GUIFrame extends javax.swing.JFrame {
             }
         });
 
+        grainLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         grainLabel.setText("Grain Settings");
 
         pitchLabel.setText("Pitch");
@@ -217,8 +211,6 @@ public class GUIFrame extends javax.swing.JFrame {
         offsetLabel.setText("Offset");
 
         amplitudeLabel.setText("Amplitude");
-
-        offsetSetting.setText("50");
 
         jLabel1.setText("Cloud Duration");
 
@@ -228,124 +220,112 @@ public class GUIFrame extends javax.swing.JFrame {
             }
         });
 
-        cloudDurationSetting.setText("50");
-        cloudDurationSetting.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cloudDurationSettingActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout grainPanelLayout = new javax.swing.GroupLayout(grainPanel);
         grainPanel.setLayout(grainPanelLayout);
         grainPanelLayout.setHorizontalGroup(
             grainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(grainPanelLayout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(grainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(grainPanelLayout.createSequentialGroup()
-                        .addComponent(offsetLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addContainerGap()
                         .addGroup(grainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(grainPanelLayout.createSequentialGroup()
-                                .addComponent(offsetSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(offsetSetting, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(grainPanelLayout.createSequentialGroup()
-                                .addComponent(cloudDurationSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(cloudDurationSetting, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(252, 252, 252))))
-                    .addGroup(grainPanelLayout.createSequentialGroup()
-                        .addGroup(grainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(grainPanelLayout.createSequentialGroup()
-                                .addComponent(amplitudeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(cloudDurationSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(amplitudeSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                            .addGroup(grainPanelLayout.createSequentialGroup()
-                                .addComponent(pitchLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(pitchSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(grainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(amplitudeSetting, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(pitchSetting, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(230, 230, 230))
-                    .addGroup(grainPanelLayout.createSequentialGroup()
-                        .addGroup(grainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(cloudDurationSetting))
                             .addGroup(grainPanelLayout.createSequentialGroup()
                                 .addComponent(durationLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(durationSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(durationSlider, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(durationSetting, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel1)
+                                .addComponent(durationSetting, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(grainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(grainPanelLayout.createSequentialGroup()
+                                    .addComponent(locationLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(locationSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(locationSetting))
+                                .addGroup(grainPanelLayout.createSequentialGroup()
+                                    .addComponent(offsetLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(offsetSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(offsetSetting, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(grainPanelLayout.createSequentialGroup()
+                                    .addComponent(amplitudeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(pitchSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(pitchSetting, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(grainPanelLayout.createSequentialGroup()
-                                .addGap(10, 10, 10)
-                                .addComponent(grainLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(grainPanelLayout.createSequentialGroup()
-                                .addComponent(locationLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(pitchLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(locationSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(amplitudeSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(locationSetting, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(194, 194, 194))))
+                                .addComponent(amplitudeSetting, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(grainPanelLayout.createSequentialGroup()
+                        .addGap(82, 82, 82)
+                        .addComponent(grainLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
+
+        grainPanelLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {amplitudeSlider, cloudDurationSlider, durationSlider, locationSlider, offsetSlider, pitchSlider});
+
+        grainPanelLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {amplitudeLabel, durationLabel, jLabel1, locationLabel, offsetLabel, pitchLabel});
+
+        grainPanelLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {amplitudeSetting, cloudDurationSetting, durationSetting, locationSetting, offsetSetting, pitchSetting});
+
         grainPanelLayout.setVerticalGroup(
             grainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(grainPanelLayout.createSequentialGroup()
                 .addContainerGap()
+                .addComponent(grainLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
                 .addGroup(grainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(grainPanelLayout.createSequentialGroup()
-                        .addComponent(grainLabel)
-                        .addGap(18, 18, 18)
-                        .addGroup(grainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(durationSlider, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(durationLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addComponent(durationSetting, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(21, 21, 21)
-                .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addGroup(grainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(grainPanelLayout.createSequentialGroup()
-                        .addGroup(grainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cloudDurationSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cloudDurationSetting, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(grainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(grainPanelLayout.createSequentialGroup()
-                                .addGap(13, 13, 13)
-                                .addComponent(amplitudeSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(grainPanelLayout.createSequentialGroup()
-                                .addGap(37, 37, 37)
-                                .addComponent(amplitudeSetting, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addComponent(amplitudeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(grainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(grainPanelLayout.createSequentialGroup()
-                        .addGap(2, 2, 2)
-                        .addGroup(grainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(pitchLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(pitchSlider, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, grainPanelLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(pitchSetting, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(23, 23, 23)))
-                .addGroup(grainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(offsetSlider, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(offsetLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(grainPanelLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 4, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(offsetSetting, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(durationSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(durationSetting, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(durationLabel, javax.swing.GroupLayout.Alignment.LEADING))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(grainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(locationSlider, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(locationLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(grainPanelLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 4, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(locationSetting, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+                .addGroup(grainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(cloudDurationSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cloudDurationSetting, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(grainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(amplitudeSetting, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(pitchLabel)
+                    .addComponent(amplitudeSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(9, 9, 9)
+                .addGroup(grainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(grainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(pitchSetting, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(pitchSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(amplitudeLabel))
+                .addGap(8, 8, 8)
+                .addGroup(grainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(grainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(offsetSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(offsetSetting, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(offsetLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(grainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(grainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(locationSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(locationSetting, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(locationLabel))
+                .addGap(32, 32, 32))
         );
 
-        grainPanelLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {durationLabel, durationSlider});
+        grainPanelLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {amplitudeSetting, cloudDurationSetting, durationSetting, locationSetting, offsetSetting, pitchSetting});
+
+        grainPanelLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {amplitudeSlider, cloudDurationSlider, durationSlider, locationSlider, offsetSlider, pitchSlider});
+
+        grainPanelLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {amplitudeLabel, locationLabel, offsetLabel, pitchLabel});
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 0, 0)));
 
         envelopebuttonGroup.add(hannButton);
         hannButton.setText("Hann");
@@ -407,11 +387,6 @@ public class GUIFrame extends javax.swing.JFrame {
 
         adsrTF3.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,##0.00"))));
         adsrTF3.setEnabled(false);
-        adsrTF3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                adsrTF3ActionPerformed(evt);
-            }
-        });
 
         gaussianField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,##0.00"))));
         gaussianField.setEnabled(false);
@@ -476,6 +451,12 @@ public class GUIFrame extends javax.swing.JFrame {
                 .addGap(88, 88, 88))
         );
 
+        statusTF.setColumns(20);
+        statusTF.setRows(5);
+        jScrollPane1.setViewportView(statusTF);
+
+        buttonPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 255, 0)));
+
         resetButton.setText("Reset to loaded Song");
         resetButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -490,37 +471,41 @@ public class GUIFrame extends javax.swing.JFrame {
             }
         });
 
-        txtWavButton.setText("Test txt2wav");
-        txtWavButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtWavButtonActionPerformed(evt);
-            }
-        });
+        javax.swing.GroupLayout buttonPanelLayout = new javax.swing.GroupLayout(buttonPanel);
+        buttonPanel.setLayout(buttonPanelLayout);
+        buttonPanelLayout.setHorizontalGroup(
+            buttonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(buttonPanelLayout.createSequentialGroup()
+                .addGap(32, 32, 32)
+                .addComponent(resetButton)
+                .addGap(18, 18, 18)
+                .addComponent(testLoadButton)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
-        outputButton.setText("Output to text file");
-        outputButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                outputButtonActionPerformed(evt);
-            }
-        });
+        buttonPanelLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {resetButton, testLoadButton});
+
+        buttonPanelLayout.setVerticalGroup(
+            buttonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(buttonPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(buttonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(resetButton)
+                    .addComponent(testLoadButton))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        buttonPanelLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {resetButton, testLoadButton});
 
         fileMenu.setText("File");
 
-        save.setText("Save");
+        save.setText("Save - NW");
         save.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 saveActionPerformed(evt);
             }
         });
         fileMenu.add(save);
-
-        saveAs.setText("Save As");
-        saveAs.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                saveAsActionPerformed(evt);
-            }
-        });
-        fileMenu.add(saveAs);
 
         open.setText("Open");
         open.addActionListener(new java.awt.event.ActionListener() {
@@ -540,15 +525,6 @@ public class GUIFrame extends javax.swing.JFrame {
 
         jMenuBar1.add(fileMenu);
 
-        optionsMenu.setText("Options");
-        jMenuBar1.add(optionsMenu);
-
-        helpMenu.setText("Help");
-        jMenuBar1.add(helpMenu);
-
-        lMenu.setText("Else");
-        jMenuBar1.add(lMenu);
-
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -556,97 +532,63 @@ public class GUIFrame extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(ButtonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(46, 46, 46)
+                        .addGap(12, 12, 12)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(resetButton)
-                            .addComponent(outputButton))
-                        .addGap(68, 68, 68)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(testLoadButton)
-                            .addComponent(txtWavButton)))
+                            .addComponent(grainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(ButtonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(buttonPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(grainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(252, 252, 252)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(17, Short.MAX_VALUE))
+                        .addContainerGap()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 733, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(66, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(ButtonPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(buttonPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(19, 19, 19)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(11, 11, 11)
-                        .addComponent(ButtonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(22, 22, 22)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(resetButton)
-                            .addComponent(testLoadButton))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtWavButton)
-                            .addComponent(outputButton))))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(43, 43, 43)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(106, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(grainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(grainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveActionPerformed
-        JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setAcceptAllFileFilterUsed(false);
-        FileNameExtensionFilter filter = new FileNameExtensionFilter(".wav", "wav");
-        fileChooser.addChoosableFileFilter(filter);
-        if (fileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
-            try {
-                FileWriter fw = new FileWriter(fileChooser.getSelectedFile());
-                String newPath = fileChooser.getSelectedFile().getAbsolutePath();
-                System.out.println("File path = " + newPath);
-                File tempAudio = new File(tempSongFile.getAbsolutePath());
-                System.out.println("File path of tempAudio = " + tempAudio.getAbsolutePath());
-
-                if (tempAudio.renameTo(new File(newPath))) {
-                    System.out.println("File saved successful!");
-                } else {
-                    System.out.println("File failed to save!");
-                }
-            } catch (Exception ex) {
-            }
-        }
-    }//GEN-LAST:event_saveActionPerformed
-
-    private void saveAsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveAsActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_saveAsActionPerformed
-
     private void openActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openActionPerformed
 
-        AS.killALData();
+        statusTF.append("Status: Attempting to Open a .wav file.\n");
+
         fileChooser.setAcceptAllFileFilterUsed(false);
         FileNameExtensionFilter filter = new FileNameExtensionFilter(".wav", "wav");
         fileChooser.addChoosableFileFilter(filter);
         int returnVal = fileChooser.showOpenDialog(this);
         if (returnVal == JFileChooser.APPROVE_OPTION) {
+
             originalSong = fileChooser.getSelectedFile();
             try {
 
+                if (AS.status()) {
+                    AS.killALData();
+                    statusTF.append("Status: " + AS.getSongFileName() + " removed from the audio stream.\n");
+                }
                 tempSongFile = originalSong;
                 AS.execute(tempSongFile);
 
             } catch (Exception ex) {
                 System.out.println("Problem accessing file " + tempSongFile.getAbsolutePath());
+                statusTF.append("Status: Problem accessing file " + tempSongFile.getAbsolutePath() + "\n");
             }
 
             // Convert the .wav file to a text file
@@ -655,19 +597,17 @@ public class GUIFrame extends javax.swing.JFrame {
             // read the text file into the sound file
             readFile(tempTxtFile, audioData);
 
-
             playButton.setEnabled(true);
             pauseButton.setEnabled(true);
             stopButton.setEnabled(true);
             // Update duration slider to song duration
             durationSlider.setMaximum((int) (audioData.samples / audioData.sampleRate));
-
-            //  txtToAudio(tempTxtFile);
+            locationSlider.setMaximum(audioData.samples);
         } else {
+            statusTF.append("Status: Open cancelled by user.\n");
             System.out.println("File access cancelled by user.");
         }
-        
-        locationSlider.setMaximum( audioData.samples);
+
 
     }//GEN-LAST:event_openActionPerformed
 
@@ -675,7 +615,7 @@ public class GUIFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         // Kill the song buffer if something is loaded        
         AS.killALData();
-
+        originalSong = tempSongFile = tempTxtFile = null;
         System.exit(0);
     }//GEN-LAST:event_quitActionPerformed
 
@@ -701,7 +641,7 @@ public class GUIFrame extends javax.swing.JFrame {
 
     private void locationSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_locationSliderStateChanged
         // TODO add your handling code here:
-        
+
         locationSetting.setText("" + locationSlider.getValue());
     }//GEN-LAST:event_locationSliderStateChanged
 
@@ -730,7 +670,8 @@ public class GUIFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         // Close song buffer if a song is loaded        
         AS.killALData();
-
+        originalSong = tempSongFile = tempTxtFile = null;
+        System.exit(0);
     }//GEN-LAST:event_formWindowClosing
 
 
@@ -738,6 +679,8 @@ public class GUIFrame extends javax.swing.JFrame {
      ------SONG MUST BE LOADED FIRST!
      */
     File audioToTxt(File file) {
+
+        statusTF.append("Status: Attempting to convert " + file.getName() + "... ");
 
         String fileName = file.getName();
 
@@ -752,16 +695,18 @@ public class GUIFrame extends javax.swing.JFrame {
         try {
             Process p = Runtime.getRuntime().exec(
                     new String[]{"cmd.exe", "/c", cmd});
-            System.out
-                    .println("Txt file constructed: /src/music/" + fileName + ".txt");
             p.waitFor();
-        } catch (Exception ex) {
+            System.out.println("Txt file constructed: \\src\\music\\" + fileName + ".txt");
+            statusTF.append("Successfuly constructed \\src\\music\\" + fileName + ".txt\n");
+        } catch (IOException ex) {
             System.out.println("FAILED: " + ex.getMessage());
-
+            statusTF.append("Failed to convert.\n");
+        } catch (InterruptedException ex) {
+            System.out.println("FAILED: " + ex.getMessage());
+            statusTF.append("Failed to convert.\n");
         }
 
         File txtFile = new File(base + fileName + ".txt");
-
         return txtFile;
 
     }//End of audioToTxt
@@ -770,6 +715,7 @@ public class GUIFrame extends javax.swing.JFrame {
      */
     void txtToAudio(String fileName) {
 
+        statusTF.append("Status: Attempting to convert " + fileName + "... ");
         fileName = fileName.substring(0, fileName.lastIndexOf("."));
         String base = System.getProperty("user.dir") + "\\src\\music\\";
 
@@ -779,11 +725,15 @@ public class GUIFrame extends javax.swing.JFrame {
         try {
             Process p = Runtime.getRuntime().exec(
                     new String[]{"cmd.exe", "/c", cmd});
-            System.out.println("Wav file constructed: \\src\\music\\" + fileName + ".wav");
             p.waitFor();
-        } catch (Exception ex) {
+            System.out.println("Wav file constructed: \\src\\music\\" + fileName + ".wav");
+            statusTF.append("Successfuly constructed \\src\\music\\" + fileName + ".wav\n");
+        } catch (IOException ex) {
             System.out.println("FAILED: " + ex.getMessage());
-
+            statusTF.append("Failed to convert.\n");
+        } catch (InterruptedException ex) {
+            System.out.println("FAILED: " + ex.getMessage());
+            statusTF.append("Failed to convert.\n");
         }
     }//End of txtToAudio
 
@@ -833,7 +783,8 @@ public class GUIFrame extends javax.swing.JFrame {
             }
             scanner.close();
 
-        } catch (Exception e) {
+        } catch (FileNotFoundException e) {
+            statusTF.append("Status: Error reading " + txtFile.getName() + ".\n");
             System.out.println("ERROR");
         }
 
@@ -872,8 +823,11 @@ public class GUIFrame extends javax.swing.JFrame {
             }
 
             out.close();
+            statusTF.append("Status: Successfully created " + fileName + "\n");
             System.out.println("Successfully created " + fileName);
-        } catch (Exception e) {
+        } catch (IOException e) {
+            statusTF.append("Status: Error outputing the file " + fileName
+                    + ". \n");
             System.out.println("Error outputing the file " + fileName);
         }
 
@@ -881,26 +835,30 @@ public class GUIFrame extends javax.swing.JFrame {
 
     private void resetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetButtonActionPerformed
         // TODO add your handling code here:
+
         AS.killALData();
-        
+        statusTF.setText("Status: Removed song from audio stream. ");
+
         try {
             AS.execute(originalSong);
-
+            statusTF.append("Loaded " + originalSong.getName() + "\n");
         } catch (Exception ex) {
             System.out.println("Problem accessing file " + originalSong.getAbsolutePath());
+            statusTF.append("Loaded " + originalSong.getName() + "\n");
+            return;
         }
 
         // Convert the .wav file to a text file
         tempTxtFile = audioToTxt(originalSong);
-
         // read the text file into the sound file
         readFile(tempTxtFile, audioData);
-        
         durationSlider.setMaximum((int) (audioData.samples / audioData.sampleRate));
+        locationSlider.setMaximum(audioData.samples);
     }//GEN-LAST:event_resetButtonActionPerformed
 
     private void testLoadButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_testLoadButtonActionPerformed
         // TODO add your handling code here:
+
         AS.killALData();
 
         tempSongFile = new File("src\\FancyPants.wav");
@@ -913,29 +871,19 @@ public class GUIFrame extends javax.swing.JFrame {
         playButton.setEnabled(true);
         pauseButton.setEnabled(true);
         stopButton.setEnabled(true);
+        durationSlider.setMaximum((int) (audioData.samples / audioData.sampleRate));
+        locationSlider.setMaximum(audioData.samples);
     }//GEN-LAST:event_testLoadButtonActionPerformed
-
-    private void txtWavButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtWavButtonActionPerformed
-        // TODO add your handling code here:
-
-        String fileName = "austin.txt";
-        txtToAudio(fileName);
-
-
-    }//GEN-LAST:event_txtWavButtonActionPerformed
-
-    private void outputButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_outputButtonActionPerformed
-        // TODO add your handling code here:
-        outputTxtFile("new.txt", audioData);
-    }//GEN-LAST:event_outputButtonActionPerformed
 
     private void applyEnvelopeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_applyEnvelopeButtonActionPerformed
         // TODO add your handling code here:
 
         // Nothing loaded
-        if(!AS.status())
+        if (!AS.status()) {
+            statusTF.append("Status: No File Loaded!\n");
             return;
-                    
+        }
+
         int type = 0;
         if (sinButton.isSelected()) {
             type = 1;
@@ -948,108 +896,122 @@ public class GUIFrame extends javax.swing.JFrame {
         } else if (adsrButton.isSelected()) {
             type = 5;
         }
-        
-        if (type == 0){ // none
+
+        if (type == 0) { // none
             System.out.println("No envelope set");
+            statusTF.append("Status: No envelope set!\n");
             return;
         }
+
+        int eDur = durationSlider.getValue(), ePitch = pitchSlider.getValue(),
+                eOffset = offsetSlider.getValue(),
+                eLocation = locationSlider.getValue(),
+                cloudDur = cloudDurationSlider.getValue();
+
+        double eAmp = (amplitudeSlider.getValue() / 10) + 0.6;
         SoundRecord audio = new SoundRecord();
         audio.bitsPerSample = audioData.bitsPerSample;
         audio.channels = audioData.channels;
         audio.normalized = audioData.normalized;
         audio.samples = audioData.samples;
         audio.sampleRate = audioData.sampleRate;
+        //audio.sampleRate = ePitch * 1000;
         double[] envelope = null;
 
-        System.out.println(tempSongFile.getName());
-        String fileName = AS.getSongFileName();
-        //for(int i = 0 ; i < audio.samples ; i++ ){
-        //   System.out.println(audio.channelOne[i]);
-        // }
-
-        //  es.readFile(fileName, audio); // read file in
-        //  double[] envelope = new double[2 * audio.sampleRate];
-        //
-        //
-        
-        int eDur = durationSlider.getValue(), eAmp = amplitudeSlider.getValue(),
-        ePitch = pitchSlider.getValue(), eOffset = offsetSlider.getValue(),
-        eLocation = locationSlider.getValue(), cloudDur = cloudDurationSlider.getValue();
-
-        double[] values = new double [4];
+        double[] values = new double[4];
         switch (type) {
-            
+
             case 1: // Sin
+                statusTF.append("Status: Applying sin envelope...");
                 envelope = es.sinEnvelope(audio);
                 break;
 
             case 2: // Hann
+                statusTF.append("Status: Applying hann envelope...");
                 envelope = es.hannEnvelope(audio, eDur);
                 break;
             case 3: // Hamming
+                statusTF.append("Status: Applying hamm envelope...");
                 envelope = es.hammEnvelope(audio, eDur);
                 break;
 
             case 4: // Gaussian
-                values[0] = Double.parseDouble(gaussianField.getText() );
-                envelope = es.gaussianEnvelope(audio, 2, values[0] );
+                
+                try {
+                    values[0] = Double.parseDouble(gaussianField.getText());
+                    statusTF.append("Status: Applying gaussian...");
+                    envelope = es.gaussianEnvelope(audio, 2, values[0]);
+                } catch (NumberFormatException ex) {
+                    return;
+                }
 
                 break;
-            
+
             case 5: // ADSR
-                values[0] = Double.parseDouble(adsrTF.getText());
-                values[1] = Double.parseDouble(adsrTF1.getText());
-                values[2] = Double.parseDouble(adsrTF2.getText());
-                values[3] = Double.parseDouble(adsrTF3.getText());
-                System.out.println(values[0]);
-                envelope = es.adsrEnvelope(audio, 2, values[0], values[1], 
-                                                    values[2], values[3]);
+                try {                    
+                    values[0] = Double.parseDouble(adsrTF.getText());
+                    values[1] = Double.parseDouble(adsrTF1.getText());
+                    values[2] = Double.parseDouble(adsrTF2.getText());
+                    values[3] = Double.parseDouble(adsrTF3.getText());
+                    statusTF.append("Status: Applying ADSR envelope...");
+                    System.out.println(values[0]);
+                    envelope = es.adsrEnvelope(audio, 2, values[0], values[1],
+                            values[2], values[3]);
+                } catch (NumberFormatException ex) {
+                    return;
+                }
                 break;
-            case 7: 
-               
-                break;
-           
         }
-        
+
         audio.channelOne = new int[audio.samples];
         audio.channelTwo = new int[audio.samples];
-        
+
         //Copy over existing audio data
-          for (int i = 0; i < audio.samples; i++) {         
+        for (int i = 0; i < audio.samples; i++) {
             audio.channelOne[i] = audioData.channelOne[i];
             if (audio.channels == 2) {
                 audio.channelTwo[i] = audioData.channelTwo[i];
-            }           
+            }
         }
-        
+
         // Apply the envelope values to a text file and then create the wav file   
-          
         // phaseShift = eLocation;
         int counter;
-          
-       for(int x = eLocation; x < cloudDur + eLocation ; x+=eOffset){
-           counter = x;           
-           for (int i = 0; i < envelope.length; i++) {
-            
-                if (counter ==  audio.samples ){
+
+        for (int x = eLocation; x < cloudDur + eLocation; x += eOffset) {
+            counter = x;
+            for (int i = 0; i < envelope.length; i++) {
+
+                if (counter == audio.samples) {
                     counter = 0;
                 }
                 audio.channelOne[counter] = (int) (audioData.channelOne[counter] * envelope[i]);
-               // System.out.println(  envelope[i] );
+                //audio.channelOne[counter] = (int) (audio.channelOne[counter] * eAmp);
                 if (audio.channels == 2) {
                     audio.channelTwo[counter] = (int) (audioData.channelTwo[counter] * envelope[i]);
+                    //audio.channelTwo[counter] = (int) (audio.channelTwo[counter] * eAmp);
                 }
                 counter++;
-            }          
-       }  
-        
-        
-        outputTxtFile("tempEnvelope.txt", audio);
-        txtToAudio("tempEnvelope.txt");
-        
+            }
+        }
+
+        statusTF.append("Envelope Applied!\n");
+
+        String tempText = AS.getSongFileName();
+        if(tempText.substring(0,8).equals("Altered.")){
+            tempText = tempText.substring(8);
+        }
+        tempText = "Altered." + tempText;
+        tempText = tempText.substring(0, tempText.lastIndexOf("."));
+
+        outputTxtFile(tempText + ".txt", audio);
+        txtToAudio(tempText + ".txt");
+
         //Load it
         AS.killALData();
-        AS.execute(new File("src\\Music\\tempEnvelope.wav"));
+        tempSongFile = new File("src\\Music\\" + tempText + ".wav");
+        AS.execute(tempSongFile);
+        statusTF.append("Status: " + AS.getSongFileName() + " loaded into the audio stream.");
 
     }//GEN-LAST:event_applyEnvelopeButtonActionPerformed
 
@@ -1066,13 +1028,13 @@ public class GUIFrame extends javax.swing.JFrame {
         // Disable other texts
         // Gaussian        
         gaussianField.setEnabled(false);
-        
+
     }//GEN-LAST:event_adsrButtonActionPerformed
 
     private void hammingButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hammingButtonActionPerformed
         // TODO add your handling code here:
         // Disbale text fields for other envelopes
-        
+
         // Gaussian        
         gaussianField.setEnabled(false);
         // ADSR
@@ -1080,7 +1042,7 @@ public class GUIFrame extends javax.swing.JFrame {
         adsrTF1.setEnabled(false);
         adsrTF2.setEnabled(false);
         adsrTF3.setEnabled(false);
-       
+
     }//GEN-LAST:event_hammingButtonActionPerformed
 
     private void sinButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sinButtonActionPerformed
@@ -1088,59 +1050,73 @@ public class GUIFrame extends javax.swing.JFrame {
         // Disbale text fields for other envelopes
         // Gaussian        
         gaussianField.setEnabled(false);
-        
+
         // ADSR
         adsrTF.setEnabled(false);
         adsrTF1.setEnabled(false);
         adsrTF2.setEnabled(false);
         adsrTF3.setEnabled(false);
-       
+
     }//GEN-LAST:event_sinButtonActionPerformed
 
     private void gaussianButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gaussianButtonActionPerformed
         // TODO add your handling code here:
         // Gaussian        
         gaussianField.setEnabled(true);
-        
+
         // Disbale text fields for other envelopes
         // ADSR
         adsrTF.setEnabled(false);
         adsrTF1.setEnabled(false);
         adsrTF2.setEnabled(false);
         adsrTF3.setEnabled(false);
-        
+
     }//GEN-LAST:event_gaussianButtonActionPerformed
 
     private void hannButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hannButtonActionPerformed
         // TODO add your handling code here:
         // Disbale text fields for other envelopes
-         // Gaussian        
+        // Gaussian        
         gaussianField.setEnabled(false);
         // ADSR
         adsrTF.setEnabled(false);
         adsrTF1.setEnabled(false);
         adsrTF2.setEnabled(false);
         adsrTF3.setEnabled(false);
-        
-    }//GEN-LAST:event_hannButtonActionPerformed
 
-    private void cloudDurationSettingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cloudDurationSettingActionPerformed
-        // TODO add your handling code here:
-       
-    }//GEN-LAST:event_cloudDurationSettingActionPerformed
+    }//GEN-LAST:event_hannButtonActionPerformed
 
     private void cloudDurationSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_cloudDurationSliderStateChanged
         // TODO add your handling code here:
-         cloudDurationSetting.setText("" + cloudDurationSlider.getValue() );
+        cloudDurationSetting.setText("" + cloudDurationSlider.getValue());
     }//GEN-LAST:event_cloudDurationSliderStateChanged
 
-    private void amplitudeSettingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_amplitudeSettingActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_amplitudeSettingActionPerformed
+    private void saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveActionPerformed
+        statusTF.append("Status: Attempting to save the temporary file...");
+        fileChooser.setAcceptAllFileFilterUsed(false);
+        FileNameExtensionFilter filter = new FileNameExtensionFilter(".wav", "wav");
+        fileChooser.addChoosableFileFilter(filter);
+        if (fileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
+            try {
+                FileWriter fw = new FileWriter(fileChooser.getSelectedFile());
+                String newPath = fileChooser.getSelectedFile().getAbsolutePath();
+                System.out.println("File path = " + newPath);
+                File tempAudio = new File(tempSongFile.getAbsolutePath());
+                System.out.println("File path of tempAudio = " + tempAudio.getAbsolutePath());
 
-    private void adsrTF3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adsrTF3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_adsrTF3ActionPerformed
+                if (tempAudio.renameTo(new File(newPath))) {
+                    System.out.println("File saved successful!");
+                    statusTF.append("Successfully saved as " + tempAudio.getName() + "\n");
+                } else {
+                    System.out.println("File failed to save!");
+                    statusTF.append("Failed to save.\n");
+                }
+            } catch (IOException ex) {
+                System.out.println("File failed to save!" + ex.getMessage());
+                statusTF.append("Failed to save.\n");
+            }
+        }
+    }//GEN-LAST:event_saveActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1192,6 +1168,7 @@ public class GUIFrame extends javax.swing.JFrame {
     private javax.swing.JTextField amplitudeSetting;
     private javax.swing.JSlider amplitudeSlider;
     private javax.swing.JButton applyEnvelopeButton;
+    private javax.swing.JPanel buttonPanel;
     private javax.swing.JTextField cloudDurationSetting;
     private javax.swing.JSlider cloudDurationSlider;
     private javax.swing.JLabel durationLabel;
@@ -1207,11 +1184,10 @@ public class GUIFrame extends javax.swing.JFrame {
     private javax.swing.JPanel grainPanel;
     private javax.swing.JRadioButton hammingButton;
     private javax.swing.JRadioButton hannButton;
-    private javax.swing.JMenu helpMenu;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JMenu lMenu;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel locationLabel;
     private javax.swing.JTextField locationSetting;
     private javax.swing.JSlider locationSlider;
@@ -1219,8 +1195,6 @@ public class GUIFrame extends javax.swing.JFrame {
     private javax.swing.JTextField offsetSetting;
     private javax.swing.JSlider offsetSlider;
     private javax.swing.JMenuItem open;
-    private javax.swing.JMenu optionsMenu;
-    private javax.swing.JButton outputButton;
     private javax.swing.JButton pauseButton;
     private javax.swing.JLabel pitchLabel;
     private javax.swing.JTextField pitchSetting;
@@ -1230,10 +1204,9 @@ public class GUIFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem quit;
     private javax.swing.JButton resetButton;
     private javax.swing.JMenuItem save;
-    private javax.swing.JMenuItem saveAs;
     private javax.swing.JRadioButton sinButton;
+    private javax.swing.JTextArea statusTF;
     private javax.swing.JButton stopButton;
     private javax.swing.JButton testLoadButton;
-    private javax.swing.JButton txtWavButton;
     // End of variables declaration//GEN-END:variables
 }

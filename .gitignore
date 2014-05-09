@@ -4,3 +4,5 @@
 /AudioEngine/nbproject/private/
 /AudioEngine/build/
 /AudioEngine/dist/
+AudioEngine/src/music/tempEnvelope.txt
+AudioEngine/src/music/tempEnvelope.wav
