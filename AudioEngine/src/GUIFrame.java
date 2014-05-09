@@ -31,7 +31,14 @@ public class GUIFrame extends javax.swing.JFrame {
      */
     public GUIFrame() {
         initComponents();
-
+        
+        // Setup sliders
+        durationSetting.setText(String.valueOf(durationSlider.getValue()));
+        cloudDurationSetting.setText(String.valueOf(cloudDurationSlider.getValue()));
+        pitchSetting.setText(String.valueOf(pitchSlider.getValue()));
+        amplitudeSetting.setText(String.valueOf(amplitudeSlider.getValue()));
+        offsetSetting.setText(String.valueOf(offsetSlider.getValue()));
+        locationSetting.setText(String.valueOf(locationSlider.getValue()));
     }
 
     /**
@@ -55,12 +62,10 @@ public class GUIFrame extends javax.swing.JFrame {
         durationSetting = new javax.swing.JTextField();
         locationSlider = new javax.swing.JSlider();
         pitchSetting = new javax.swing.JTextField();
-        amplitudeSetting = new javax.swing.JTextField();
         locationLabel = new javax.swing.JLabel();
         locationSetting = new javax.swing.JTextField();
         pitchSlider = new javax.swing.JSlider();
         durationSlider = new javax.swing.JSlider();
-        amplitudeSlider = new javax.swing.JSlider();
         offsetSlider = new javax.swing.JSlider();
         grainLabel = new javax.swing.JLabel();
         pitchLabel = new javax.swing.JLabel();
@@ -70,6 +75,8 @@ public class GUIFrame extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         cloudDurationSlider = new javax.swing.JSlider();
         cloudDurationSetting = new javax.swing.JTextField();
+        amplitudeSlider = new javax.swing.JSlider();
+        amplitudeSetting = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         hannButton = new javax.swing.JRadioButton();
         gaussianButton = new javax.swing.JRadioButton();
@@ -175,8 +182,8 @@ public class GUIFrame extends javax.swing.JFrame {
 
         locationLabel.setText("Location");
 
-        pitchSlider.setMajorTickSpacing(1);
-        pitchSlider.setMaximum(10);
+        pitchSlider.setMaximum(440);
+        pitchSlider.setMinimum(10);
         pitchSlider.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 pitchSliderStateChanged(evt);
@@ -186,14 +193,6 @@ public class GUIFrame extends javax.swing.JFrame {
         durationSlider.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 durationSliderStateChanged(evt);
-            }
-        });
-
-        amplitudeSlider.setMajorTickSpacing(1);
-        amplitudeSlider.setMaximum(440);
-        amplitudeSlider.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                amplitudeSliderStateChanged(evt);
             }
         });
 
@@ -220,6 +219,14 @@ public class GUIFrame extends javax.swing.JFrame {
             }
         });
 
+        amplitudeSlider.setMaximum(10);
+        amplitudeSlider.setMinimum(1);
+        amplitudeSlider.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                amplitudeSliderStateChanged(evt);
+            }
+        });
+
         javax.swing.GroupLayout grainPanelLayout = new javax.swing.GroupLayout(grainPanel);
         grainPanel.setLayout(grainPanelLayout);
         grainPanelLayout.setHorizontalGroup(
@@ -241,31 +248,30 @@ public class GUIFrame extends javax.swing.JFrame {
                                 .addComponent(durationSlider, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(durationSetting, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(grainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addGroup(grainPanelLayout.createSequentialGroup()
-                                    .addComponent(locationLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(locationSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(locationSetting))
-                                .addGroup(grainPanelLayout.createSequentialGroup()
-                                    .addComponent(offsetLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(offsetSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(offsetSetting, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(grainPanelLayout.createSequentialGroup()
-                                    .addComponent(amplitudeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(pitchSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(pitchSetting, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(grainPanelLayout.createSequentialGroup()
-                                .addComponent(pitchLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(locationLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(locationSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(locationSetting))
+                            .addGroup(grainPanelLayout.createSequentialGroup()
+                                .addComponent(offsetLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(offsetSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(offsetSetting, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(grainPanelLayout.createSequentialGroup()
+                                .addComponent(amplitudeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(amplitudeSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(amplitudeSetting, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(amplitudeSetting, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(grainPanelLayout.createSequentialGroup()
+                                .addComponent(pitchLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(pitchSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(pitchSetting, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(grainPanelLayout.createSequentialGroup()
                         .addGap(82, 82, 82)
                         .addComponent(grainLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -295,26 +301,23 @@ public class GUIFrame extends javax.swing.JFrame {
                     .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(grainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(amplitudeSetting, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(pitchLabel)
-                    .addComponent(amplitudeSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(pitchSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(pitchSetting, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(9, 9, 9)
                 .addGroup(grainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(grainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(pitchSetting, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(pitchSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(amplitudeLabel))
+                    .addComponent(amplitudeLabel)
+                    .addComponent(amplitudeSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(amplitudeSetting, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(8, 8, 8)
                 .addGroup(grainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(grainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(offsetSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(offsetSetting, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(offsetLabel))
+                    .addComponent(offsetSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(offsetLabel)
+                    .addComponent(offsetSetting, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(grainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(grainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(locationSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(locationSetting, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(locationSetting, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(locationSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(locationLabel))
                 .addGap(32, 32, 32))
         );
@@ -448,7 +451,7 @@ public class GUIFrame extends javax.swing.JFrame {
                     .addComponent(adsrTF1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(adsrTF2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(adsrTF3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(88, 88, 88))
+                .addContainerGap(88, Short.MAX_VALUE))
         );
 
         statusTF.setColumns(20);
@@ -837,14 +840,16 @@ public class GUIFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
 
         AS.killALData();
-        statusTF.setText("Status: Removed song from audio stream. ");
+        
 
         try {
             AS.execute(originalSong);
+            statusTF.setText("Status: Attempting to remove song from audio stream. ");
             statusTF.append("Loaded " + originalSong.getName() + "\n");
         } catch (Exception ex) {
             System.out.println("Problem accessing file " + originalSong.getAbsolutePath());
-            statusTF.append("Loaded " + originalSong.getName() + "\n");
+            statusTF.setText("Status: Attempting to remove song from audio stream. ");
+            statusTF.append("Failed to load " + originalSong.getName() + "\n");
             return;
         }
 
@@ -861,7 +866,7 @@ public class GUIFrame extends javax.swing.JFrame {
 
         AS.killALData();
 
-        tempSongFile = new File("src\\FancyPants.wav");
+        tempSongFile = originalSong = new File("src\\FancyPants.wav");
         AS.execute(tempSongFile);
 
         tempTxtFile = audioToTxt(tempSongFile);
@@ -908,14 +913,14 @@ public class GUIFrame extends javax.swing.JFrame {
                 eLocation = locationSlider.getValue(),
                 cloudDur = cloudDurationSlider.getValue();
 
-        double eAmp = (amplitudeSlider.getValue() / 10) + 0.6;
+        double eAmp = (amplitudeSlider.getValue() / 100) + 0.4;
         SoundRecord audio = new SoundRecord();
         audio.bitsPerSample = audioData.bitsPerSample;
         audio.channels = audioData.channels;
         audio.normalized = audioData.normalized;
         audio.samples = audioData.samples;
-        audio.sampleRate = audioData.sampleRate;
-        //audio.sampleRate = ePitch * 1000;
+        //audio.sampleRate = audioData.sampleRate;
+        audio.sampleRate = ePitch * 100;
         double[] envelope = null;
 
         double[] values = new double[4];
@@ -986,10 +991,10 @@ public class GUIFrame extends javax.swing.JFrame {
                     counter = 0;
                 }
                 audio.channelOne[counter] = (int) (audioData.channelOne[counter] * envelope[i]);
-                //audio.channelOne[counter] = (int) (audio.channelOne[counter] * eAmp);
+                audio.channelOne[counter] = (int) (audio.channelOne[counter] * eAmp);
                 if (audio.channels == 2) {
                     audio.channelTwo[counter] = (int) (audioData.channelTwo[counter] * envelope[i]);
-                    //audio.channelTwo[counter] = (int) (audio.channelTwo[counter] * eAmp);
+                    audio.channelTwo[counter] = (int) (audio.channelTwo[counter] * eAmp);
                 }
                 counter++;
             }

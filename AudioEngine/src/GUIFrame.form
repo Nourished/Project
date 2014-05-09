@@ -228,35 +228,33 @@
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="durationSetting" linkSize="10" min="-2" pref="41" max="-2" attributes="0"/>
                               </Group>
-                              <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="locationLabel" linkSize="5" min="-2" pref="59" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="locationSlider" linkSize="4" min="-2" pref="148" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="locationSetting" linkSize="10" max="32767" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="offsetLabel" linkSize="5" min="-2" pref="59" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="offsetSlider" linkSize="4" min="-2" pref="148" max="-2" attributes="0"/>
-                                      <EmptySpace max="32767" attributes="0"/>
-                                      <Component id="offsetSetting" linkSize="10" min="-2" pref="41" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="amplitudeLabel" linkSize="5" min="-2" pref="59" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="pitchSlider" linkSize="4" min="-2" pref="148" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="pitchSetting" linkSize="10" min="-2" pref="41" max="-2" attributes="0"/>
-                                  </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="locationLabel" linkSize="5" min="-2" pref="59" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="locationSlider" linkSize="4" min="-2" pref="148" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="locationSetting" linkSize="10" max="32767" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
-                                  <Component id="pitchLabel" linkSize="5" min="-2" pref="59" max="-2" attributes="0"/>
+                                  <Component id="offsetLabel" linkSize="5" min="-2" pref="59" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="offsetSlider" linkSize="4" min="-2" pref="148" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="offsetSetting" linkSize="10" min="-2" pref="41" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="amplitudeLabel" linkSize="5" min="-2" pref="59" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="amplitudeSlider" linkSize="4" min="-2" pref="148" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="amplitudeSetting" linkSize="10" min="-2" pref="41" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="pitchLabel" linkSize="5" min="-2" pref="59" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="pitchSlider" linkSize="4" min="-2" pref="148" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="pitchSetting" linkSize="10" min="-2" pref="41" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -288,32 +286,26 @@
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="amplitudeSetting" linkSize="7" min="-2" max="-2" attributes="0"/>
                       <Component id="pitchLabel" linkSize="12" min="-2" max="-2" attributes="0"/>
-                      <Component id="amplitudeSlider" linkSize="11" min="-2" max="-2" attributes="0"/>
+                      <Component id="pitchSlider" linkSize="11" min="-2" max="-2" attributes="0"/>
+                      <Component id="pitchSetting" linkSize="7" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="103" alignment="0" groupAlignment="1" attributes="0">
-                          <Component id="pitchSetting" linkSize="7" min="-2" max="-2" attributes="0"/>
-                          <Component id="pitchSlider" linkSize="11" min="-2" max="-2" attributes="0"/>
-                      </Group>
                       <Component id="amplitudeLabel" linkSize="12" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="amplitudeSlider" linkSize="11" min="-2" max="-2" attributes="0"/>
+                      <Component id="amplitudeSetting" linkSize="7" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="103" alignment="0" groupAlignment="1" attributes="0">
-                          <Component id="offsetSlider" linkSize="11" min="-2" max="-2" attributes="0"/>
-                          <Component id="offsetSetting" linkSize="7" min="-2" max="-2" attributes="0"/>
-                      </Group>
+                      <Component id="offsetSlider" linkSize="11" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Component id="offsetLabel" linkSize="12" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="offsetSetting" linkSize="7" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="103" alignment="0" groupAlignment="1" attributes="0">
-                          <Component id="locationSlider" linkSize="11" min="-2" max="-2" attributes="0"/>
-                          <Component id="locationSetting" linkSize="7" min="-2" max="-2" attributes="0"/>
-                      </Group>
+                      <Component id="locationSetting" linkSize="7" min="-2" max="-2" attributes="0"/>
+                      <Component id="locationSlider" linkSize="11" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Component id="locationLabel" linkSize="12" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
@@ -336,8 +328,6 @@
         </Component>
         <Component class="javax.swing.JTextField" name="pitchSetting">
         </Component>
-        <Component class="javax.swing.JTextField" name="amplitudeSetting">
-        </Component>
         <Component class="javax.swing.JLabel" name="locationLabel">
           <Properties>
             <Property name="text" type="java.lang.String" value="Location"/>
@@ -347,8 +337,8 @@
         </Component>
         <Component class="javax.swing.JSlider" name="pitchSlider">
           <Properties>
-            <Property name="majorTickSpacing" type="int" value="1"/>
-            <Property name="maximum" type="int" value="10"/>
+            <Property name="maximum" type="int" value="440"/>
+            <Property name="minimum" type="int" value="10"/>
           </Properties>
           <Events>
             <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="pitchSliderStateChanged"/>
@@ -357,15 +347,6 @@
         <Component class="javax.swing.JSlider" name="durationSlider">
           <Events>
             <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="durationSliderStateChanged"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JSlider" name="amplitudeSlider">
-          <Properties>
-            <Property name="majorTickSpacing" type="int" value="1"/>
-            <Property name="maximum" type="int" value="440"/>
-          </Properties>
-          <Events>
-            <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="amplitudeSliderStateChanged"/>
           </Events>
         </Component>
         <Component class="javax.swing.JSlider" name="offsetSlider">
@@ -407,6 +388,17 @@
           </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="cloudDurationSetting">
+        </Component>
+        <Component class="javax.swing.JSlider" name="amplitudeSlider">
+          <Properties>
+            <Property name="maximum" type="int" value="10"/>
+            <Property name="minimum" type="int" value="1"/>
+          </Properties>
+          <Events>
+            <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="amplitudeSliderStateChanged"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JTextField" name="amplitudeSetting">
         </Component>
       </SubComponents>
     </Container>
@@ -489,7 +481,7 @@
                       <Component id="adsrTF2" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="adsrTF3" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="88" max="-2" attributes="0"/>
+                  <EmptySpace pref="88" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
