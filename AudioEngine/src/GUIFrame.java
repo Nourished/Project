@@ -66,26 +66,22 @@ public class GUIFrame extends javax.swing.JFrame {
         offsetLabel = new javax.swing.JLabel();
         amplitudeLabel = new javax.swing.JLabel();
         offsetSetting = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        cloudDurationSlider = new javax.swing.JSlider();
+        cloudDurationSetting = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         hannButton = new javax.swing.JRadioButton();
-        breakpointButton = new javax.swing.JRadioButton();
         gaussianButton = new javax.swing.JRadioButton();
         envelopeLabel = new javax.swing.JLabel();
         sinButton = new javax.swing.JRadioButton();
         hammingButton = new javax.swing.JRadioButton();
-        arButton = new javax.swing.JRadioButton();
         adsrButton = new javax.swing.JRadioButton();
         applyEnvelopeButton = new javax.swing.JButton();
-        arTF = new javax.swing.JFormattedTextField();
-        arTF1 = new javax.swing.JFormattedTextField();
         adsrTF = new javax.swing.JFormattedTextField();
         adsrTF1 = new javax.swing.JFormattedTextField();
         adsrTF2 = new javax.swing.JFormattedTextField();
         adsrTF3 = new javax.swing.JFormattedTextField();
-        bpTF = new javax.swing.JFormattedTextField();
-        bpTF1 = new javax.swing.JFormattedTextField();
-        bpTF2 = new javax.swing.JFormattedTextField();
-        bpTF3 = new javax.swing.JFormattedTextField();
+        gaussianField = new javax.swing.JFormattedTextField();
         resetButton = new javax.swing.JButton();
         testLoadButton = new javax.swing.JButton();
         txtWavButton = new javax.swing.JButton();
@@ -180,10 +176,15 @@ public class GUIFrame extends javax.swing.JFrame {
         pitchSetting.setText("50");
 
         amplitudeSetting.setText("50");
+        amplitudeSetting.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                amplitudeSettingActionPerformed(evt);
+            }
+        });
 
         locationLabel.setText("Location");
 
-        locationSetting.setText("50");
+        locationSetting.setText("0");
 
         pitchSlider.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
@@ -219,6 +220,21 @@ public class GUIFrame extends javax.swing.JFrame {
 
         offsetSetting.setText("50");
 
+        jLabel1.setText("Cloud Duration");
+
+        cloudDurationSlider.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                cloudDurationSliderStateChanged(evt);
+            }
+        });
+
+        cloudDurationSetting.setText("50");
+        cloudDurationSetting.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cloudDurationSettingActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout grainPanelLayout = new javax.swing.GroupLayout(grainPanel);
         grainPanel.setLayout(grainPanelLayout);
         grainPanelLayout.setHorizontalGroup(
@@ -227,40 +243,52 @@ public class GUIFrame extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(grainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(grainPanelLayout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(grainLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(offsetLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(grainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(grainPanelLayout.createSequentialGroup()
+                                .addComponent(offsetSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(offsetSetting, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(grainPanelLayout.createSequentialGroup()
+                                .addComponent(cloudDurationSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(cloudDurationSetting, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(252, 252, 252))))
                     .addGroup(grainPanelLayout.createSequentialGroup()
-                        .addComponent(durationLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(grainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(grainPanelLayout.createSequentialGroup()
+                                .addComponent(amplitudeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(amplitudeSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                            .addGroup(grainPanelLayout.createSequentialGroup()
+                                .addComponent(pitchLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(pitchSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(durationSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(durationSetting))
-                    .addGroup(grainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, grainPanelLayout.createSequentialGroup()
-                            .addComponent(locationLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(locationSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(locationSetting))
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, grainPanelLayout.createSequentialGroup()
-                            .addComponent(offsetLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(offsetSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(offsetSetting))
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, grainPanelLayout.createSequentialGroup()
-                            .addComponent(amplitudeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(amplitudeSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(amplitudeSetting, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, grainPanelLayout.createSequentialGroup()
-                            .addComponent(pitchLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(pitchSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(pitchSetting, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap())
+                        .addGroup(grainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(amplitudeSetting, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(pitchSetting, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(230, 230, 230))
+                    .addGroup(grainPanelLayout.createSequentialGroup()
+                        .addGroup(grainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(grainPanelLayout.createSequentialGroup()
+                                .addComponent(durationLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(durationSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(durationSetting, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel1)
+                            .addGroup(grainPanelLayout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addComponent(grainLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(grainPanelLayout.createSequentialGroup()
+                                .addComponent(locationLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(locationSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(locationSetting, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(194, 194, 194))))
         );
         grainPanelLayout.setVerticalGroup(
             grainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -274,30 +302,42 @@ public class GUIFrame extends javax.swing.JFrame {
                             .addComponent(durationSlider, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(durationLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addComponent(durationSetting, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(21, 21, 21)
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
                 .addGroup(grainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(amplitudeSlider, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 55, Short.MAX_VALUE)
-                    .addComponent(amplitudeLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(grainPanelLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 4, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(amplitudeSetting, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(grainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(pitchSlider, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 55, Short.MAX_VALUE)
-                    .addComponent(pitchLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(grainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cloudDurationSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cloudDurationSetting, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(grainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(grainPanelLayout.createSequentialGroup()
+                                .addGap(13, 13, 13)
+                                .addComponent(amplitudeSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(grainPanelLayout.createSequentialGroup()
+                                .addGap(37, 37, 37)
+                                .addComponent(amplitudeSetting, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addComponent(amplitudeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(grainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(grainPanelLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 4, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(pitchSetting, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(2, 2, 2)
+                        .addGroup(grainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(pitchLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(pitchSlider, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, grainPanelLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(pitchSetting, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(23, 23, 23)))
                 .addGroup(grainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(offsetSlider, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 55, Short.MAX_VALUE)
+                    .addComponent(offsetSlider, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(offsetLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(grainPanelLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 4, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(offsetSetting, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(grainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(locationSlider, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 55, Short.MAX_VALUE)
+                    .addComponent(locationSlider, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(locationLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(grainPanelLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 4, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -312,14 +352,6 @@ public class GUIFrame extends javax.swing.JFrame {
         hannButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 hannButtonActionPerformed(evt);
-            }
-        });
-
-        envelopebuttonGroup.add(breakpointButton);
-        breakpointButton.setText("Breakpoint");
-        breakpointButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                breakpointButtonActionPerformed(evt);
             }
         });
 
@@ -349,14 +381,6 @@ public class GUIFrame extends javax.swing.JFrame {
             }
         });
 
-        envelopebuttonGroup.add(arButton);
-        arButton.setText("Attack and Release");
-        arButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                arButtonActionPerformed(evt);
-            }
-        });
-
         envelopebuttonGroup.add(adsrButton);
         adsrButton.setText("Attack Decay Sustain Release");
         adsrButton.addActionListener(new java.awt.event.ActionListener() {
@@ -372,12 +396,6 @@ public class GUIFrame extends javax.swing.JFrame {
             }
         });
 
-        arTF.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,##0.00"))));
-        arTF.setEnabled(false);
-
-        arTF1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,##0.00"))));
-        arTF1.setEnabled(false);
-
         adsrTF.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,##0.00"))));
         adsrTF.setEnabled(false);
 
@@ -389,18 +407,14 @@ public class GUIFrame extends javax.swing.JFrame {
 
         adsrTF3.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,##0.00"))));
         adsrTF3.setEnabled(false);
+        adsrTF3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                adsrTF3ActionPerformed(evt);
+            }
+        });
 
-        bpTF.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,##0.00"))));
-        bpTF.setEnabled(false);
-
-        bpTF1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,##0.00"))));
-        bpTF1.setEnabled(false);
-
-        bpTF2.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,##0.00"))));
-        bpTF2.setEnabled(false);
-
-        bpTF3.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,##0.00"))));
-        bpTF3.setEnabled(false);
+        gaussianField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,##0.00"))));
+        gaussianField.setEnabled(false);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -408,39 +422,29 @@ public class GUIFrame extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(envelopeLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(sinButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(hannButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(hammingButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(gaussianButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(arButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(adsrButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(breakpointButton, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(applyEnvelopeButton)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(arTF, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(envelopeLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 197, Short.MAX_VALUE)
+                            .addComponent(sinButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(hannButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(hammingButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(gaussianButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(arTF1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(applyEnvelopeButton)
+                            .addComponent(gaussianField, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(adsrButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(adsrTF, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(adsrTF1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(adsrTF2, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(adsrTF3, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(bpTF, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(bpTF1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(bpTF2, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(bpTF3, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(28, 28, 28))
+                        .addComponent(adsrTF3, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(30, 30, 30))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -458,28 +462,18 @@ public class GUIFrame extends javax.swing.JFrame {
                         .addComponent(applyEnvelopeButton)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(hammingButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(gaussianButton)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(arButton)
-                    .addComponent(arTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(arTF1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(gaussianButton)
+                    .addComponent(gaussianField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(10, 10, 10)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(adsrButton)
                     .addComponent(adsrTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(adsrTF1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(adsrTF2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(adsrTF3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(breakpointButton)
-                    .addComponent(bpTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(bpTF1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(bpTF2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(bpTF3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                .addGap(88, 88, 88))
         );
 
         resetButton.setText("Reset to loaded Song");
@@ -565,10 +559,6 @@ public class GUIFrame extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(grainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
                         .addComponent(ButtonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(46, 46, 46)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -577,8 +567,12 @@ public class GUIFrame extends javax.swing.JFrame {
                         .addGap(68, 68, 68)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(testLoadButton)
-                            .addComponent(txtWavButton))))
-                .addContainerGap(214, Short.MAX_VALUE))
+                            .addComponent(txtWavButton)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(grainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(252, 252, 252)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -596,13 +590,15 @@ public class GUIFrame extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtWavButton)
                             .addComponent(outputButton))))
-                .addGap(43, 43, 43)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(grainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(43, 43, 43)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addContainerGap(106, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(grainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())))
         );
 
         pack();
@@ -670,7 +666,8 @@ public class GUIFrame extends javax.swing.JFrame {
         } else {
             System.out.println("File access cancelled by user.");
         }
-
+        
+        locationSlider.setMaximum( audioData.samples);
 
     }//GEN-LAST:event_openActionPerformed
 
@@ -704,6 +701,7 @@ public class GUIFrame extends javax.swing.JFrame {
 
     private void locationSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_locationSliderStateChanged
         // TODO add your handling code here:
+        
         locationSetting.setText("" + locationSlider.getValue());
     }//GEN-LAST:event_locationSliderStateChanged
 
@@ -947,12 +945,8 @@ public class GUIFrame extends javax.swing.JFrame {
             type = 3;
         } else if (gaussianButton.isSelected()) {
             type = 4;
-        } else if (arButton.isSelected()) {
-            type = 5;
         } else if (adsrButton.isSelected()) {
-            type = 6;
-        } else if (breakpointButton.isSelected()) {
-            type = 7;
+            type = 5;
         }
         
         if (type == 0){ // none
@@ -979,14 +973,14 @@ public class GUIFrame extends javax.swing.JFrame {
         //
         
         int eDur = durationSlider.getValue(), eAmp = amplitudeSlider.getValue(),
-                ePitch = pitchSlider.getValue(), eOffset = offsetSlider.getValue(),
-                eLocation = locationSlider.getValue();
+        ePitch = pitchSlider.getValue(), eOffset = offsetSlider.getValue(),
+        eLocation = locationSlider.getValue(), cloudDur = cloudDurationSlider.getValue();
 
         double[] values = new double [4];
         switch (type) {
             
             case 1: // Sin
-                envelope = es.sinEnvelope(audio, eDur);
+                envelope = es.sinEnvelope(audio);
                 break;
 
             case 2: // Hann
@@ -997,16 +991,12 @@ public class GUIFrame extends javax.swing.JFrame {
                 break;
 
             case 4: // Gaussian
-                envelope = es.gaussianEnvelope(audio, 2, 0.3);
+                values[0] = Double.parseDouble(gaussianField.getText() );
+                envelope = es.gaussianEnvelope(audio, 2, values[0] );
 
                 break;
-            case 5: // AR
-                values[0] = Double.parseDouble(arTF.getText());
-                values[1] = Double.parseDouble(arTF1.getText());
-
-                break;
-
-            case 6: // ADSR
+            
+            case 5: // ADSR
                 values[0] = Double.parseDouble(adsrTF.getText());
                 values[1] = Double.parseDouble(adsrTF1.getText());
                 values[2] = Double.parseDouble(adsrTF2.getText());
@@ -1015,29 +1005,44 @@ public class GUIFrame extends javax.swing.JFrame {
                 envelope = es.adsrEnvelope(audio, 2, values[0], values[1], 
                                                     values[2], values[3]);
                 break;
-            case 7: // Breakpoint
-                values[0] = Double.parseDouble(bpTF.getText());
-                values[1] = Double.parseDouble(bpTF1.getText());
-                values[2] = Double.parseDouble(bpTF2.getText());
-                values[3] = Double.parseDouble(bpTF3.getText());
+            case 7: 
+               
                 break;
-
-            case 8:
-
-                break;
-
+           
         }
         
         audio.channelOne = new int[audio.samples];
         audio.channelTwo = new int[audio.samples];
-        // Apply the envelope values to a text file and then create the wav file
-        for (int i = 0; i < envelope.length; i++) {
-            //System.out.println(envelope[i]);
-            audio.channelOne[i] = (int) (audioData.channelOne[i] * envelope[i]);
+        
+        //Copy over existing audio data
+          for (int i = 0; i < audio.samples; i++) {         
+            audio.channelOne[i] = audioData.channelOne[i];
             if (audio.channels == 2) {
-                audio.channelTwo[i] = (int) (audioData.channelTwo[i] * envelope[i]);
-            }
+                audio.channelTwo[i] = audioData.channelTwo[i];
+            }           
         }
+        
+        // Apply the envelope values to a text file and then create the wav file   
+          
+        // phaseShift = eLocation;
+        int counter;
+          
+       for(int x = eLocation; x < cloudDur + eLocation ; x+=eOffset){
+           counter = x;           
+           for (int i = 0; i < envelope.length; i++) {
+            
+                if (counter ==  audio.samples ){
+                    counter = 0;
+                }
+                audio.channelOne[counter] = (int) (audioData.channelOne[counter] * envelope[i]);
+               // System.out.println(  envelope[i] );
+                if (audio.channels == 2) {
+                    audio.channelTwo[counter] = (int) (audioData.channelTwo[counter] * envelope[i]);
+                }
+                counter++;
+            }          
+       }  
+        
         
         outputTxtFile("tempEnvelope.txt", audio);
         txtToAudio("tempEnvelope.txt");
@@ -1059,127 +1064,83 @@ public class GUIFrame extends javax.swing.JFrame {
         adsrTF3.setEnabled(true);
 
         // Disable other texts
-        // Attack Release
-        arTF.setEnabled(false);
-        arTF1.setEnabled(false);
-
-        // Breakpoint
-        bpTF.setEnabled(false);
-        bpTF1.setEnabled(false);
-        bpTF2.setEnabled(false);
-        bpTF3.setEnabled(false);
+        // Gaussian        
+        gaussianField.setEnabled(false);
+        
     }//GEN-LAST:event_adsrButtonActionPerformed
-
-    private void arButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_arButtonActionPerformed
-        // TODO add your handling code here:
-        // Enable text
-        arTF.setEnabled(true);
-        arTF1.setEnabled(true);;
-        // Disable other texts
-        // ADSR
-        adsrTF.setEnabled(false);
-        adsrTF1.setEnabled(false);
-        adsrTF2.setEnabled(false);
-        adsrTF3.setEnabled(false);
-
-        // Breakpoint
-        bpTF.setEnabled(false);
-        bpTF1.setEnabled(false);
-        bpTF2.setEnabled(false);
-        bpTF3.setEnabled(false);
-    }//GEN-LAST:event_arButtonActionPerformed
 
     private void hammingButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hammingButtonActionPerformed
         // TODO add your handling code here:
         // Disbale text fields for other envelopes
+        
+        // Gaussian        
+        gaussianField.setEnabled(false);
         // ADSR
         adsrTF.setEnabled(false);
         adsrTF1.setEnabled(false);
         adsrTF2.setEnabled(false);
         adsrTF3.setEnabled(false);
-        // Attack Release
-        arTF.setEnabled(false);
-        arTF1.setEnabled(false);
-        // Breakpoint
-        bpTF.setEnabled(false);
-        bpTF1.setEnabled(false);
-        bpTF2.setEnabled(false);
-        bpTF3.setEnabled(false);
+       
     }//GEN-LAST:event_hammingButtonActionPerformed
 
     private void sinButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sinButtonActionPerformed
         // TODO add your handling code here:
         // Disbale text fields for other envelopes
+        // Gaussian        
+        gaussianField.setEnabled(false);
+        
         // ADSR
         adsrTF.setEnabled(false);
         adsrTF1.setEnabled(false);
         adsrTF2.setEnabled(false);
         adsrTF3.setEnabled(false);
-        // Attack Release
-        arTF.setEnabled(false);
-        arTF1.setEnabled(false);
-        // Breakpoint
-        bpTF.setEnabled(false);
-        bpTF1.setEnabled(false);
-        bpTF2.setEnabled(false);
-        bpTF3.setEnabled(false);
+       
     }//GEN-LAST:event_sinButtonActionPerformed
 
     private void gaussianButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gaussianButtonActionPerformed
         // TODO add your handling code here:
+        // Gaussian        
+        gaussianField.setEnabled(true);
+        
         // Disbale text fields for other envelopes
         // ADSR
         adsrTF.setEnabled(false);
         adsrTF1.setEnabled(false);
         adsrTF2.setEnabled(false);
         adsrTF3.setEnabled(false);
-        // Attack Release
-        arTF.setEnabled(false);
-        arTF1.setEnabled(false);
-        // Breakpoint
-        bpTF.setEnabled(false);
-        bpTF1.setEnabled(false);
-        bpTF2.setEnabled(false);
-        bpTF3.setEnabled(false);
+        
     }//GEN-LAST:event_gaussianButtonActionPerformed
-
-    private void breakpointButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_breakpointButtonActionPerformed
-        // TODO add your handling code here:
-        // Enable text
-        // Breakpoint
-        bpTF.setEnabled(true);
-        bpTF1.setEnabled(true);
-        bpTF2.setEnabled(true);
-        bpTF3.setEnabled(true);
-
-        // Disable other texts
-        // ADSR
-        adsrTF.setEnabled(false);
-        adsrTF1.setEnabled(false);
-        adsrTF2.setEnabled(false);
-        adsrTF3.setEnabled(false);
-        // Attack Release
-        arTF.setEnabled(false);
-        arTF1.setEnabled(false);
-    }//GEN-LAST:event_breakpointButtonActionPerformed
 
     private void hannButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hannButtonActionPerformed
         // TODO add your handling code here:
         // Disbale text fields for other envelopes
+         // Gaussian        
+        gaussianField.setEnabled(false);
         // ADSR
         adsrTF.setEnabled(false);
         adsrTF1.setEnabled(false);
         adsrTF2.setEnabled(false);
         adsrTF3.setEnabled(false);
-        // Attack Release
-        arTF.setEnabled(false);
-        arTF1.setEnabled(false);
-        // Breakpoint
-        bpTF.setEnabled(false);
-        bpTF1.setEnabled(false);
-        bpTF2.setEnabled(false);
-        bpTF3.setEnabled(false);
+        
     }//GEN-LAST:event_hannButtonActionPerformed
+
+    private void cloudDurationSettingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cloudDurationSettingActionPerformed
+        // TODO add your handling code here:
+       
+    }//GEN-LAST:event_cloudDurationSettingActionPerformed
+
+    private void cloudDurationSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_cloudDurationSliderStateChanged
+        // TODO add your handling code here:
+         cloudDurationSetting.setText("" + cloudDurationSlider.getValue() );
+    }//GEN-LAST:event_cloudDurationSliderStateChanged
+
+    private void amplitudeSettingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_amplitudeSettingActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_amplitudeSettingActionPerformed
+
+    private void adsrTF3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adsrTF3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_adsrTF3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1231,14 +1192,8 @@ public class GUIFrame extends javax.swing.JFrame {
     private javax.swing.JTextField amplitudeSetting;
     private javax.swing.JSlider amplitudeSlider;
     private javax.swing.JButton applyEnvelopeButton;
-    private javax.swing.JRadioButton arButton;
-    private javax.swing.JFormattedTextField arTF;
-    private javax.swing.JFormattedTextField arTF1;
-    private javax.swing.JFormattedTextField bpTF;
-    private javax.swing.JFormattedTextField bpTF1;
-    private javax.swing.JFormattedTextField bpTF2;
-    private javax.swing.JFormattedTextField bpTF3;
-    private javax.swing.JRadioButton breakpointButton;
+    private javax.swing.JTextField cloudDurationSetting;
+    private javax.swing.JSlider cloudDurationSlider;
     private javax.swing.JLabel durationLabel;
     private javax.swing.JTextField durationSetting;
     private javax.swing.JSlider durationSlider;
@@ -1247,11 +1202,13 @@ public class GUIFrame extends javax.swing.JFrame {
     private javax.swing.JFileChooser fileChooser;
     private javax.swing.JMenu fileMenu;
     private javax.swing.JRadioButton gaussianButton;
+    private javax.swing.JFormattedTextField gaussianField;
     private javax.swing.JLabel grainLabel;
     private javax.swing.JPanel grainPanel;
     private javax.swing.JRadioButton hammingButton;
     private javax.swing.JRadioButton hannButton;
     private javax.swing.JMenu helpMenu;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JMenu lMenu;

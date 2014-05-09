@@ -23,12 +23,13 @@ public class Envelope {
     /* double[] sinEnvelope(SoundRecord audio,int envelopeDuration)
      *  
      */
-    public double[] sinEnvelope(SoundRecord audio, int envelopeDuration) {
+    public double[] sinEnvelope(SoundRecord audio) {
 
-        double[] envelope = new double[envelopeDuration * audio.sampleRate];
+        double[] envelope = new double[1 * audio.sampleRate];
 
         for (int i = 0; i < envelope.length; i++) {
-            envelope[i] = Math.sin(Math.PI * ((double) i / audio.sampleRate));
+            envelope[i] = Math.sin(Math.PI * ( (double) i / audio.sampleRate));
+            
         }
 
         return envelope;
@@ -43,6 +44,7 @@ public class Envelope {
 
         for (int i = 0; i < envelope.length; i++) {
             envelope[i] = 0.5 * (1 - Math.cos(2 * Math.PI * i / (envelopeDuration * audio.sampleRate)));
+            
         }
 
         return envelope;
@@ -56,7 +58,8 @@ public class Envelope {
         double[] envelope = new double[envelopeDuration * audio.sampleRate];
 
         for (int i = 0; i < envelope.length; i++) {
-            envelope[i] = .54 - 0.46 * Math.cos(2 * Math.PI * i / (audio.sampleRate * envelopeDuration));
+            envelope[i] = 0.54 - 0.46 * Math.cos(2 * Math.PI * (double) i / (audio.sampleRate * envelopeDuration));
+            System.out.println(envelope[i]);
         }
 
         return envelope;
@@ -86,21 +89,24 @@ public class Envelope {
 
         attack = attack * audio.sampleRate;
         decay = decay * audio.sampleRate;
-        sustain = sustain * audio.sampleRate;
+       // sustain = sustain * audio.sampleRate;
         release = release * audio.sampleRate;
 
         for (int i = 0; i < envelope.length; i++) {
 
             if (i < attack) {
-                envelope[i] = (i / attack);
+                envelope[i] = ( (double) i / attack);
             } else if (i < (attack + decay)) {
-                envelope[i] = 1 - (1 - sustain) * ((i - attack) / decay);
+                envelope[i] = 1 - (1 - sustain) * ((  (double) i - attack) / decay);
             } else if (i <= ((envelopeDuration * audio.sampleRate) - release)) {
                 envelope[i] = sustain;
             } else {
-                envelope[i] = sustain * ((((envelopeDuration * audio.sampleRate) - i) / release));
+                envelope[i] = sustain * ((((envelopeDuration * audio.sampleRate) - (double) i) / release));
             }
+            System.out.println(envelope[i]);
         }
+        
+        
 
         return envelope;
 
